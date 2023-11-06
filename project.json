@@ -107,12 +107,12 @@
         "port": 4400,
         "configDir": "./.storybook",
         "browserTarget": "black-pearl:build",
-        "compodoc": false,
-        "styles": [".storybook/tailwind-imports.css"]
+        "compodoc": false
       },
       "configurations": {
         "ci": {
-          "quiet": true
+          "open": false,
+          "quiet": false
         }
       }
     },
@@ -125,13 +125,12 @@
         "outputDir": "dist/storybook/black-pearl",
         "configDir": "./.storybook",
         "browserTarget": "black-pearl:build",
-        "compodoc": true,
+        "compodoc": false,
         "compodocArgs": [
           "-e",
           "json",
           "-d"
-        ],
-        "styles": [".storybook/tailwind-imports.css"]
+        ]
       },
       "configurations": {
         "ci": {
@@ -149,8 +148,7 @@
       "executor": "@nx/web:file-server",
       "options": {
         "buildTarget": "black-pearl:build-storybook",
-        "staticFilePath": "dist/storybook/black-pearl",
-        "styles": [".storybook/tailwind-imports.css"]
+        "staticFilePath": "dist/storybook/black-pearl"
       },
       "configurations": {
         "ci": {
