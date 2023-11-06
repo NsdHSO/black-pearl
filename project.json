@@ -122,7 +122,7 @@
         "{options.outputDir}"
       ],
       "options": {
-        "outputDir": "dist/black-pearl",
+        "outputDir": "dist/storybook/black-pearl",
         "configDir": "./.storybook",
         "browserTarget": "black-pearl:build",
         "compodoc": false,
