@@ -4,7 +4,8 @@ import { RouterModule } from '@angular/router';
 @Component({
   standalone: true,
   imports: [ RouterModule],
-  selector: 'black-pearl-root',
+  // eslint-disable-next-line @angular-eslint/component-selector
+  selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
