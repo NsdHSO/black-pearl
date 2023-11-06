@@ -22,6 +22,15 @@
     "e2e": {
       "cache": true,
       "inputs": ["default", "^production"]
+    },
+    "build-storybook": {
+      "cache": true,
+      "inputs": [
+        "default",
+        "^production",
+        "{projectRoot}/.storybook/**/*",
+        "{projectRoot}/tsconfig.storybook.json"
+      ]
     }
   },
   "namedInputs": {
@@ -34,7 +43,10 @@
       "!{projectRoot}/src/test-setup.[jt]s",
       "!{projectRoot}/test-setup.[jt]s",
       "!{projectRoot}/.eslintrc.json",
-      "!{projectRoot}/eslint.config.js"
+      "!{projectRoot}/eslint.config.js",
+      "!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)",
+      "!{projectRoot}/.storybook/**/*",
+      "!{projectRoot}/tsconfig.storybook.json"
     ],
     "sharedGlobals": []
   },
@@ -54,5 +66,12 @@
     }
   },
   "defaultProject": "black-pearl",
-  "nxCloudAccessToken": "NDlkZDllMjUtNzM3OC00ZWI1LTg3YjYtMjc4NzJlNjNlYWI1fHJlYWQtd3JpdGU="
+  "nxCloudAccessToken": "NDlkZDllMjUtNzM3OC00ZWI1LTg3YjYtMjc4NzJlNjNlYWI1fHJlYWQtd3JpdGU=",
+  "tasksRunnerOptions": {
+    "default": {
+      "options": {
+        "cacheableOperations": ["build-storybook"]
+      }
+    }
+  }
 }

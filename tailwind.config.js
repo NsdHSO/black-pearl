@@ -8,7 +8,14 @@ module.exports = {
     ...createGlobPatternsForDependencies(__dirname),
   ],
   theme: {
-    extend: {},
+    extend: {
+      width: {
+        42: '10.5rem',
+      },
+    },
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-animated'),
+    require('@tailwindcss/typography'),
+  ],
 };
