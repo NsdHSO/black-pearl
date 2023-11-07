@@ -4,7 +4,13 @@ import {
   withEnabledBlockingInitialNavigation,
 } from '@angular/router';
 import { appRoutes } from './app.routes';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { provideStore } from '@ngrx/store';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(appRoutes, withEnabledBlockingInitialNavigation())],
+  providers: [
+    provideStore(),
+    provideRouter(appRoutes, withEnabledBlockingInitialNavigation()),
+    provideStoreDevtools(),
+  ],
 };
