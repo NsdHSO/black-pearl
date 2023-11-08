@@ -39,4 +39,16 @@ describe('HomeComponent', () => {
     expect(input.classList).toContain('ng-untouched')
     expect(input.value).toContain("ivan")
   });
+  it('should be pristine', () => {
+    fixture = TestBed.createComponent(HomeComponent);
+    component = fixture.componentInstance;
+    component.name.setValue('ivan')
+    const input: HTMLInputElement = fixture.nativeElement.querySelector("[data-test='control']")
+    input.value ="Ivan"
+    input.dispatchEvent(new Event('input'))
+    input.dispatchEvent(new Event('blur'))
+    fixture.detectChanges()
+    expect(input.classList).toContain("ng-dirty")
+    expect(input.value).toEqual('Ivan')
+  })
 });

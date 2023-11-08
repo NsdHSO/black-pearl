@@ -1,8 +1,7 @@
-import {Component, inject} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {select, Store} from "@ngrx/store";
-import {selectHomeState} from "../+state/home.selectors";
-import {FormControl, ReactiveFormsModule} from "@angular/forms";
+import { Store } from '@ngrx/store';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'black-pearl-home',
