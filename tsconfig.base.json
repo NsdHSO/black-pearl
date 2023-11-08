@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@black-pearl/home": ["home/src/index.ts"]
+      "@black-pearl/home": ["home/src/index.ts"],
+      "ngx-synergy": ["synergy/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
