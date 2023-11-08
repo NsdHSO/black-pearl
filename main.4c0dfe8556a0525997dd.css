@@ -541,4 +541,20 @@ video {
   --tw-backdrop-saturate:  ;
   --tw-backdrop-sepia:  ;
 }
+.flex {
+  display: flex;
+}
+.w-80 {
+  width: 20rem;
+}
+.flex-1 {
+  flex: 1 1 0%;
+}
+.border {
+  border-width: 1px;
+}
+.border-red-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(239 68 68 / var(--tw-border-opacity));
+}
 /* You can add global styles to this file, and also import other style files */
