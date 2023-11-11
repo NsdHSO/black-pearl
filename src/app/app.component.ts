@@ -40,4 +40,8 @@ export class AppComponent {
   change(event: any) {
     this.addess.set(event?.target?.value??'');
   }
+
+  value($event: any) {
+    console.log($event)
+  }
 }

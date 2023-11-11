@@ -14,4 +14,6 @@ export class HomeComponent {
   @Input()
   hero?: string;
   store = inject(Store);
+  @Input()
+  ivan?: string;
 }
