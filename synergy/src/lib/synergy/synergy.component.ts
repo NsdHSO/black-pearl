@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './synergy.component.html',
-  styleUrls: ['./synergy.component.css'],
+  styleUrls: ['./synergy.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SynergyComponent {}
