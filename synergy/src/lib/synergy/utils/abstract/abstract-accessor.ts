@@ -5,6 +5,15 @@ export abstract class AbstractAccessor implements ControlValueAccessor {
   private _disabled = false;
   private _changed = false;
   private _blur = false;
+  private _pristine = false;
+  get pristine(): boolean {
+    return this._pristine;
+  }
+
+  set pristine(value: boolean) {
+    this._pristine = value;
+  }
+
   get value(): unknown {
     return this._value;
   }
@@ -20,19 +29,19 @@ export abstract class AbstractAccessor implements ControlValueAccessor {
     return this._disabled;
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    this._disabled = isDisabled;
-  }
-
   get changed(): boolean {
     return this._changed;
   }
 
   set changed(value: boolean) {
     if (this.value !== value) {
-      this._blur = true
+      this._blur = true;
       this._changed = value;
     }
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this._disabled = isDisabled;
   }
 
   writeValue(value: number): void {

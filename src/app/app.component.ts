@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import {Component, signal} from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { InputTextComponent } from 'ngx-synergy';
 import {
   FormControl,
-  FormGroup,
+  FormGroup, FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -18,6 +18,7 @@ import { AsyncPipe, JsonPipe, NgIf } from '@angular/common';
     NgIf,
     AsyncPipe,
     JsonPipe,
+    FormsModule,
   ],
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'app-root',
@@ -25,11 +26,18 @@ import { AsyncPipe, JsonPipe, NgIf } from '@angular/common';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  addess = signal('tet');
+
   title = 'black-pearl';
   addressGroup = new FormGroup({
-    addess1: new FormControl(
-        "EST2"
-    ),
-    addess2: new FormControl('test24'),
+    address1: new FormControl('EST2'),
   });
+  protected readonly FormControl = FormControl;
+  get nativee() {
+    return this.addressGroup.get('address1') as FormControl;
+  }
+  ivan ='tst'
+  change(event: any) {
+    this.addess.set(event?.target?.value??'');
+  }
 }

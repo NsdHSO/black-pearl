@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'black-pearl-home',
@@ -11,7 +11,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
+  @Input()
+  hero?: string;
   store = inject(Store);
-
-  name = new FormControl('test');
 }
