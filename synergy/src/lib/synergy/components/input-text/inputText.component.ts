@@ -13,9 +13,6 @@ import { AbstractAccessor, FORWARD_REF } from '../../utils';
   providers: [FORWARD_REF(InputTextComponent)],
   hostDirectives: [{ directive: OutlineDirective }],
 })
-export class InputTextComponent extends AbstractAccessor implements OnChanges {
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes)
-  }
+export class InputTextComponent extends AbstractAccessor{
 
 }
