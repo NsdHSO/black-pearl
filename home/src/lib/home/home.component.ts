@@ -1,19 +1,13 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Store } from '@ngrx/store';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DashboardHomeComponent } from '@black-pearl/dashboard-home';
 
 @Component({
   selector: 'black-pearl-home',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, DashboardHomeComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent {
-  @Input()
-  hero?: string;
-  store = inject(Store);
-  @Input()
-  ivan?: string;
-}
+export class HomeComponent {}

@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@black-pearl/dashboard-home": ["dashboard-home/src/index.ts"],
       "@black-pearl/home": ["home/src/index.ts"],
       "ngx-synergy": ["synergy/src/index.ts"]
     }

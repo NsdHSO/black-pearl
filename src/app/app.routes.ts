@@ -4,8 +4,5 @@ export const appRoutes: Route[] = [
   {
     path: '',
     loadChildren: () => import('@black-pearl/home').then((m) => m.homeRoutes),
-    data: {
-      ivan: 'test'
-    }
   },
 ];

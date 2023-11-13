@@ -1,0 +1,7 @@
+<ng-container *ngIf="search$ | async as searchValue">
+    <input
+            (ngModelChange)="this.store.dispatch(setSearchValue({ search: $event }))"
+            [ngModel]="searchValue"
+            data-test="dsh-home-input"
+    />
+</ng-container>

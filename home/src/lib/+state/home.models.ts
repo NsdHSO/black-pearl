@@ -4,4 +4,5 @@
 export interface HomeEntity {
   id: string | number; // Primary ID
   name: string;
+  search: string;
 }

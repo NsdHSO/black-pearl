@@ -1,5 +1,5 @@
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { createReducer, on, Action } from '@ngrx/store';
+import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
+import { Action, createReducer, on } from '@ngrx/store';
 
 import * as HomeActions from './home.actions';
 import { HomeEntity } from './home.models';
@@ -22,6 +22,10 @@ export const homeAdapter: EntityAdapter<HomeEntity> =
 export const initialHomeState: HomeState = homeAdapter.getInitialState({
   // set initial required properties
   loaded: false,
+  entities: {
+    search: 'valye',
+    theme: 'dark',
+  },
 });
 
 const reducer = createReducer(
@@ -32,9 +36,15 @@ const reducer = createReducer(
     error: null,
   })),
   on(HomeActions.loadHomeSuccess, (state, { home }) =>
-    homeAdapter.setAll(home, { ...state, loaded: true })
+    homeAdapter.setAll(home, { ...state, loaded: true }),
   ),
-  on(HomeActions.loadHomeFailure, (state, { error }) => ({ ...state, error }))
+  on(HomeActions.loadHomeFailure, (state, { error }) => ({ ...state, error })),
+  on(HomeActions.setSearchValue, (state, action) => {
+    return {
+      ...state,
+      entities: { ...state.entities, search: action.search },
+    };
+  }),
 );
 
 export function homeReducer(state: HomeState | undefined, action: Action) {
