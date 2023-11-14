@@ -12,20 +12,20 @@ describe('HomeEffects', () => {
   let actions: Observable<Action>;
   let effects: HomeEffects;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [],
-      providers: [
-        HomeEffects,
-        provideMockActions(() => actions),
-        provideMockStore(),
-      ],
+  describe('init$', () => {
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [],
+        providers: [
+          HomeEffects,
+          provideMockActions(() => actions),
+          provideMockStore(),
+        ],
+      });
+
+      effects = TestBed.inject(HomeEffects);
     });
 
-    effects = TestBed.inject(HomeEffects);
-  });
-
-  describe('init$', () => {
     it('should work', () => {
       actions = hot('-a-|', { a: HomeActions.initHome() });
 
