@@ -1,15 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DashboardHomeComponent } from './dashboard-home.component';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { Store } from '@ngrx/store';
-import { selectSearchField } from '@black-pearl/home';
-import { PREFIX_HOME } from '../util/PREFIX_HOME';
+import { By } from '@angular/platform-browser';
+import { AccountComponent } from 'ngx-synergy';
+import { DashboardHomeService } from '../dashboard-home.service';
+import { of } from 'rxjs';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import {
+  HttpClientTestingModule,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
 
 describe('DashboardHomeComponent', () => {
   let component: DashboardHomeComponent;
   let fixture: ComponentFixture<DashboardHomeComponent>;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let selectSearchValueSelector: any;
   let store: MockStore;
 
   afterEach(() => {
@@ -19,7 +24,11 @@ describe('DashboardHomeComponent', () => {
     beforeEach(async () => {
       await TestBed.configureTestingModule({
         imports: [DashboardHomeComponent],
-        providers: [provideMockStore()],
+        providers: [
+          provideMockStore(),
+          provideHttpClient(),
+          provideHttpClientTesting(),
+        ],
       }).compileComponents();
 
       fixture = TestBed.createComponent(DashboardHomeComponent);
@@ -32,48 +41,48 @@ describe('DashboardHomeComponent', () => {
       expect(component).toBeTruthy();
     });
 
-    it('should not render the input ', () => {
-      const inputTag: HTMLInputElement = fixture.nativeElement.querySelector(
-        `[data-test="${PREFIX_HOME}-home-input"]`,
+    it('should header component', () => {
+      const headerElement = fixture.debugElement.queryAll(
+        By.directive(AccountComponent),
       );
 
-      expect(inputTag).toBeNull();
+      expect(headerElement.length).toBe(0);
     });
   });
-  describe('should assert the select', () => {
+  describe('should assert ui', () => {
     beforeEach(async () => {
       await TestBed.configureTestingModule({
-        imports: [DashboardHomeComponent],
-        providers: [
-          provideMockStore({
-            initialState: {
-              home: {
-                id: 1,
-                entities: {
-                  theme: 'dark',
-                  search: '',
-                },
-              },
-            },
-          }),
+        imports: [
+          DashboardHomeComponent,
+          AccountComponent,
+          HttpClientTestingModule,
         ],
+        providers: [
+          provideMockStore(),
+          {
+            provide: DashboardHomeService,
+            useValue: {
+              accountWithIcons$: of(['t', 't']),
+            },
+          },
+          provideHttpClient(),
+          provideHttpClientTesting(),
+        ],
+        schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
 
       fixture = TestBed.createComponent(DashboardHomeComponent);
       component = fixture.componentInstance;
-      store = TestBed.inject(Store) as MockStore;
-      selectSearchValueSelector = store.overrideSelector(
-        selectSearchField,
-        'CROCO' as any,
-      );
       fixture.detectChanges();
       // Provide a mock observable for the selectSearchField selector
     });
-    it('should update search value', () => {
-      const inputE: HTMLInputElement = fixture.nativeElement.querySelector(
-        `[data-test="${PREFIX_HOME}-home-input"]`,
+
+    it('should accounts renderer', () => {
+      const headerElement = fixture.debugElement.queryAll(
+        By.directive(AccountComponent),
       );
-      expect(inputE.value).toEqual('CROCO');
+
+      expect(headerElement.length).toBe(2);
     });
   });
 });

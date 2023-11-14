@@ -1,7 +1,5 @@
-<ng-container *ngIf="search$ | async as searchValue">
-    <input
-            (ngModelChange)="this.store.dispatch(setSearchValue({ search: $event }))"
-            [ngModel]="searchValue"
-            data-test="dsh-home-input"
-    />
+<ng-container *ngIf="accounts$ |async as accounts">
+    <ng-container *ngFor="let account of accounts">
+        <black-pearl-account [account]="account"/>
+    </ng-container>
 </ng-container>

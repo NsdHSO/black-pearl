@@ -1,20 +1,19 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Store } from '@ngrx/store';
-import { selectSearchField, setSearchValue } from '@black-pearl/home';
 import { FormsModule } from '@angular/forms';
+import { DashboardHomeService } from '../dashboard-home.service';
+import { AccountComponent } from 'ngx-synergy';
 
 @Component({
   selector: 'black-pearl-dashboard-home',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, AccountComponent],
   templateUrl: './dashboard-home.component.html',
   styleUrls: ['./dashboard-home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardHomeComponent {
-  store = inject(Store);
+  private _dashboardHomeService = inject(DashboardHomeService);
 
-  search$ = this.store.select(selectSearchField);
-  protected readonly setSearchValue = setSearchValue;
+  accounts$ = this._dashboardHomeService.accountWithIcons$;
 }

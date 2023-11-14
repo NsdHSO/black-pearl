@@ -1,0 +1,22 @@
+{
+  "accounts": [
+    {
+      "IBAN": "GB29RBOS60161331926819",
+      "currency": "GBP",
+      "amount": 1500
+    },
+    {
+      "IBAN": "FR1420041010050500013M02606",
+      "currency": "EUR",
+      "amount": 2300
+    },
+    {
+      "IBAN": "US4412245221245930014556",
+      "currency": "USD",
+      "amount": 3000
+    }
+  ],
+  "icons": [
+    {}
+  ]
+}
