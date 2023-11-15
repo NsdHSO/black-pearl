@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { Inject, inject, Injectable } from '@angular/core';
 import { of, shareReplay, switchMap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Account } from 'ngx-synergy';
@@ -9,10 +9,12 @@ import { Account } from 'ngx-synergy';
 export class DashboardHomeService {
   private _httpClient = inject(HttpClient);
   private accounts$ = this._httpClient.get<Account[]>(
-    'http://localhost:3000/accounts',
+    `${this._baseUrl}/accounts`,
   );
   accountWithIcons$ = this.accounts$.pipe(
     switchMap((v) => of(v)),
     shareReplay(),
   );
+
+  constructor(@Inject('BASE_URL_HOME') private _baseUrl: any) {}
 }

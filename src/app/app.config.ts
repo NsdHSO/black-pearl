@@ -23,5 +23,9 @@ export const appConfig: ApplicationConfig = {
     provideStoreDevtools(),
     provideAnimations(),
     importProvidersFrom(IconCoreModule),
+    {
+      provide: 'BASE_URL_HOME',
+      useValue: process.env['NX_BASE_URL_HOME'],
+    },
   ],
 };
