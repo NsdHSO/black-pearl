@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AccountComponent } from './account.component';
+import { AccountComponent } from 'ngx-synergy';
 
 describe('AccountComponent', () => {
   let component: AccountComponent;

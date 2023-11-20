@@ -8,6 +8,7 @@
     "test": "nx test",
     "build-storybook": "nx build-storybook",
     "storybook": "nx storybook --open=false",
+    "storybook:synergy": "nx storybook synergy --open=false",
     "compodoc": "npx compodoc -p tsconfig.doc.json -e json -d ."
   },
   "private": true,
@@ -74,6 +75,8 @@
     "@storybook/manager-api": "^7.5.2",
     "@storybook/test-runner": "0.13.0",
     "@storybook/testing-library": "0.2.2",
+    "@storybook/addon-docs": "^7.4.0",
+    "@storybook/core-common": "^7.0.24",
     "@swc-node/register": "~1.6.7",
     "@swc/core": "~1.3.85",
     "@types/jest": "^29.4.0",
@@ -105,4 +108,3 @@
     "typescript": "5.2.2"
   }
 }
-

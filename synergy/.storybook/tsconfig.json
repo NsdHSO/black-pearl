@@ -3,16 +3,12 @@
   "compilerOptions": {
     "emitDecoratorMetadata": true
   },
-  "exclude": [
-    "../**/*.spec.ts"
-  ],
+  "exclude": ["../**/*.spec.ts"],
   "include": [
-    "../synergy/**/*.stories.ts",
     "../src/**/*.stories.ts",
     "../src/**/*.stories.js",
     "../src/**/*.stories.jsx",
     "../src/**/*.stories.tsx",
-    "../**/**/src/lib/**/*.component.ts",
     "../src/**/*.stories.mdx",
     "*.js",
     "*.ts"
