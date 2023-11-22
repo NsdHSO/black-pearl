@@ -1,44 +1,45 @@
 import path from 'path';
 
 const config = {
-    stories: [
-        '../src/app/**/*.stories.@(js|jsx|ts|tsx|mdx)',
-    ],
-    addons: [
-        '@storybook/addon-links',
-        {
-            name: path.dirname(require.resolve('@storybook/addon-docs/package.json')),
-            options: { transcludeMarkdown: true },
-        },
-        {
-            name: '@storybook/addon-essentials',
-            options: { docs: false },
-        },
-        '@storybook/addon-interactions',
-        '@storybook/addon-docs',
-        {
-            name: '@storybook/addon-styling',
-            options: {
-                // Check out https://github.com/storybookjs/addon-styling/blob/main/docs/api.md
-                // For more details on this addon's options.
-                postCss: {
-                    implementation: require.resolve('postcss'),
-                },
-            },
-        },
-        {
-            name: '@storybook/addon-styling',
-            options: {},
-        },
-    ],
-    framework: {
-        name: '@storybook/angular',
-        options: {},
+  stories: [
+    '../src/app/**/*.stories.@(js|jsx|ts|tsx|mdx)',
+    '../synergy/**/*.stories.@(js|jsx|ts|tsx|mdx)',
+  ],
+  addons: [
+    '@storybook/addon-links',
+    {
+      name: path.dirname(require.resolve('@storybook/addon-docs/package.json')),
+      options: { transcludeMarkdown: true },
     },
-    staticDirs: [{ from: './../src/assets', to: '/assets' }],
-    docs: {
-        autodocs: 'tag',
+    {
+      name: '@storybook/addon-essentials',
+      options: { docs: false },
     },
+    '@storybook/addon-interactions',
+    '@storybook/addon-docs',
+    {
+      name: '@storybook/addon-styling',
+      options: {
+        // Check out https://github.com/storybookjs/addon-styling/blob/main/docs/api.md
+        // For more details on this addon's options.
+        postCss: {
+          implementation: require.resolve('postcss'),
+        },
+      },
+    },
+    {
+      name: '@storybook/addon-styling',
+      options: {},
+    },
+  ],
+  framework: {
+    name: '@storybook/angular',
+    options: {},
+  },
+  staticDirs: [{ from: './../src/assets', to: '/assets' }],
+  docs: {
+    autodocs: 'tag',
+  },
 };
 
 export default config;
