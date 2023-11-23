@@ -16,7 +16,21 @@
       "amount": 3000
     }
   ],
-  "icons": [
-    {}
+  "icon": [
+    {
+      "id": 1,
+      "name": "gbp",
+      "value": "fa_brands:waze"
+    },
+    {
+      "id": 2,
+      "name": "usd",
+      "value": "fa_brands:weixin"
+    },
+    {
+      "id": 3,
+      "name": "eur",
+      "value": "fa_brands:figma"
+    }
   ]
 }

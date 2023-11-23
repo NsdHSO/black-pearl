@@ -7,6 +7,11 @@ import {
 } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { TestScheduler } from 'rxjs/internal/testing/TestScheduler';
+import { Account } from 'ngx-synergy';
+import {
+  getAccounts,
+  getAccountsWithIcons,
+} from './mocks/dashboard-service.mock';
 
 describe('DashboardHomeService', () => {
   let service: DashboardHomeService;
@@ -14,7 +19,11 @@ describe('DashboardHomeService', () => {
   let testScheduler: TestScheduler;
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideHttpClient(), provideHttpClientTesting()],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        { provide: 'BASE_URL_HOME', useValue: 'http://localhost:3000' },
+      ],
     });
 
     service = TestBed.inject(DashboardHomeService);
@@ -39,11 +48,20 @@ describe('DashboardHomeService', () => {
       });
 
       const req = httpMock.expectOne('http://localhost:3000/accounts');
-      req.flush(['1', '2', '3']);
-
-      expect(emittedValue).toEqual(['1', '2', '3']);
+      req.flush(getAccounts() as Account[]);
+      const iconsData = [
+        { name: 'gbp', value: 'fa_brands:waze' },
+        { name: 'eur', value: 'fa_brands:figma' },
+        { name: 'usd', value: 'fa_brands:weixin' },
+      ];
+      for (const icon of iconsData) {
+        const reqIcon = httpMock.expectOne(
+          `http://localhost:3000/icon/?name=${icon.name}`,
+        );
+        reqIcon.flush({ ...icon });
+      }
       expectObservable(service.accountWithIcons$).toBe('(a|)', {
-        a: ['1', '2', '3'],
+        a: getAccountsWithIcons(),
       });
     });
   });

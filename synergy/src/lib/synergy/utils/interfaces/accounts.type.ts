@@ -4,5 +4,5 @@ export interface Account {
   IBAN: string;
   currency: string;
   amount: number;
-  icons: Icon[];
+  icon: Icon;
 }
