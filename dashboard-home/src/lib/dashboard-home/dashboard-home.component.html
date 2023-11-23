@@ -1,7 +1,5 @@
 <ng-container *ngIf="accounts$ |async as accounts">
-    <div class="flex gap-2 flex-col">
-        <ng-container *ngFor="let account of accounts">
-            <black-pearl-account [account]="account"/>
-        </ng-container>
-    </div>
+    <ng-container *ngFor="let account of accounts">
+        <black-pearl-account [account]="account"/>
+    </ng-container>
 </ng-container>

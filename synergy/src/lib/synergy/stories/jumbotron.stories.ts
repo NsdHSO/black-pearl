@@ -45,7 +45,9 @@ const Parent: Story<JumbotronComponent> = (args: JumbotronComponent) => ({
   template: `
     <div [ngStyle]="{
            'margin.rem':'1'
-        }  ">
+        }  "
+        [ngClass]="[padding, margin]"
+        >
         <black-pearl-jumbotron [shadow]="shadow">
                 <p>account works!</p>
         </black-pearl-jumbotron>
@@ -69,5 +71,15 @@ WorkParent.argTypes = {
       'shadow-none',
     ],
     defaultValue: 'shadow-none',
+  },
+  padding: {
+    control: 'select',
+    options: ['m-1', 'm-2', 'mx-0 my-1', 'mx-1 my-2', 'mx-4 my-1', 'm-0'],
+    defaultValue: 'm-0',
+  },
+  margin: {
+    control: 'select',
+    options: ['p-1', 'p-2', 'px-0 py-1', 'px-1 py-2', 'px-4 py-1', 'p-0'],
+    defaultValue: 'p-0',
   },
 };

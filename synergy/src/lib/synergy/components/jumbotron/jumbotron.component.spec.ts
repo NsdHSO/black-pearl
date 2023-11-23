@@ -25,7 +25,6 @@ describe('JumbotronComponent', () => {
         '[data-test="synergy-wrapper"]',
       );
       fixture.detectChanges();
-
       expect(element.classList).toContain('p-0');
     });
   });
