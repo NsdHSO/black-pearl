@@ -1,5 +1,5 @@
 import { Inject, inject, Injectable } from '@angular/core';
-import { delay, forkJoin, map, shareReplay, switchMap } from 'rxjs';
+import { forkJoin, map, shareReplay, switchMap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Account, Icon } from 'ngx-synergy';
 
@@ -28,7 +28,6 @@ export class DashboardHomeService {
       ),
     ),
     shareReplay(),
-    delay(912000),
   );
 
   private icon$ = (nameIcon: string) =>
