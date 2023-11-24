@@ -10,7 +10,7 @@
     "storybook": "nx storybook --open=false",
     "storybook:synergy": "nx run black-pearl:storybook --open=false",
     "compodoc": "npx compodoc -p tsconfig.doc.json -e json -d .",
-    "prepare": "husky install"
+    "precommit": "git-format-staged --formatter 'prettier --stdin' ['*.ts', '*.html']"
   },
   "private": true,
   "dependencies": {
@@ -103,6 +103,7 @@
     "postcss-preset-env": "~7.5.0",
     "postcss-url": "~10.1.3",
     "prettier": "^3.1.0",
+    "pretty-quick": "^3.1.3",
     "style-loader": "^3.3.3",
     "tailwindcss": "^3.0.2",
     "ts-jest": "^29.1.0",
