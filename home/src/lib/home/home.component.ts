@@ -8,6 +8,6 @@ import { DashboardHomeComponent } from '@black-pearl/dashboard-home';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, DashboardHomeComponent],
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {}

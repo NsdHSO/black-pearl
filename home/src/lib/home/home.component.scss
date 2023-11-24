@@ -1,0 +1,7 @@
+:host {
+  @apply m-5 flex;
+
+  > * {
+    flex: 1;
+  }
+}
