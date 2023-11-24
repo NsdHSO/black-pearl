@@ -5,4 +5,16 @@ export interface Account {
   currency: string;
   amount: number;
   icon: Icon;
+  configuration?: ConfigurationAccount;
+}
+
+export interface ConfigurationAccount {
+  buttons: ConfigButton[];
+}
+
+export interface ConfigButton {
+  visible: true;
+  name: string;
+  action: () => void;
+  IBAN: string;
 }

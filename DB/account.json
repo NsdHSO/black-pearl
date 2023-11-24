@@ -32,5 +32,25 @@
       "name": "eur",
       "value": "fa_brands:figma"
     }
+  ],
+  "configAccount": [
+    {
+      "id": 1,
+      "IBAN": "US4412245221245930014556",
+      "visible": true,
+      "name": "Click ME"
+    },
+    {
+      "id": 2,
+      "IBAN": "US4412245221245930014556",
+      "visible": true,
+      "name": "View "
+    },
+    {
+      "id": 3,
+      "IBAN": "US4412245221245930014556",
+      "visible": true,
+      "name": "Click here"
+    }
   ]
 }
