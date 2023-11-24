@@ -15,6 +15,6 @@ export interface ConfigurationAccount {
 export interface ConfigButton {
   visible: true;
   name: string;
-  action: () => void;
+  action: (event: unknown) => void;
   IBAN: string;
 }

@@ -46,6 +46,15 @@ export class DashboardHomeService {
               ...account,
               configuration: { buttons: [...config] },
             })),
+            map((configurations) => ({
+              ...configurations,
+              configuration: {
+                buttons: configurations.configuration.buttons.map((config) => ({
+                  ...config,
+                  action: (row: unknown) => console.log(row),
+                })),
+              },
+            })),
           ),
         ),
       ),

@@ -17,9 +17,13 @@
                 <mat-icon [svgIcon]="account.icon.value" class="!w-full !h-full"></mat-icon>
             </div>
         </div>
-        <div class="flex align-middle"></div>
-        <black-pearl-button [disabled]="of(false)"
-                            class="rounded-md border border-gray-100 bg-blue-400 z-10 text-white"
-                            text="ted"/>
+        <div class="flex align-middle space-x-3">
+            <ng-container *ngFor="let config of account.configuration?.buttons">
+                <black-pearl-button (marian)="config.action(account)"
+                                    [disabled]="of(false)"
+                                    [text]="config.name"
+                                    class="rounded-md border border-gray-100 bg-blue-400 z-10 text-white"/>
+            </ng-container>
+        </div>
     </div>
 </black-pearl-jumbotron>

@@ -28,59 +28,64 @@ describe('DashboardHomeService', () => {
 
     service = TestBed.inject(DashboardHomeService);
     httpMock = TestBed.inject(HttpTestingController);
-
-    testScheduler = new TestScheduler((actual, expected) => {
-      expect(JSON.stringify(actual)).toEqual(JSON.stringify(expected));
-    });
   });
 
   afterEach(() => {
     httpMock.verify();
   });
-  it('should return an icon and final account', () => {
-    testScheduler.run(({ cold, expectObservable }) => {
-      const account$ = cold('---a|', { a: ['2'], b: 'C' }); // 'b' represents completion
-      service['accounts$'] = account$ as any;
 
-      let emittedValue: any;
-      service.accountWithIcons$.subscribe((v) => {
-        emittedValue = v;
-      });
+  describe('assert deep', () => {
+    testScheduler = new TestScheduler((actual, expected) => {
+      expect(JSON.stringify(actual)).toEqual(JSON.stringify(expected));
+    });
 
-      const reqAccounts = httpMock.expectOne('http://localhost:3000/accounts');
-      reqAccounts.flush(getAccounts() as Account[]);
-      const iconsData = [
-        { name: 'gbp', value: 'fa_brands:waze' },
-        { name: 'eur', value: 'fa_brands:figma' },
-        { name: 'usd', value: 'fa_brands:weixin' },
-      ];
+    it('should return an icon and final account', () => {
+      testScheduler.run(({ cold, expectObservable }) => {
+        const account$ = cold('---a|', { a: ['2'], b: 'C' }); // 'b' represents completion
+        service['accounts$'] = account$ as any;
 
-      iconsData.forEach((icon, index: number) => {
-        const reqIcon = httpMock.expectOne(
-          `http://localhost:3000/icon/?name=${icon.name}`,
+        let emittedValue: any;
+        service.accountWithIcons$.subscribe((v) => {
+          emittedValue = v;
+        });
+
+        const reqAccounts = httpMock.expectOne(
+          'http://localhost:3000/accounts',
         );
-        reqIcon.flush([{ ...icon }]);
-      });
+        reqAccounts.flush(getAccounts() as Account[]);
+        const iconsData = [
+          { name: 'gbp', value: 'fa_brands:waze' },
+          { name: 'eur', value: 'fa_brands:figma' },
+          { name: 'usd', value: 'fa_brands:weixin' },
+        ];
 
-      const configData = [
-        {
-          IBAN: 'US4412245221245930014556',
-          visible: true,
-          name: 'Click ME',
-          action: () => console.log('test'),
-        },
-        { IBAN: 'GB29RBOS60161331926819' },
-        { IBAN: 'FR1420041010050500013M02606' },
-      ];
-      configData.forEach((configAccount, index: number) => {
-        const reqConfigAccount = httpMock.expectOne(
-          `http://localhost:3000/configAccount/?IBAN=${configAccount.IBAN}`,
-        );
-        reqConfigAccount.flush([{ ...configAccount }]);
-      });
+        iconsData.forEach((icon, index: number) => {
+          const reqIcon = httpMock.expectOne(
+            `http://localhost:3000/icon/?name=${icon.name}`,
+          );
+          reqIcon.flush([{ ...icon }]);
+        });
 
-      expectObservable(service.accountWithIcons$).toBe('(a|)', {
-        a: getAccountsWithIcons(),
+        const configData = [
+          {
+            IBAN: 'US4412245221245930014556',
+            visible: true,
+            name: 'Click ME',
+            action: () => console.log('test'),
+          },
+          { IBAN: 'GB29RBOS60161331926819' },
+          { IBAN: 'FR1420041010050500013M02606' },
+        ];
+        configData.forEach((configAccount, index: number) => {
+          const reqConfigAccount = httpMock.expectOne(
+            `http://localhost:3000/configAccount/?IBAN=${configAccount.IBAN}`,
+          );
+          reqConfigAccount.flush([{ ...configAccount }]);
+        });
+
+        expectObservable(service.accountWithIcons$).toBe('(a|)', {
+          a: getAccountsWithIcons(),
+        });
       });
     });
   });

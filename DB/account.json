@@ -38,7 +38,8 @@
       "id": 1,
       "IBAN": "US4412245221245930014556",
       "visible": true,
-      "name": "Click ME"
+      "name": "Click with log",
+      "action": "($event)=> console.log('tes')"
     },
     {
       "id": 2,
