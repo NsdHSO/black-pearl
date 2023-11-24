@@ -1,5 +1,12 @@
 import { Inject, inject, Injectable } from '@angular/core';
-import { forkJoin, map, shareReplay, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  forkJoin,
+  map,
+  shareReplay,
+  switchMap,
+} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Account, ConfigButton, Icon } from 'ngx-synergy';
 
@@ -8,6 +15,7 @@ import { Account, ConfigButton, Icon } from 'ngx-synergy';
 })
 export class DashboardHomeService {
   private _httpClient = inject(HttpClient);
+  private _selectedAccount$ = new BehaviorSubject(0);
   private accounts$ = this._httpClient.get<Account[]>(
     `${this._baseUrl}/accounts`,
   );
@@ -16,6 +24,10 @@ export class DashboardHomeService {
 
   iconsReq$ = (accounts: Account[]) =>
     accounts.map((a) => this.icon$Request(a.currency.toLowerCase()));
+
+  setAccount = (index: number) => {
+    this._selectedAccount$.next(index);
+  };
 
   private icon$Request = (nameIcon: string) =>
     this._httpClient.get<Icon[]>(`${this._baseUrl}/icon/`, {
@@ -27,7 +39,7 @@ export class DashboardHomeService {
       params: { IBAN: accountIban },
     });
 
-  accountWithIcons$ = this.accounts$.pipe(
+  private accountWithIcons$ = this.accounts$.pipe(
     switchMap((accounts) =>
       forkJoin(this.iconsReq$(accounts)).pipe(
         map((icons) => {
@@ -60,5 +72,17 @@ export class DashboardHomeService {
       ),
     ),
     shareReplay(),
+  );
+
+  accountWithIconsAndSelected$ = combineLatest([
+    this.accountWithIcons$,
+    this._selectedAccount$.asObservable(),
+  ]).pipe(
+    map(([accounts, selectedAccount]) => {
+      return accounts.map((v, index) => ({
+        ...v,
+        selected: index === selectedAccount,
+      }));
+    }),
   );
 }

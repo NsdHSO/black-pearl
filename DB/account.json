@@ -48,10 +48,16 @@
       "name": "View "
     },
     {
-      "id": 3,
-      "IBAN": "US4412245221245930014556",
+      "IBAN": "GB29RBOS60161331926819",
       "visible": true,
       "name": "Click here"
+    },
+    {
+      "id": 1,
+      "IBAN": "US4412245221245930014556",
+      "visible": true,
+      "name": "Click with log",
+      "action": "($event)=> console.log('tes')"
     }
   ]
 }

@@ -11,7 +11,6 @@
         <p class="text-lg text-gray-500" data-test="synergy-account-iban">
           {{ account.IBAN }}
         </p>
-        <div></div>
       </div>
       <div class="rounded-full w-16 h-16">
         <mat-icon
@@ -20,15 +19,20 @@
         ></mat-icon>
       </div>
     </div>
-    <div class="flex align-middle space-x-3">
-      <ng-container *ngFor="let config of account.configuration?.buttons">
-        <black-pearl-button
-          (marian)="config.action(account)"
-          [disabled]="of(false)"
-          [text]="config.name"
-          class="rounded-md border border-gray-100 bg-blue-400 z-10 text-white"
-        />
-      </ng-container>
-    </div>
+    @if (account.selected && account.configuration?.buttons?.length) {
+      <div class="flex align-middle space-x-3">
+        @for (
+          config of account.configuration?.buttons;
+          track _utilService.trackBy
+        ) {
+          <black-pearl-button
+            (marian)="config.action(account)"
+            [disabled]="of(false)"
+            [text]="config.name"
+            class="rounded-md border border-gray-100 bg-blue-400 z-10 !text-white animate-delay-500 transition-all"
+          />
+        }
+      </div>
+    }
   </div>
 </black-pearl-jumbotron>

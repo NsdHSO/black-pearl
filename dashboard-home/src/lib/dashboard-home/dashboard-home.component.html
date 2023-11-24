@@ -1,9 +1,11 @@
-<ng-container *ngIf="accounts$ | async as accounts; else emptyContainer">
-    <ng-container *ngFor="let account of accounts">
-        <black-pearl-account [account]="account"/>
-    </ng-container>
-</ng-container>
-
-<ng-template #emptyContainer>
-    <black-pearl-dashboard-home-skeleton data-test="dashboard-home-skeleton-account"/>
-</ng-template>
+@if (accounts$ | async; as accounts) {
+  @for (account of accounts; track _utilService.trackBy; let index = $index) {
+    <black-pearl-account [account]="account" (click)="sendAccount(index)" />
+  } @empty {
+    <black-pearl-empty-accounts />
+  }
+} @else {
+  <black-pearl-dashboard-home-skeleton
+    data-test="dashboard-home-skeleton-account"
+  />
+}

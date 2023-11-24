@@ -6,6 +6,7 @@ export interface Account {
   amount: number;
   icon: Icon;
   configuration?: ConfigurationAccount;
+  selected: boolean;
 }
 
 export interface ConfigurationAccount {

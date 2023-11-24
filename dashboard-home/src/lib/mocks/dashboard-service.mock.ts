@@ -6,6 +6,7 @@ export function getAccountsWithIcons(): Account[] {
       IBAN: 'GB29RBOS60161331926819',
       currency: 'GBP',
       amount: 1500,
+      selected: true,
       icon: {
         name: 'gbp',
         value: 'fa_brands:waze',
@@ -18,6 +19,7 @@ export function getAccountsWithIcons(): Account[] {
       IBAN: 'FR1420041010050500013M02606',
       currency: 'EUR',
       amount: 2300,
+      selected: false,
       icon: {
         name: 'eur',
         value: 'fa_brands:figma',
@@ -34,6 +36,7 @@ export function getAccountsWithIcons(): Account[] {
       IBAN: 'US4412245221245930014556',
       currency: 'USD',
       amount: 3000,
+      selected: false,
       icon: {
         name: 'usd',
         value: 'fa_brands:weixin',
@@ -58,16 +61,19 @@ export function getAccounts() {
       IBAN: 'GB29RBOS60161331926819',
       currency: 'GBP',
       amount: 1500,
+      selected: true,
     },
     {
       IBAN: 'FR1420041010050500013M02606',
       currency: 'EUR',
       amount: 2300,
+      selected: false,
     },
     {
       IBAN: 'US4412245221245930014556',
       currency: 'USD',
       amount: 3000,
+      selected: false,
     },
   ];
 }

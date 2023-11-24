@@ -5,6 +5,8 @@ import { DashboardHomeService } from '../dashboard-home.service';
 import { AccountComponent } from 'ngx-synergy';
 import { MatButtonModule } from '@angular/material/button';
 import { DashboardHomeSkeletonComponent } from './components/skeletons/dashboardHomeSkeleton/dashboardHomeSkeleton.component';
+import { UtilsService } from '../../../../synergy/src/lib/synergy/utils/services';
+import { EmptyAccountsComponent } from './components/emptyAccounts/emptyAccounts.component';
 
 @Component({
   selector: 'black-pearl-dashboard-home',
@@ -15,6 +17,7 @@ import { DashboardHomeSkeletonComponent } from './components/skeletons/dashboard
     AccountComponent,
     MatButtonModule,
     DashboardHomeSkeletonComponent,
+    EmptyAccountsComponent,
   ],
   templateUrl: './dashboard-home.component.html',
   styleUrls: ['./dashboard-home.component.scss'],
@@ -22,7 +25,12 @@ import { DashboardHomeSkeletonComponent } from './components/skeletons/dashboard
 })
 export class DashboardHomeComponent {
   private _dashboardHomeService = inject(DashboardHomeService);
+  protected _utilService = inject(UtilsService);
+  accounts$ = this._dashboardHomeService.accountWithIconsAndSelected$;
 
-  accounts$ = this._dashboardHomeService.accountWithIcons$;
   protected readonly Array = Array;
+
+  sendAccount(index: number) {
+    this._dashboardHomeService.setAccount(index);
+  }
 }
