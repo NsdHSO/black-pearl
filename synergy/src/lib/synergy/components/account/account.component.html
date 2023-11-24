@@ -2,22 +2,21 @@
     <div class="flex flex-col">
         <div class="flex">
             <div class="flex-1">
-                <p class="text-xl text-blue-400 font-bold" data-test="synergy-account-title">
+                <p
+                        class="text-xl text-blue-400 font-bold"
+                        data-test="synergy-account-title"
+                >
                     Cont Curent
                 </p>
                 <p class="text-lg" data-test="synergy-account-iban">
-                    {{account.IBAN}}
+                    {{ account.IBAN }}
                 </p>
-                <div>
-
-                </div>
+                <div></div>
             </div>
-            <div>
-                icon
+            <div class="rounded-full w-16 h-16">
+                <mat-icon [svgIcon]="account.icon.value" class="!w-full !h-full"></mat-icon>
             </div>
         </div>
-        <div class="flex align-middle">
-            action
-        </div>
+        <div class="flex align-middle">action</div>
     </div>
 </black-pearl-jumbotron>

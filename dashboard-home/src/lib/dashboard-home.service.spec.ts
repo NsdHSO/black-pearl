@@ -37,7 +37,7 @@ describe('DashboardHomeService', () => {
   afterEach(() => {
     httpMock.verify();
   });
-  it('should ', () => {
+  it('should return an icon and final account', () => {
     testScheduler.run(({ cold, expectObservable }) => {
       const account$ = cold('---a|', { a: ['2'], b: 'C' }); // 'b' represents completion
       service['accounts$'] = account$ as any;
@@ -54,12 +54,14 @@ describe('DashboardHomeService', () => {
         { name: 'eur', value: 'fa_brands:figma' },
         { name: 'usd', value: 'fa_brands:weixin' },
       ];
-      for (const icon of iconsData) {
+
+      iconsData.forEach((icon, index: number) => {
         const reqIcon = httpMock.expectOne(
           `http://localhost:3000/icon/?name=${icon.name}`,
         );
-        reqIcon.flush({ ...icon });
-      }
+        reqIcon.flush([{ ...icon }]);
+      });
+
       expectObservable(service.accountWithIcons$).toBe('(a|)', {
         a: getAccountsWithIcons(),
       });

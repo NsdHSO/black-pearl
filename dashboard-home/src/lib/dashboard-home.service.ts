@@ -15,14 +15,14 @@ export class DashboardHomeService {
   constructor(@Inject('BASE_URL_HOME') private _baseUrl: string) {}
 
   iconsReq$ = (accounts: Account[]) =>
-    accounts.map((a) => this.icon$(a.currency.toLowerCase()));
+    accounts.map((a) => this.icon$Request(a.currency.toLowerCase()));
   accountWithIcons$ = this.accounts$.pipe(
     switchMap((accounts) =>
       forkJoin(this.iconsReq$(accounts)).pipe(
         map((icons) => {
           return accounts.map((acc: Account, index) => ({
             ...acc,
-            icon: icons[index] as unknown as Icon,
+            icon: icons[index][0],
           }));
         }),
       ),
@@ -30,8 +30,8 @@ export class DashboardHomeService {
     shareReplay(),
   );
 
-  private icon$ = (nameIcon: string) =>
-    this._httpClient.get<Account[]>(`${this._baseUrl}/icon/`, {
+  private icon$Request = (nameIcon: string) =>
+    this._httpClient.get<Icon[]>(`${this._baseUrl}/icon/`, {
       params: { name: nameIcon },
     });
 }
