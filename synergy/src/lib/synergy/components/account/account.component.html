@@ -18,7 +18,12 @@
             </div>
         </div>
         <div class="flex align-middle"></div>
-        <black-pearl-button [disabled]="of(true)" class="bg-red-500" text="ted"/>
-        <black-pearl-button [disabled]="of(false)" text="dasd"/>
+        <black-pearl-button [disabled]="of(false)"
+                            class="rounded-md border border-gray-100 bg-blue-400 z-10 text-white"
+                            text="ted"/>
+
+        <black-pearl-button [disabled]="of(false)" [text]="'ICANSDA'">
+            <div>test</div>
+        </black-pearl-button>
     </div>
 </black-pearl-jumbotron>

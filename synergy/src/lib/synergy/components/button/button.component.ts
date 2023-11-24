@@ -13,7 +13,7 @@ import { Shadows } from '../../utils/types/shadow';
   styleUrls: ['./button.component.scss'],
 })
 export class ButtonComponent {
-  @Input({ required: true })
+  @Input()
   text!: string;
 
   @Input({ required: true })
@@ -23,8 +23,9 @@ export class ButtonComponent {
   marian: EventEmitter<unknown> = new EventEmitter<unknown>();
 
   @Input()
-  class?: string = '';
+  class?: unknown = '';
 
   @Input()
   shadow?: Shadows = 'shadow-x';
+  protected readonly event = event;
 }

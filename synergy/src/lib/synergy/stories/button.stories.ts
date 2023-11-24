@@ -16,7 +16,7 @@ export default {
 const Template: Story<ButtonComponent> = (args: ButtonComponent) => ({
   props: args,
   template: `
-  <black-pearl-button [text]="text" [class]="class" [shadow]="shadow"[disabled]="disabled"/>`,
+  <black-pearl-button [text]="text" [class]="class" [shadow]="shadow" [disabled]="disabled"/>`,
 });
 export const WorkBack = Template.bind({});
 WorkBack.args = {

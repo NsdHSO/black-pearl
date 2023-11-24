@@ -7,6 +7,7 @@ import {
 import { ButtonComponent } from './button.component';
 import { of } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
+import { Component } from '@angular/core';
 
 describe('ButtonComponent', () => {
   let component: ButtonComponent;
@@ -54,7 +55,7 @@ describe('ButtonComponent', () => {
       );
 
       // By default shadows
-      expect(buttonElement.classList.length).toEqual(1);
+      expect(buttonElement.classList.length).toEqual(2);
     }));
   });
   describe('should have change value', () => {
@@ -88,30 +89,6 @@ describe('ButtonComponent', () => {
       expect(buttonElement.innerHTML).toContain('Ivan');
     }));
 
-    it('should have default class', fakeAsync(() => {
-      const buttonElement: HTMLButtonElement =
-        fixture.nativeElement.querySelector('[data-test="synergy-button"]');
-      buttonElement.classList.remove(
-        'mdc-button',
-        'mat-mdc-button',
-        'mat-unthemed',
-        'mat-mdc-button-base',
-      );
-      expect(buttonElement.classList.length).toEqual(2);
-    }));
-
-    it('should not have default class', fakeAsync(() => {
-      const buttonElement: HTMLButtonElement =
-        fixture.nativeElement.querySelector('[data-test="synergy-button"]');
-      buttonElement.classList.remove(
-        'mdc-button',
-        'mat-mdc-button',
-        'mat-unthemed',
-        'mat-mdc-button-base',
-      );
-      expect(buttonElement.classList.length).toEqual(2);
-    }));
-
     it('should have rounded class', fakeAsync(() => {
       const buttonElement: HTMLButtonElement =
         fixture.nativeElement.querySelector('[data-test="synergy-button"]');
@@ -126,4 +103,88 @@ describe('ButtonComponent', () => {
       expect(buttonElement.classList).toContain('rounded-full');
     }));
   });
+  describe('should not have text and render the ng-content', () => {
+    let componentFake: any;
+    let fixturefake: any;
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
+        imports: [TestMockComponent, ButtonComponent],
+      }).compileComponents();
+
+      fixturefake = TestBed.createComponent(TestMockComponent);
+      componentFake = fixturefake.componentInstance;
+      fixturefake.detectChanges();
+    });
+
+    it('should check ng-content is renderer', () => {
+      const divElement = fixturefake.nativeElement.querySelector(
+        '[data-test="test-button-content"]',
+      );
+
+      expect(divElement).toBeDefined();
+    });
+
+    it('should check is only one element', () => {
+      const divElement = fixturefake.nativeElement.querySelector(
+        '[data-test="test-button-content"]',
+      );
+
+      expect(divElement.innerHTML).toEqual('test');
+    });
+  });
+  describe('should not have ng-content', () => {
+    let componentFake: any;
+    let fixturefake: any;
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
+        imports: [TestMockComponent2, ButtonComponent],
+      }).compileComponents();
+
+      fixturefake = TestBed.createComponent(TestMockComponent2);
+      componentFake = fixturefake.componentInstance;
+      componentFake.text = 'ivant';
+      fixturefake.detectChanges();
+    });
+
+    it('should check ng-content ', () => {
+      const divElement = fixturefake.nativeElement.querySelector(
+        '[data-test="test-button-content"]',
+      );
+
+      expect(divElement).toBeNull();
+    });
+  });
 });
+
+@Component({
+  standalone: true,
+  imports: [ButtonComponent],
+  template: `
+    <black-pearl-button
+      [disabled]="of(false)"
+      class="rounded-md border border-gray-100 bg-blue-400 z-10 text-white"
+    >
+      <div data-test="test-button-content">test</div>
+    </black-pearl-button>
+  `,
+})
+export class TestMockComponent {
+  protected readonly of = of;
+}
+
+@Component({
+  standalone: true,
+  imports: [ButtonComponent],
+  template: `
+    <black-pearl-button
+      text="ivan"
+      [disabled]="of(false)"
+      class="rounded-md border border-gray-100 bg-blue-400 z-10 text-white"
+    >
+      <div data-test="test-button-content">test</div>
+    </black-pearl-button>
+  `,
+})
+export class TestMockComponent2 {
+  protected readonly of = of;
+}

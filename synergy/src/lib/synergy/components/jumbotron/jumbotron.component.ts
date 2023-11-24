@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { Shadows } from '../../utils/types/shadow';
 
@@ -18,7 +18,4 @@ export class JumbotronComponent {
 
   @Input()
   padding: string = 'p-0';
-
-  @Output()
-  marian: EventEmitter<unknown> = new EventEmitter<unknown>();
 }

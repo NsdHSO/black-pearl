@@ -1,9 +1,4 @@
-import {
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { JumbotronComponent } from './jumbotron.component';
 
 describe('JumbotronComponent', () => {
@@ -74,16 +69,5 @@ describe('JumbotronComponent', () => {
       fixture.detectChanges();
       expect(uiElement.classList).toContain('shadow-x');
     });
-
-    it('should emit event', fakeAsync(() => {
-      const uiElement = fixture.nativeElement.querySelector(
-        '[data-test="synergy-wrapper"]',
-      );
-      jest.spyOn(component.marian, 'emit');
-      uiElement.click();
-      tick();
-
-      expect(component.marian.emit).toHaveBeenCalledTimes(1);
-    }));
   });
 });

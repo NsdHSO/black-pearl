@@ -103,7 +103,10 @@
         "port": 4400,
         "configDir": "./.storybook",
         "browserTarget": "black-pearl:build",
-        "compodoc": false
+        "compodoc": false,
+        "styles": [
+          "./src/styles.scss"
+        ]
       },
       "configurations": {
         "ci": {
