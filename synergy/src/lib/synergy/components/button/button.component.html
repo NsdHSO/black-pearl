@@ -1,0 +1,10 @@
+<button
+        (click)="marian.emit(true)"
+        [disabled]="disabled | async"
+        [ngClass]="[class, shadow]"
+        class="w-full"
+        data-test="synergy-button"
+        mat-button
+>
+    {{ text }}
+</button>
