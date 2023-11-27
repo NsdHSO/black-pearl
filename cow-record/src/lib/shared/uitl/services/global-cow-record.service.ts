@@ -12,6 +12,7 @@ import {
   takeUntil,
   tap,
 } from 'rxjs';
+import { Store } from '@aura';
 
 @Injectable({
   providedIn: 'root',
@@ -26,9 +27,18 @@ export class GlobalCowRecordService {
     rate: new UntypedFormControl(''),
     month: new UntypedFormControl(''),
   });
+  store: any;
 
   constructor() {
     const t = signal('tet');
+    const name = 'Test';
+    const state = {
+      inva: 'tesdd',
+    };
+
+    this.store = new Store({ name, state });
+    new Store({ name: 'Coca', state: { age: 4, child: 4 } });
+    new Store({ name: 'papa', state: { age: 4, child: 4 } });
   }
 
   private _state = new BehaviorSubject<{
@@ -75,6 +85,8 @@ export class GlobalCowRecordService {
   }
 
   dispatch<T, V extends number>(action: T, value: V) {
+    this.store.update((state: any) => ({ ...state, age: 5 }));
+    console.log(this.store.value.age);
     const goalOldState = { ...this._state.value.eligibility };
     this._state.next({
       ...this._state.value,

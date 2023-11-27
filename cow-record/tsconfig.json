@@ -9,6 +9,9 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true
   },
+  "paths": {
+    "@aura": ["aura/src/"]
+  },
   "files": [],
   "include": [],
   "references": [

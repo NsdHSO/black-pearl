@@ -1,1 +1,1 @@
-export * from './lib/aura/aura.component';
+export * from './lib/store';

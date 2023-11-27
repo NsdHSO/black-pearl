@@ -10,6 +10,7 @@
     "noFallthroughCasesInSwitch": true,
     "paths": {
       "@synergy": ["synergy/src"],
+      "@aura": ["aura/src"],
       "@admin": ["admin/src"],
       "@cow-record": ["cow-record/src"],
       "@dashboard": ["dashboard/src"],

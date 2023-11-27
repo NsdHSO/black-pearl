@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@aura": ["aura/src"],
       "@black-pearl/admin": ["admin/src/index.ts"],
       "@black-pearl/cow-record": ["cow-record/src/index.ts"],
       "@black-pearl/dashboard": ["dashboard/src/index.ts"],
