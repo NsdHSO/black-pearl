@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
-import { Observable } from 'rxjs';
-import { Shadows } from '../../utils/types/shadow';
+import { Observable, of } from 'rxjs';
+import { Shadows } from '../../utils';
 
 @Component({
   selector: 'black-pearl-button',
@@ -16,8 +16,8 @@ export class ButtonComponent {
   @Input()
   text!: string;
 
-  @Input({ required: true })
-  disabled?: Observable<boolean>;
+  @Input()
+  disabled?: Observable<boolean> = of(false);
 
   @Output()
   marian: EventEmitter<unknown> = new EventEmitter<unknown>();
