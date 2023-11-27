@@ -1,18 +1,24 @@
-import { Component, inject, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  Input,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Account } from '../../utils';
+import { Account, forExpand, UtilsService } from '../../utils';
 import { JumbotronComponent } from '../jumbotron/jumbotron.component';
 import { MatIconModule } from '@angular/material/icon';
-import { ButtonComponent } from '../button/button.component';
 import { of } from 'rxjs';
-import { UtilsService } from '../../utils/services';
+import { ButtonComponent } from '../button/button.component';
 
 @Component({
   selector: 'black-pearl-account',
   standalone: true,
   imports: [CommonModule, JumbotronComponent, MatIconModule, ButtonComponent],
   templateUrl: './account.component.html',
-  styleUrls: ['./account.component.scss'],
+  styleUrl: './account.component.scss',
+  animations: [forExpand()],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccountComponent {
   @Input({ required: true })

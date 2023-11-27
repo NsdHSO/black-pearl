@@ -2,10 +2,9 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DashboardHomeService } from '../dashboard-home.service';
-import { AccountComponent } from 'ngx-synergy';
+import { AccountComponent, forExpand, UtilsService } from 'ngx-synergy';
 import { MatButtonModule } from '@angular/material/button';
 import { DashboardHomeSkeletonComponent } from './components/skeletons/dashboardHomeSkeleton/dashboardHomeSkeleton.component';
-import { UtilsService } from '../../../../synergy/src/lib/synergy/utils/services';
 import { EmptyAccountsComponent } from './components/emptyAccounts/emptyAccounts.component';
 
 @Component({
@@ -22,6 +21,7 @@ import { EmptyAccountsComponent } from './components/emptyAccounts/emptyAccounts
   templateUrl: './dashboard-home.component.html',
   styleUrls: ['./dashboard-home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [forExpand()],
 })
 export class DashboardHomeComponent {
   private _dashboardHomeService = inject(DashboardHomeService);

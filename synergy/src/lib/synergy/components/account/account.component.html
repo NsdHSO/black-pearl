@@ -1,5 +1,5 @@
 <black-pearl-jumbotron margin="my-2" padding="p-1">
-  <div class="flex flex-col">
+  <div class="flex flex-col animate-delay-200 animate-duration-150">
     <div class="flex">
       <div class="flex-1">
         <p
@@ -26,6 +26,7 @@
           track _utilService.trackBy
         ) {
           <black-pearl-button
+            @animate
             (marian)="config.action(account)"
             [disabled]="of(false)"
             [text]="config.name"
