@@ -43,10 +43,12 @@ export class DashboardHomeService {
     switchMap((accounts) =>
       forkJoin(this.iconsReq$(accounts)).pipe(
         map((icons) => {
-          return accounts.map((acc: Account, index) => ({
-            ...acc,
-            icon: icons[index][0],
-          }));
+          return accounts.map((acc: Account, index) => {
+            return {
+              ...acc,
+              icon: icons[index][0],
+            };
+          });
         }),
       ),
     ),
@@ -81,6 +83,7 @@ export class DashboardHomeService {
     map(([accounts, selectedAccount]) => {
       return accounts.map((v, index) => ({
         ...v,
+
         selected: index === selectedAccount,
       }));
     }),
