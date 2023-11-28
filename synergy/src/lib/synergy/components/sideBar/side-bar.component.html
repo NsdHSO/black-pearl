@@ -1,0 +1,31 @@
+<div class="h-full w-full relative">
+  <div class="h-16 bg-indigo-300 dark:bg-indigo-800 pl-12">Header</div>
+  <div
+    class="text-white absolute h-full w-14 top-0 left-0 bg-indigo-300 dark:bg-indigo-800 z-10 animate-duration-150 hover:w-52 transition-all px-2"
+    #sidePan
+  >
+    <div class="h-16">Logo</div>
+    <div class="w-full flex flex-col space-y-4 side__bar">
+      @for (itemsConfig of items; track itemsConfig) {
+        <a
+          [routerLink]="itemsConfig.path"
+          routerLinkActive="side__bar-active"
+          class="flex overflow-hidden space-x-5 shadow-2xl"
+          data-test="synergy-side-bar-elements"
+        >
+          <div class="flex w-10 h-10 justify-center items-center p-1.5">
+            <mat-icon class="text-blue-300" [svgIcon]="itemsConfig.icon" />
+          </div>
+          @defer (on hover(sidePan)) {
+            <div class="flex justify-center items-center">
+              {{ itemsConfig.name }}
+            </div>
+          }
+        </a>
+      }
+    </div>
+  </div>
+  <div class="absolute h-[95.88%] top-17 left-14 w-[95.59%]">
+    <router-outlet />
+  </div>
+</div>

@@ -1,0 +1,9 @@
+:host {
+  @apply h-full w-full absolute left-0 top-0;
+}
+
+.side__bar-active {
+  :first-child {
+    @apply border rounded-full  border-indigo-300 border-solid;
+  }
+}

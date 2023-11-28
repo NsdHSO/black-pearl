@@ -1,15 +1,1 @@
-@if (accounts$ | async; as accounts) {
-  @for (account of accounts; track _utilService.trackBy; let index = $index) {
-    <black-pearl-account
-      @animate
-      [account]="account"
-      (click)="sendAccount(index)"
-    />
-  } @empty {
-    <black-pearl-empty-accounts />
-  }
-} @else {
-  <black-pearl-dashboard-home-skeleton
-    data-test="dashboard-home-skeleton-account"
-  />
-}
+<div class="text-white">test</div>
