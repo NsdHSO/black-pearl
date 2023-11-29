@@ -13,7 +13,7 @@ import { RouterOutlet } from '@angular/router';
     DashboardHomeComponent,
     RouterOutlet,
   ],
-  templateUrl: './home.component.html',
+  template: '<router-outlet />',
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {}
