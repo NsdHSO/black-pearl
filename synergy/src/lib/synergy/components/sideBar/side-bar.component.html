@@ -10,14 +10,14 @@
         <a
           [routerLink]="itemsConfig.path"
           routerLinkActive="side__bar-active"
-          class="flex overflow-hidden space-x-5 shadow-2xl"
+          class="flex overflow-hidden space-x-5 items-center hover:opacity-95 hover:drop-shadow hover:bg-indigo-500"
           data-test="synergy-side-bar-elements"
         >
           <div class="flex w-10 h-10 justify-center items-center p-1.5">
             <mat-icon class="text-blue-300" [svgIcon]="itemsConfig.icon" />
           </div>
           @defer (on hover(sidePan)) {
-            <div class="flex justify-center items-center">
+            <div class="flex justify-center items-center overflow-hidden h-4">
               {{ itemsConfig.name }}
             </div>
           }
@@ -25,7 +25,7 @@
       }
     </div>
   </div>
-  <div class="absolute h-[95.88%] top-17 left-14 w-[95.59%]">
+  <div class="absolute h-[calc(100%-64px)] top-17 left-14 w-[calc(100%-56px)]">
     <router-outlet />
   </div>
 </div>
