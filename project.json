@@ -10,7 +10,7 @@
       "executor": "@nx/angular:webpack-browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist",
+        "outputPath": "dist/black-pearl",
         "index": "./src/index.html",
         "main": "./src/main.ts",
         "polyfills": ["zone.js"],
