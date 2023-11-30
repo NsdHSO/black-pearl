@@ -16,4 +16,6 @@ import { RouterOutlet } from '@angular/router';
   template: '<router-outlet />',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent {}
+export class HomeComponent {
+  //TODO: remove all side effects
+}
