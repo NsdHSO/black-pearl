@@ -63,7 +63,7 @@
       "executor": "@nx/angular:webpack-dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "black-pearl:build:production"
+          "buildTarget": "black-pearl:build:production"
         },
         "development": {
           "buildTarget": "black-pearl:build:development"
