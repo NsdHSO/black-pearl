@@ -5,8 +5,12 @@
         <black-pearl-card-dashboard [milkProduction]="milkProduction" />
       }
     </div>
-    <div class="bg-white dark:bg-gray-950 p-2"></div>
+    <div class="bg-white dark:bg-gray-950 p-2">
+      <pre>
     {{ getDiet$ | async }}
+</pre
+      >
+    </div>
   </div>
   <div class="grid grid-cols-2 gap-0.5 bg-gray-50">
     <div class="bg-white dark:bg-gray-950 p-2"></div>
