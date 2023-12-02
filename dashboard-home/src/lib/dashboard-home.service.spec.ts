@@ -7,11 +7,7 @@ import {
 } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { TestScheduler } from 'rxjs/internal/testing/TestScheduler';
-import { Account } from 'ngx-synergy';
-import {
-  getAccounts,
-  getAccountsWithIcons,
-} from './mocks/dashboard-service.mock';
+import { getAccounts } from './mocks/dashboard-service.mock';
 
 describe('DashboardHomeService', () => {
   let service: DashboardHomeService;
@@ -41,29 +37,24 @@ describe('DashboardHomeService', () => {
 
     it('should return an icon and final account', () => {
       testScheduler.run(({ cold, expectObservable }) => {
-        const account$ = cold('---a|', { a: ['2'], b: 'C' }); // 'b' represents completion
-        service['accounts$'] = account$ as any;
-
         let emittedValue: any;
-        service.accountWithIcons$.subscribe((v) => {
+        service._accounts$.subscribe((v) => {
           emittedValue = v;
         });
 
-        const reqAccounts = httpMock.expectOne(
-          'http://localhost:3000/accounts',
-        );
-        reqAccounts.flush(getAccounts() as Account[]);
+        httpMock
+          .expectOne('http://localhost:3000/accounts')
+          .flush(getAccounts());
         const iconsData = [
           { name: 'gbp', value: 'fa_brands:waze' },
           { name: 'eur', value: 'fa_brands:figma' },
           { name: 'usd', value: 'fa_brands:weixin' },
         ];
 
-        iconsData.forEach((icon, index: number) => {
-          const reqIcon = httpMock.expectOne(
-            `http://localhost:3000/icon/?name=${icon.name}`,
-          );
-          reqIcon.flush([{ ...icon }]);
+        iconsData.forEach((icon) => {
+          httpMock
+            .expectOne(`http://localhost:3000/icon/?name=${icon.name}`)
+            .flush([{ ...icon }]);
         });
 
         const configData = [
@@ -73,18 +64,29 @@ describe('DashboardHomeService', () => {
             name: 'Click ME',
             action: () => console.log('test'),
           },
-          { IBAN: 'GB29RBOS60161331926819' },
-          { IBAN: 'FR1420041010050500013M02606' },
+          {
+            IBAN: 'GB29RBOS60161331926819',
+            visible: true,
+            name: 'Click ME',
+            action: () => console.log('test'),
+          },
+          {
+            IBAN: 'FR1420041010050500013M02606',
+            visible: true,
+            name: 'Click ME',
+            action: () => console.log('test'),
+          },
         ];
         configData.forEach((configAccount, index: number) => {
-          const reqConfigAccount = httpMock.expectOne(
-            `http://localhost:3000/configAccount/?IBAN=${configAccount.IBAN}`,
-          );
-          reqConfigAccount.flush([{ ...configAccount }]);
+          httpMock
+            .expectOne(
+              `http://localhost:3000/configAccount/?IBAN=${configAccount.IBAN}`,
+            )
+            .flush([{ ...configAccount }]);
         });
 
-        expectObservable(service.accountWithIcons$).toBe('(a|)', {
-          a: getAccountsWithIcons(),
+        expectObservable(service._accounts$).toBe('a', {
+          a: getAccounts(),
         });
       });
     });

@@ -49,7 +49,7 @@ describe('JumbotronComponent', () => {
       expect(element.classList).toContain('px-0');
       expect(element.classList).toContain('py-2');
     });
-
+    des;
     it('should have margin changed', () => {
       const element: HTMLDivElement = fixture.nativeElement.querySelector(
         '[data-test="synergy-wrapper"]',

@@ -16,9 +16,7 @@ import { Account, ConfigButton, Icon } from 'ngx-synergy';
 export class DashboardHomeService {
   private _httpClient = inject(HttpClient);
   private _selectedAccount$ = new BehaviorSubject(0);
-  private accounts$ = this._httpClient.get<Account[]>(
-    `${this._baseUrl}/accounts`,
-  );
+  _accounts$ = this._httpClient.get<Account[]>(`${this._baseUrl}/accounts`);
 
   constructor(@Inject('BASE_URL_HOME') private _baseUrl: string) {}
 
@@ -39,7 +37,7 @@ export class DashboardHomeService {
       params: { IBAN: accountIban },
     });
 
-  private accountWithIcons$ = this.accounts$.pipe(
+  private accountWithIcons$ = this._accounts$.pipe(
     switchMap((accounts) =>
       forkJoin(this.iconsReq$(accounts)).pipe(
         map((icons) => {

@@ -3,7 +3,11 @@
 }
 
 .side__bar-active {
+  &:hover {
+    @apply rounded-l-full;
+  }
+
   :first-child {
-    @apply border rounded-full  border-indigo-300 border-solid;
+    @apply border rounded-full  dark:border-indigo-300 border-solid border-gray-700;
   }
 }

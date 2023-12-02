@@ -12,7 +12,14 @@ export function getAccountsWithIcons(): Account[] {
         value: 'fa_brands:waze',
       },
       configuration: {
-        buttons: [{ IBAN: 'GB29RBOS60161331926819' } as ConfigButton],
+        buttons: [
+          {
+            IBAN: 'GB29RBOS60161331926819',
+            visible: true,
+            name: 'Click ME',
+            action: () => console.log('test'),
+          } as ConfigButton,
+        ],
       },
     },
     {
@@ -28,6 +35,9 @@ export function getAccountsWithIcons(): Account[] {
         buttons: [
           {
             IBAN: 'FR1420041010050500013M02606',
+            visible: true,
+            name: 'Click ME',
+            action: () => console.log('test'),
           } as ConfigButton,
         ],
       },
