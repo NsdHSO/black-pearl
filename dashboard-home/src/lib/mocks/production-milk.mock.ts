@@ -12,3 +12,25 @@ export function productionMilkMock() {
     cowWithHighestMilkQuantity: 'Margret Tac54',
   };
 }
+
+export function dietCow() {
+  return {
+    averageDailyFeed: {
+      dryCowHay: 25,
+      dryCowGrains: 8,
+      lactatingCowHay: 50,
+      lactatingCowGrains: 15,
+    },
+    keyNutrientsPercentage: {
+      protein: 17,
+      fiber: 22,
+      fat: 4,
+      calcium: 0.8,
+      phosphorus: 0.4,
+    },
+    waterIntakeGallons: {
+      min: 10,
+      max: 20,
+    },
+  };
+}
