@@ -1,15 +1,17 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { JumbotronComponent } from 'ngx-synergy';
-import { ProductionMilkType } from './../../../util';
+import { JumbotronComponent, UtilsService } from 'ngx-synergy';
+import { KeysPipe } from './../../../util';
 
 @Component({
   selector: 'black-pearl-card-dashboard',
   standalone: true,
-  imports: [CommonModule, JumbotronComponent],
+  imports: [CommonModule, JumbotronComponent, KeysPipe],
   templateUrl: './cardDashboard.component.html',
   styleUrl: './cardDashboard.component.scss',
 })
 export class CardDashboardComponent {
-  @Input() milkProduction!: ProductionMilkType;
+  //eslint-disable-next-line
+  @Input() milkProduction!: any;
+  protected _utilService = inject(UtilsService);
 }

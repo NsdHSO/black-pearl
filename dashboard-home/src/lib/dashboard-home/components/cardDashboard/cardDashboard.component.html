@@ -1,1 +1,7 @@
-<black-pearl-jumbotron padding="p-4"> testffs </black-pearl-jumbotron>
+<black-pearl-jumbotron padding="p-4">
+  <div class="grid grid-cols-2">
+    @for (key of milkProduction | keys; track _utilService.trackBy) {
+      <div>{{ key }} {{ milkProduction[key] }}</div>
+    }
+  </div>
+</black-pearl-jumbotron>
