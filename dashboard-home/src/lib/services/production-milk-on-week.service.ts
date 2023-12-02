@@ -1,6 +1,6 @@
 import { inject, Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ProductionMilkType } from '@black-pearl/dashboard-home';
+import { ProductionMilkType } from './../util';
 
 @Injectable({
   providedIn: 'root',

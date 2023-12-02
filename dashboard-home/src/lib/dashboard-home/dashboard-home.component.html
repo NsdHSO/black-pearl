@@ -1,11 +1,11 @@
 <div class="grid grid-col-2 gap-0.5 bg-gray-50 w-full h-full" @animate>
   <div class="grid grid-cols-2 gap-0.5 bg-gray-50 dark:bg-white">
     <div class="bg-white dark:bg-gray-950 p-2">
-      <black-pearl-card-dashboard />
+      @if (getProductionMilk$ | async; as milkProduction) {
+        <black-pearl-card-dashboard [milkProduction]="milkProduction" />
+      }
     </div>
-    <div class="bg-white dark:bg-gray-950 p-2">
-      <pre class="text-white">{{ getProductionMilk$ | async | json }}</pre>
-    </div>
+    <div class="bg-white dark:bg-gray-950 p-2"></div>
   </div>
   <div class="grid grid-cols-2 gap-0.5 bg-gray-50">
     <div class="bg-white dark:bg-gray-950 p-2"></div>
