@@ -72,7 +72,7 @@
     "totalLiters": 29236.0,
     "cowWithHighestMilkQuantity": "Margret Tac54"
   },
-  "cowDiet": {
+  "cow-diet": {
     "averageDailyFeed": {
       "dryCowHay": 25,
       "dryCowGrains": 8,

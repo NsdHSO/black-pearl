@@ -1,9 +1,11 @@
 import { Route } from '@angular/router';
-import { provideState } from '@ngrx/store';
+import { provideState, provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import * as fromHome from './+state/home.reducer';
 import { HomeEffects } from './+state/home.effects';
 import { SideBarConfig } from 'ngx-synergy';
+import * as fromDashboard from './+state/dashboard.reducer';
+import { DashboardEffects } from './+state/dashboard.effects';
 
 function routes() {
   return [
@@ -59,6 +61,13 @@ export const homeRoutes: Route[] = [
               import('dashboard-home/src').then(
                 (c) => c.DashboardHomeComponent,
               ),
+            providers: [
+              provideState(
+                fromDashboard.DASHBOARD_FEATURE_KEY,
+                fromDashboard.dashboardReducer,
+              ),
+              provideEffects(DashboardEffects),
+            ],
           },
         ],
       },
