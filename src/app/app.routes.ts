@@ -2,7 +2,8 @@ import { Route } from '@angular/router';
 
 export const appRoutes: Route[] = [
   {
-    path: '',
-    loadChildren: () => import('@black-pearl/home').then((m) => m.homeRoutes),
+    path: 'admin',
+    loadChildren: () => import('@admin').then((m) => m.adminRoutes),
   },
+  { path: '', redirectTo: 'admin', pathMatch: 'full' },
 ];

@@ -1,9 +1,5 @@
 {
-  "extends": [
-    "plugin:playwright/recommended",
-    "../.eslintrc.json",
-    "../.eslintrc.base.json"
-  ],
+  "extends": ["plugin:playwright/recommended", "../.eslintrc.json"],
   "ignorePatterns": ["!**/*"],
   "overrides": [
     {
@@ -20,11 +16,13 @@
     },
     {
       "files": ["*.js", "*.jsx"],
+      "extends": ["plugin:@nx/javascript"],
       "rules": {}
     },
     {
       "files": ["src/**/*.{ts,js,tsx,jsx}"],
       "rules": {}
     }
-  ]
+  ],
+  "plugins": ["@nx"]
 }

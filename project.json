@@ -7,20 +7,18 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/angular:webpack-browser",
+      "executor": "@angular-devkit/build-angular:application",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/black-pearl",
         "index": "./src/index.html",
-        "main": "./src/main.ts",
+        "browser": "./src/main.ts",
         "polyfills": ["zone.js"],
         "tsConfig": "./tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
         "assets": ["./src/favicon.ico", "./src/assets"],
         "styles": ["./src/styles.scss"],
-        "scripts": [],
-        "customWebpackConfig": {
-          "path": "./webpack.config.js"
-        }
+        "scripts": []
       },
       "configurations": {
         "production": {
@@ -36,31 +34,18 @@
               "maximumError": "4kb"
             }
           ],
-          "outputHashing": "all",
-          "optimization": {
-            "scripts": true,
-            "styles": {
-              "minify": true,
-              "inlineCritical": false
-            },
-            "fonts": {
-              "inline": true
-            }
-          }
+          "outputHashing": "all"
         },
         "development": {
-          "buildOptimizer": false,
           "optimization": false,
-          "vendorChunk": true,
           "extractLicenses": false,
-          "sourceMap": true,
-          "namedChunks": true
+          "sourceMap": true
         }
       },
       "defaultConfiguration": "production"
     },
     "serve": {
-      "executor": "@nx/angular:webpack-dev-server",
+      "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
           "buildTarget": "black-pearl:build:production"

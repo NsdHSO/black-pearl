@@ -1,10 +1,7 @@
 import path from 'path';
 
 const config = {
-  stories: [
-    '../src/app/**/*.stories.@(js|jsx|ts|tsx|mdx)',
-    '../synergy/**/*.stories.@(js|jsx|ts|tsx|mdx)',
-  ],
+  stories: ['../src/app/**/*.stories.@(js|jsx|ts|tsx|mdx)'],
   addons: [
     '@storybook/addon-links',
     {

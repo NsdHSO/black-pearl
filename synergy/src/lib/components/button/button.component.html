@@ -1,0 +1,14 @@
+<button
+  (click)="event?.stopPropagation(); marian.emit(true)"
+  [disabled]="disabled | async"
+  [ngClass]="[class, shadow]"
+  class="w-full"
+  data-test="synergy-button"
+  mat-button
+>
+  @if (text) {
+  {{ text }}
+  } @else {
+  <ng-content></ng-content>
+  }
+</button>

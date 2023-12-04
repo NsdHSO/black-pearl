@@ -1,0 +1,39 @@
+<black-pearl-jumbotron margin="my-2" padding="p-2">
+  <div class="flex flex-col animate-delay-200 animate-duration-150">
+    <div class="flex">
+      <div class="flex-1">
+        <p
+          class="text-xl text-blue-400 font-bold dark:text-slate-200"
+          data-test="synergy-account-title"
+        >
+          Cont Curent
+        </p>
+        <p
+          class="text-lg text-gray-500 dark:text-slate-300"
+          data-test="synergy-account-iban"
+        >
+          {{ account.IBAN }}
+        </p>
+      </div>
+      <div class="rounded-full w-16 h-16">
+        <mat-icon
+          [svgIcon]="account.icon.value"
+          class="!w-full !h-full dark:text-gray-400 text-blue-950"
+        ></mat-icon>
+      </div>
+    </div>
+    @if (account.selected && account.configuration?.buttons?.length) {
+    <div class="flex align-middle space-x-3">
+      @for ( config of account.configuration?.buttons; track
+      _utilService.trackBy ) {
+      <black-pearl-button
+        @animate
+        (marian)="config.action(account)"
+        [text]="config.name"
+        class="rounded-md border border-gray-100 bg-blue-400 z-10 !text-white animate-delay-500 transition-all dark:bg-blue-950"
+      />
+      }
+    </div>
+    }
+  </div>
+</black-pearl-jumbotron>

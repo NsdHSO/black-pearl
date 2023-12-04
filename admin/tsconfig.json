@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
+    "target": "es2022",
     "useDefineForClassFields": false,
-    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,
@@ -9,36 +9,24 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@synergy": ["synergy/src"],
-      "@admin": ["admin/src"]
+      "@synergy": ["synergy/src/"]
     }
   },
   "files": [],
   "include": [],
   "references": [
     {
-      "path": "./tsconfig.app.json"
+      "path": "./tsconfig.lib.json"
     },
     {
       "path": "./tsconfig.spec.json"
-    },
-    {
-      "path": "./tsconfig.editor.json"
-    },
-    {
-      "path": "./.storybook/tsconfig.json"
     }
   ],
+  "extends": "../tsconfig.base.json",
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  },
-  "ts-node": {
-    "compilerOptions": {
-      "module": "commonjs"
-    }
-  },
-  "extends": "./tsconfig.base.json"
+  }
 }

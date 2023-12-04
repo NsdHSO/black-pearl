@@ -19,15 +19,6 @@
       "cache": true,
       "inputs": ["default", "^production"]
     },
-    "build-storybook": {
-      "cache": true,
-      "inputs": [
-        "default",
-        "^production",
-        "{projectRoot}/.storybook/**/*",
-        "{projectRoot}/tsconfig.storybook.json"
-      ]
-    },
     "@nx/jest:jest": {
       "cache": true,
       "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
@@ -40,6 +31,15 @@
           "codeCoverage": true
         }
       }
+    },
+    "build-storybook": {
+      "cache": true,
+      "inputs": [
+        "default",
+        "^production",
+        "{projectRoot}/.storybook/**/*",
+        "{projectRoot}/tsconfig.storybook.json"
+      ]
     }
   },
   "namedInputs": {
@@ -68,15 +68,14 @@
     },
     "@nx/angular:library": {
       "linter": "eslint",
-      "unitTestRunner": "jest",
-      "style": "scss"
+      "unitTestRunner": "jest"
     },
     "@nx/angular:component": {
       "style": "scss"
     }
   },
   "defaultProject": "black-pearl",
-  "nxCloudAccessToken": "NDlkZDllMjUtNzM3OC00ZWI1LTg3YjYtMjc4NzJlNjNlYWI1fHJlYWQtd3JpdGU=",
+  "nxCloudAccessToken": "NWUwOTY5N2MtMjA2ZC00NGNjLWFjYTctZGRkMjM1NDJjZTFifHJlYWQtd3JpdGU=",
   "tasksRunnerOptions": {
     "default": {
       "options": {
