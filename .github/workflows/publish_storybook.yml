@@ -12,14 +12,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Use Node 18.x
-        uses: actions/setup-node@v1
+      - name: Install pnmpm
+        uses: pnpm/action-setup@v2
         with:
-          node-version: '18.x'
-      - name: Install dependencies
-        run: npm ci --legacy-peer-deps
+          version: 8
+
+      - name: Install NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install NodeJS dependencies
+        run: pnpm install
       - name: Build
-        run: npm run-script build-storybook
+        run: pnpm run-script build-storybook
       - name: Archive build
         if: success()
         uses: actions/upload-artifact@v1
