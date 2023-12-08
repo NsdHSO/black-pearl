@@ -7,11 +7,7 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "paths": {
-      "@synergy": ["synergy/src/"],
-      "@dashboard": ["dashboard/src"]
-    }
+    "noFallthroughCasesInSwitch": true
   },
   "files": [],
   "include": [],
@@ -23,6 +19,9 @@
       "path": "./tsconfig.spec.json"
     }
   ],
+  "paths": {
+    "@synergy": ["synergy/src"]
+  },
   "extends": "../tsconfig.base.json",
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

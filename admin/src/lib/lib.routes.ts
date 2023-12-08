@@ -46,5 +46,6 @@ export const adminRoutes: Route[] = [
       provideState(fromAdmin.ADMIN_FEATURE_KEY, fromAdmin.adminReducer),
       provideEffects(AdminEffects),
     ],
+    loadChildren: () => import('@dashboard').then((m) => m.dashboardRoutes),
   },
 ];

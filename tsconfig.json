@@ -10,7 +10,8 @@
     "noFallthroughCasesInSwitch": true,
     "paths": {
       "@synergy": ["synergy/src"],
-      "@admin": ["admin/src"]
+      "@admin": ["admin/src"],
+      "@dashboard": ["dashboard/src"]
     }
   },
   "files": [],
