@@ -1,25 +1,26 @@
 <div class="text-white">
-    <div class="flex">
-        <div class="flex-1">
-            <black-pearl-breadcrumb/>
-        </div>
-        <div>
-            <black-pearl-button [text]="'Add new cow'" [class]="'bg-indigo-400 rounded-xl hover:bg-indigo-300 p-1'" (marian)="addNew.next(true)"/>
-        </div>
+  <div class="flex">
+    <div class="flex-1">
+      <black-pearl-breadcrumb />
     </div>
-    <div class="grid-cols-2 grid gap-1 bg-gray-200 p-0.5">
-        <black-pearl-card-dashboard [milkProduction]="production()"/>
-        <div class="bg-gray-500">
-        </div>
+    <div>
+      <black-pearl-button
+        [text]="'Add new cow'"
+        [class]="'bg-indigo-400 rounded-xl hover:bg-indigo-300 p-1'"
+        (marian)="addNew.next(true)"
+      />
     </div>
-    <div class="grid-cols-2 grid gap-1 bg-gray-200 p-0.5">
-        <div class="bg-gray-500">
-            <pre>{{cowItems$|async | json}}</pre>
-        </div>
+  </div>
+  <div class="grid-cols-2 grid gap-1 bg-gray-200 p-0.5">
+    <black-pearl-card-dashboard [milkProduction]="production()" />
+    <div class="bg-gray-500"></div>
+  </div>
+  <div class="grid-cols-2 grid gap-1 bg-gray-200 p-0.5">
+    <div class="bg-gray-500">
+      <pre>{{ cowItems$ | async | json }}</pre>
     </div>
+  </div>
 </div>
-@if (newCow | async){
+@if (newCow | async) {}
 
-}
-
-@if (signalForTriggerGet|async){}
+@if (signalForTriggerGet | async) {}
