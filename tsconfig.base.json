@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@black-pearl/admin": ["admin/src/index.ts"],
-      "@black-pearl/dashboard": ["dashboard/src/index.ts"]
+      "@black-pearl/dashboard": ["dashboard/src/index.ts"],
+      "@synergy": ["synergy/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

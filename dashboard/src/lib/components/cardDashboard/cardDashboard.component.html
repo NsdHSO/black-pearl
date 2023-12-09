@@ -1,0 +1,10 @@
+<black-pearl-jumbotron padding="p-4 rounded-md">
+  <div class="grid grid-cols-2 gap-x-8">
+    @for (key of milkProduction | keys; track _utilService.trackBy) {
+    <div class="flex justify-between items-center cursor-default">
+      <span class="card-dashboard-key">{{ key }} </span
+      ><span class="w-full text-right">{{ milkProduction[key] }}</span>
+    </div>
+    }
+  </div>
+</black-pearl-jumbotron>

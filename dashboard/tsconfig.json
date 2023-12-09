@@ -19,9 +19,6 @@
       "path": "./tsconfig.spec.json"
     }
   ],
-  "paths": {
-    "@synergy": ["synergy/src"]
-  },
   "extends": "../tsconfig.base.json",
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
