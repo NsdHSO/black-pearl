@@ -7,24 +7,27 @@
     <div class="h-16">Logo</div>
     <div class="w-full flex flex-col space-y-4 side__bar">
       @for (itemsConfig of items; track itemsConfig) {
-      <a
-        [routerLink]="itemsConfig.path"
-        routerLinkActive="side__bar-active"
-        class="flex overflow-hidden space-x-5 items-center hover:opacity-95 hover:drop-shadow dark:hover:bg-indigo-500 hover:bg-indigo-200"
-        data-test="synergy-side-bar-elements"
-      >
-        <div class="flex w-10 h-10 justify-center items-center p-1.5">
-          <mat-icon
-            class="dark:text-blue-300 text-slate-700"
-            [svgIcon]="itemsConfig.icon"
-          />
-        </div>
-        @defer (on hover(sidePan)) {
-        <div class="flex justify-center items-center overflow-hidden h-4">
-          {{ itemsConfig.name }}
-        </div>
-        }
-      </a>
+        <a
+          [routerLink]="itemsConfig.path"
+          routerLinkActive="side__bar-active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="flex overflow-hidden space-x-5 items-center hover:opacity-95 hover:drop-shadow dark:hover:bg-indigo-500 hover:bg-indigo-200"
+          data-test="synergy-side-bar-elements"
+        >
+          <div
+            class="flex w-10 h-10 justify-center items-center p-1.5 side__bar-active-icon"
+          >
+            <mat-icon
+              class="dark:text-blue-300 text-slate-700"
+              [svgIcon]="itemsConfig.icon"
+            />
+          </div>
+          @defer (on hover(sidePan)) {
+            <div class="flex justify-center items-center overflow-hidden h-4">
+              {{ itemsConfig.name }}
+            </div>
+          }
+        </a>
       }
     </div>
   </div>

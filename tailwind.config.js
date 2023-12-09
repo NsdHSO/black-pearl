@@ -7,6 +7,7 @@ module.exports = {
     join(__dirname, 'src/**/!(*.stories|*.spec).{ts,html}'),
     join(__dirname, 'synergy/**/!(*.stories|*.spec).{ts,html}'),
     join(__dirname, 'dashboard/**/!(*.stories|*.spec).{ts,html}'),
+    join(__dirname, 'appointment/**/!(*.stories|*.spec).{ts,html}'),
     ...createGlobPatternsForDependencies(__dirname),
   ],
   theme: {

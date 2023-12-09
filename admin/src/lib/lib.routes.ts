@@ -8,12 +8,12 @@ import { SideBarConfig } from '@synergy';
 function routes() {
   return [
     {
-      path: '',
+      path: 'dashboard',
       name: 'Dashboard',
       icon: 'fa_brands:jenkins',
     },
     {
-      path: 'cow_heath',
+      path: 'appointment',
       name: 'Cow Heath',
       icon: 'fa_brands:figma',
     },
@@ -46,6 +46,26 @@ export const adminRoutes: Route[] = [
       provideState(fromAdmin.ADMIN_FEATURE_KEY, fromAdmin.adminReducer),
       provideEffects(AdminEffects),
     ],
-    loadChildren: () => import('@dashboard').then((m) => m.dashboardRoutes),
+    children: [
+      {
+        path: 'dashboard',
+        loadChildren: () => import('@dashboard').then((m) => m.dashboardRoutes),
+      },
+      {
+        path: 'appointment',
+        loadChildren: () =>
+          import('@appointment').then((m) => m.appointmentRoutes),
+      },
+      {
+        path: 'cow_records',
+        loadChildren: () =>
+          import('@appointment').then((m) => m.appointmentRoutes),
+      },
+      {
+        path: 'breeding',
+        loadChildren: () =>
+          import('@appointment').then((m) => m.appointmentRoutes),
+      },
+    ],
   },
 ];

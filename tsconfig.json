@@ -11,7 +11,8 @@
     "paths": {
       "@synergy": ["synergy/src"],
       "@admin": ["admin/src"],
-      "@dashboard": ["dashboard/src"]
+      "@dashboard": ["dashboard/src"],
+      "@appointment": ["appointment/src"]
     }
   },
   "files": [],
