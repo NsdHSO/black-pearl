@@ -56,16 +56,6 @@ export const adminRoutes: Route[] = [
         loadChildren: () =>
           import('@appointment').then((m) => m.appointmentRoutes),
       },
-      {
-        path: 'cow_records',
-        loadChildren: () =>
-          import('@appointment').then((m) => m.appointmentRoutes),
-      },
-      {
-        path: 'breeding',
-        loadChildren: () =>
-          import('@appointment').then((m) => m.appointmentRoutes),
-      },
     ],
   },
 ];
