@@ -24,7 +24,9 @@ export class DashboardComponent {
   private _cowService = inject(CowService);
 
   production = toSignal(this.productionMilkOnWeekService.getProductionMilk$);
-  cows2 = this._cowService.cowItems;
+  cowItems$ = this._cowService.cowItems;
+  signalForTriggerGet = this._cowService.cowSignalForTriggerGet;
+
   addNew = new Subject();
   newCow = this.addNew.pipe(
     switchMap((t) => this._cowService.addNewCow({ name: 'MArgaret' }))

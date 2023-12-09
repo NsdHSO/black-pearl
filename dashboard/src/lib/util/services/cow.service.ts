@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { of, Subject, switchMap, tap } from 'rxjs';
+import { startWith, Subject, switchMap, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -8,15 +8,17 @@ import { of, Subject, switchMap, tap } from 'rxjs';
 export class CowService {
   private _httpClient = inject(HttpClient);
   cowItems = new Subject();
-  getCows = of(1).pipe(
-    switchMap((v) =>
-      this._httpClient
-        .get('http://localhost:3000/cows')
-        .pipe(tap((v) => this.cowItems.next(v)))
-    )
-  );
+  signalItem = new Subject();
+
+  getCows = this._httpClient
+    .get('http://localhost:3000/cows')
+    .pipe(tap((v) => this.cowItems.next(v)));
 
   cow$ = this.getCows;
+  cowSignalForTriggerGet = this.signalItem.pipe(
+    startWith(1),
+    switchMap(() => this.cow$)
+  );
 
   addNewCow(cow: { name: string }) {
     return this._httpClient

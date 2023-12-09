@@ -15,10 +15,12 @@
     </div>
     <div class="grid-cols-2 grid gap-1 bg-gray-200 p-0.5">
         <div class="bg-gray-500">
-            <pre>{{cows2|async | json}}</pre>
+            <pre>{{cowItems$|async | json}}</pre>
         </div>
     </div>
 </div>
 @if (newCow | async){
 
 }
+
+@if (signalForTriggerGet|async){}

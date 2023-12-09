@@ -15,12 +15,12 @@ function routes() {
     {
       path: 'cow_heath',
       name: 'Cow Heath',
-      icon: 'fa_brands:tumblr',
+      icon: 'fa_brands:figma',
     },
     {
       path: 'cow_records',
       name: 'Cow Records',
-      icon: 'fa_brands:tumblr',
+      icon: 'fa_brands:diaspora',
     },
     {
       path: 'breeding',
@@ -30,7 +30,7 @@ function routes() {
     {
       path: 'animal_weight',
       name: 'Animal Weight',
-      icon: 'fa_brands:tumblr',
+      icon: 'fa_brands:linux',
     },
   ];
 }
