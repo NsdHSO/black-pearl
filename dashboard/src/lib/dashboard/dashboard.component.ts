@@ -1,26 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BreadcrumbComponent } from '../../../../synergy/src';
+import { BreadcrumbComponent, ButtonComponent } from '@synergy';
 import { CardDashboardComponent } from '../components/cardDashboard/cardDashboard.component';
+import { CowService, ProductionMilkOnWeekService } from '../util';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { Subject, switchMap } from 'rxjs';
 
 @Component({
   selector: 'black-pearl-dashboard',
   standalone: true,
-  imports: [CommonModule, BreadcrumbComponent, CardDashboardComponent],
+  imports: [
+    CommonModule,
+    BreadcrumbComponent,
+    CardDashboardComponent,
+    ButtonComponent,
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent {
-  asd = {
-    totalCows: 38,
-    totalCowsMilked: 12,
-    cowsNotMilked: 26,
-    totalAmLiters: 929.0,
-    totalNoonLiters: 918.0,
-    averageLiters: 244.66,
-    highestMilkQuality: 800,
-    lowestMilkQuantity: 60,
-    totalLiters: 29236.0,
-    cowWithHighestMilkQuantity: 'Margret Tac54',
-  };
+  static id = 4;
+  private productionMilkOnWeekService = inject(ProductionMilkOnWeekService);
+  private _cowService = inject(CowService);
+
+  production = toSignal(this.productionMilkOnWeekService.getProductionMilk$);
+  cows2 = this._cowService.cowItems;
+  addNew = new Subject();
+  newCow = this.addNew.pipe(
+    switchMap((t) => this._cowService.addNewCow({ name: 'MArgaret' }))
+  );
 }

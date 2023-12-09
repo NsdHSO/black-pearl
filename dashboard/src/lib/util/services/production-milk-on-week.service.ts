@@ -1,4 +1,4 @@
-import { inject, Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ProductionMilkType } from '../index';
 
@@ -7,8 +7,9 @@ import { ProductionMilkType } from '../index';
 })
 export class ProductionMilkOnWeekService {
   private _httpClient = inject(HttpClient);
+  private _baseUrl: string = 'http://localhost:3000';
 
-  constructor(@Inject('BASE_URL_HOME') private _baseUrl: string) {}
+  constructor() {}
 
   getProductionMilk$ = this._httpClient.get<ProductionMilkType>(
     `${this._baseUrl}/productionMilkWeek`

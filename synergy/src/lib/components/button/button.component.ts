@@ -1,16 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatRippleModule } from '@angular/material/core';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { Shadows } from '../../utils';
 
 @Component({
   selector: 'black-pearl-button',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatRippleModule],
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
+  imports: [AsyncPipe, NgClass],
 })
 export class ButtonComponent {
   @Input()
