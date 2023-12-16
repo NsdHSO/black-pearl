@@ -120,5 +120,51 @@
       "name": "MArgaret",
       "id": 7
     }
-  ]
+  ],
+  "amount": {
+    "economy": [
+      {
+        "valueMoney": 200,
+        "month": "May"
+      },
+      {
+        "valueMoney": 500,
+        "month": "January"
+      },
+      {
+        "valueMoney": 100,
+        "month": "February"
+      },
+      {
+        "valueMoney": 150,
+        "month": "March"
+      },
+      {
+        "valueMoney": 120,
+        "month": "April"
+      }
+    ],
+    "contrastData": [
+      {
+        "month": "May",
+        "contrast": null
+      },
+      {
+        "month": "January",
+        "contrast": null
+      },
+      {
+        "month": "February",
+        "contrast": 500
+      },
+      {
+        "month": "March",
+        "contrast": 500
+      },
+      {
+        "month": "April",
+        "contrast": -200
+      }
+    ]
+  }
 }
