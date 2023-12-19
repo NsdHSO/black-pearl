@@ -12,7 +12,8 @@
       "@synergy": ["synergy/src"],
       "@admin": ["admin/src"],
       "@dashboard": ["dashboard/src"],
-      "@appointment": ["appointment/src"]
+      "@appointment": ["appointment/src"],
+      "@graph": ["graph/src"]
     }
   },
   "files": [],

@@ -18,7 +18,7 @@
       "@black-pearl/admin": ["admin/src/index.ts"],
       "@black-pearl/dashboard": ["dashboard/src/index.ts"],
       "@synergy": ["synergy/src/index.ts"],
-      "ngx-graf": ["graph/src/index.ts"]
+      "@graph": ["graph/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
