@@ -1,12 +1,18 @@
 import * as d3 from 'd3';
 
-let svg: d3.Selection<SVGSVGElement, unknown, HTMLElement, never>;
-const width = 400;
-const height = 600;
-
-export function buildSVG(container: string) {
+export const buildSVG = (
+  container: string,
+  width: number,
+  height: number,
+  wrapperClassActive = true,
+  wrapperClassName = 'bar-char',
+  svg?: d3.Selection<SVGSVGElement, unknown, HTMLElement, never>,
+) => {
   if (!svg) {
-    svg = d3.select(container).append('svg').classed('bar-char', true);
+    svg = d3
+      .select(container)
+      .append('svg')
+      .classed(wrapperClassName, wrapperClassActive);
 
     const containerGroup = svg
       .append('g')
@@ -18,25 +24,23 @@ export function buildSVG(container: string) {
 
   svg.attr('width', width);
   svg.attr('height', height);
-}
+};
 
-function generateG(
+const generateG = (
   container: d3.Selection<SVGGElement, unknown, HTMLElement, never>,
   classes: string,
   showed: boolean,
-) {
-  container.append('g').classed(classes, showed);
-}
+) => container.append('g').classed(classes, showed);
 
-function buildContainerGroups(
+const buildContainerGroups = (
   container: d3.Selection<SVGGElement, unknown, HTMLElement, never>,
-) {
+) => {
   buildContainer(container);
-}
+};
 
-function buildContainer(
+const buildContainer = (
   container: d3.Selection<SVGGElement, unknown, HTMLElement, never>,
-) {
+) => {
   generateG(container, 'y-axis-group axis', true);
   generateG(container, 'x-axis-group axis', true);
-}
+};

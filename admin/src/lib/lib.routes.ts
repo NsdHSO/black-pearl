@@ -56,6 +56,7 @@ export const adminRoutes: Route[] = [
         loadChildren: () =>
           import('@appointment').then((m) => m.appointmentRoutes),
       },
+      { path: '', redirectTo: 'appointment', pathMatch: 'full' },
     ],
   },
 ];
