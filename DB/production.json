@@ -124,46 +124,29 @@
   "amount": {
     "economy": [
       {
+        "valueMoney": 600,
+        "month": "01.01.2023",
+        "contrastMoney": 700
+      },
+      {
+        "valueMoney": 640,
+        "month": "02.02.2023",
+        "contrastMoney": 640
+      },
+      {
+        "valueMoney": 15,
+        "month": "03.03.2023",
+        "contrastMoney": 15
+      },
+      {
         "valueMoney": 200,
-        "month": "May"
+        "month": "04.04.2023",
+        "contrastMoney": 200
       },
       {
-        "valueMoney": 500,
-        "month": "January"
-      },
-      {
-        "valueMoney": 100,
-        "month": "February"
-      },
-      {
-        "valueMoney": 150,
-        "month": "March"
-      },
-      {
-        "valueMoney": 120,
-        "month": "April"
-      }
-    ],
-    "contrastData": [
-      {
-        "month": "May",
-        "contrast": null
-      },
-      {
-        "month": "January",
-        "contrast": null
-      },
-      {
-        "month": "February",
-        "contrast": 500
-      },
-      {
-        "month": "March",
-        "contrast": 500
-      },
-      {
-        "month": "April",
-        "contrast": -200
+        "valueMoney": 400,
+        "month": "05.05.2023",
+        "contrastMoney": 200
       }
     ]
   }

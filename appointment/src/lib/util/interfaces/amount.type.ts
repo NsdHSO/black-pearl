@@ -9,6 +9,6 @@ export interface ContrastEntry {
 }
 
 export interface Amount {
-  economy: EconomyEntry[];
+  economy: Iterable<{ [key: string]: number }>;
   contrastData: ContrastEntry[];
 }
