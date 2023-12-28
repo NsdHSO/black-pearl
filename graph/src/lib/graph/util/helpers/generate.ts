@@ -47,36 +47,25 @@ const buildContainer = (
 };
 
 // Create scales
-const yScale: any = (stackedValues: any, height: number) =>
-  d3
-    .scaleLinear()
-    .range([height, 0])
-    .domain([
-      0,
-      d3.max(
-        stackedValues[stackedValues.length - 1],
-        (dp: any) => dp[1],
-      ) as any,
-    ]);
-const xScale: any = (data: any, width: number) =>
-  d3
+const yScale: any = (stackedValues: any, height: number) => {
+  console.log(stackedValues.length);
+  return d3.scaleLinear().range([height, 0]).domain([0, 250]);
+};
+const xScale: any = (data: any, width: number) => {
+  return d3
     .scaleLinear()
     .range([0, width])
-    .domain(
-      d3.extent(data, (dataPoint: any) => {
-        console.log(dataPoint);
-        return dataPoint.month;
-      }) as any,
-    );
+    .domain(d3.extent(data.values, (dataPoint: any) => dataPoint.month) as any);
+};
 
 const area: any = d3
   .area()
-  .x((dataPoint: any) => {
-    console.log(dataPoint);
-    return xScale(dataPoint, 400);
+  .x((dataPoint: any) => xScale(dataPoint, 400))
+  .y0((dataPoint: any) => {
+    console.log('dataPon ', dataPoint);
+    return yScale(dataPoint.values, 400);
   })
-  .y0((dataPoint: any) => yScale(dataPoint.values[0], 400))
-  .y1((dataPoint: any) => yScale(dataPoint.values[1], 400));
+  .y1((dataPoint: any) => yScale(dataPoint.values, 400));
 const series: any = (grp: any, stackedData: any) =>
   grp
     .selectAll('.series')
