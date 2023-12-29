@@ -119,6 +119,14 @@
     {
       "name": "MArgaret",
       "id": 7
+    },
+    {
+      "name": "MArgaret",
+      "id": 8
+    },
+    {
+      "name": "MArgaret",
+      "id": 9
     }
   ],
   "amount": {
@@ -144,7 +152,7 @@
         "valueMoney": 11
       },
       {
-        "contrastMoney": 30,
+        "contrastMoney": 35,
         "month": "05.05.2023",
         "valueMoney": 13
       }

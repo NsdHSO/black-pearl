@@ -1,8 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { Amount } from '../interfaces';
+import { Amount, ContrastEntry } from '../interfaces';
 import * as d3 from 'd3';
+import { Any, extent, newSvg, stackedSeries } from '@graph';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,9 @@ export class AmmountDataService {
     .get<Amount>('http://localhost:3000/amount')
     .pipe(
       //eslint-disable-next-line
-      tap((v: any) => {
+      tap((v: Any) => {
+        const width = 600;
+        const height = 420;
         const data = [
           {
             contrastMoney: 0,
@@ -36,20 +39,45 @@ export class AmmountDataService {
             month: '05.05.2023',
             valueMoney: 13,
           },
-        ] as any;
-        const stackGen = d3.stack().keys(['valueMoney', 'contrastMoney']);
+        ] as Any;
 
-        const stackedSeries = stackGen(data);
-        const xExtent: any = d3.extent(data, (d: any) => {
-          console.log(data, d);
-          return new Date(d.month);
-        });
-        const yExtent: any = d3.extent(data, (d: any) => {
-          return d.contrastMoney;
-        });
-        const xScale: any = d3.scaleTime().domain(xExtent).range([0, 400]);
-        const yScale: any = d3.scaleLinear().domain(yExtent).range([400, 0]);
+        const stacked = stackedSeries(
+          data,
+          ['valueMoney', 'contrastMoney'],
+          d3,
+        );
+        const yExtent = extent<ContrastEntry>(
+          data,
+          (d) => '' + d.contrastMoney,
+          d3,
+        );
+        const xExtent = extent<ContrastEntry>(
+          data,
+          (d) => new Date(d.month),
+          d3,
+        );
+        const xScale: Any = d3
+          .scaleTime()
+          .domain(xExtent as Any)
+          .range([0, width]);
+        const margin = { top: 0, bottom: 30, left: 30, right: 20 };
+        const svg = newSvg('#chart', width, height, d3);
 
+        const heightChart: Any =
+          +svg.attr('height') - margin.top - margin.bottom;
+        const yScale: Any = d3
+          .scaleLinear()
+          .domain(yExtent as Any)
+          .range([heightChart, 0]);
+        const chart = svg.append('g').attr('transform', `scale(0.9`);
+        const grp = chart
+          .append('g')
+          .attr(
+            'transform',
+            `translate(-${margin.left - this.strokeWidth},-${
+              margin.top
+            }-20); scale(0.9)`,
+          );
         const colorScale = d3
           .scaleOrdinal()
           .domain(['valueMoney', 'contrastMoney'])
@@ -58,30 +86,42 @@ export class AmmountDataService {
           .scaleOrdinal()
           .domain(['valueMoney', 'contrastMoney'])
           .range(['#dfb5bb', '#1f67ea']);
-        const areaGen: any = d3
+        const areaGen: Any = d3
           .area()
-          .x((d: any) => xScale(new Date(d.data.month)))
-          .y0((d: any) => {
+          .x((d: Any) => xScale(new Date(d.data.month)))
+          .y0((d: Any) => {
             console.log(d);
             return +yScale(d[0]);
           })
-          .y1((d: any) => +yScale(d[1]))
+          .y1((d: Any) => +yScale(d[1]))
           .curve(d3.curveNatural);
 
-        d3.select('#chart')
-          .append('svg')
-          .attr('width', 400)
-          .attr('height', 400)
-          .append('g')
-          .attr('transform', `translate(-${10 - 1.1},-${5})`)
-          .selectAll('.areas')
-          .data(stackedSeries)
+        const series = grp.selectAll('series');
+        const dateFormat = d3.timeFormat('%d/%m/%Y');
+
+        const xAxis: Any = d3
+          .axisBottom(xScale)
+          .ticks(data.length)
+          .tickFormat((d: Any) => {
+            console.log(d);
+            return dateFormat(new Date(d));
+          });
+
+        series
+          .data(stacked)
           .join('path')
-          .attr('stroke', (d: any) => colorStroke(d.key) as any)
+          .attr('stroke', (d: Any) => colorStroke(d.key) as Any)
           .attr('padding', 2)
-          .attr('stroke-width', (d: any) => (d.key === 'contrastMoney' ? 2 : 0)) // Set stroke width only for the top line
+          .attr('stroke-width', (d: Any) => (d.key === 'contrastMoney' ? 2 : 0)) // Set stroke width only for the top line
           .attr('d', areaGen)
-          .attr('fill', (d: any) => colorScale(d.key) as any);
+          .attr('fill', (d: Any) => colorScale(d.key) as Any);
+        chart
+          .append('g')
+          .attr('transform', `translate(0,${heightChart})`)
+          .call(xAxis)
+          .selectAll('text')
+          .style('fill', 'white')
+          .style('font-size', '15');
       }),
     );
 

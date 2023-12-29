@@ -4,8 +4,9 @@ export interface EconomyEntry {
 }
 
 export interface ContrastEntry {
+  contrastMoney: number;
   month: string;
-  contrast: number | null;
+  valueMoney: number;
 }
 
 export interface Amount {
