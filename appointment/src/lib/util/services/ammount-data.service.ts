@@ -3,7 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { Amount, ContrastEntry } from '../interfaces';
 import * as d3 from 'd3';
-import { Any, extent, newSvg, stackedSeries } from '@graph';
+import {
+  Any,
+  coloring,
+  createNewGroup,
+  extent,
+  mouseEvent,
+  newSvg,
+  stackedSeries,
+} from '@graph';
 
 @Injectable({
   providedIn: 'root',
@@ -69,43 +77,46 @@ export class AmmountDataService {
           .scaleLinear()
           .domain(yExtent as Any)
           .range([heightChart, 0]);
-        const chart = svg.append('g').attr('transform', `scale(0.9`);
-        const grp = chart
-          .append('g')
-          .attr(
-            'transform',
-            `translate(-${margin.left - this.strokeWidth},-${
-              margin.top
-            }-20); scale(0.9)`,
-          );
-        const colorScale = d3
-          .scaleOrdinal()
-          .domain(['valueMoney', 'contrastMoney'])
-          .range(['#f8f2f6', '#aec9f8']);
-        const colorStroke = d3
-          .scaleOrdinal()
-          .domain(['valueMoney', 'contrastMoney'])
-          .range(['#dfb5bb', '#1f67ea']);
+        const chart = createNewGroup(svg);
+        const grp = createNewGroup(chart);
+        grp.attr(
+          'transform',
+          `translate(-${margin.left - this.strokeWidth},-${margin.top}-20)`,
+        );
+        const colorScale = coloring(
+          d3,
+          ['valueMoney', 'contrastMoney'],
+          ['#f8f2f6', '#aec9f8'],
+        );
+        const colorStroke = coloring(
+          d3,
+          ['valueMoney', 'contrastMoney'],
+          ['#dfb5bb', '#1f67ea'],
+        );
         const areaGen: Any = d3
           .area()
           .x((d: Any) => xScale(new Date(d.data.month)))
-          .y0((d: Any) => {
-            console.log(d);
-            return +yScale(d[0]);
-          })
+          .y0((d: Any) => +yScale(d[0]))
           .y1((d: Any) => +yScale(d[1]))
           .curve(d3.curveNatural);
-
+        const t = (element: Any) => {
+          mouseEvent(
+            'mouseout',
+            d3,
+          )((event: Any) =>
+            d3
+              .select(event.currentTarget)
+              .attr('fill', (d: Any) => colorScale(d.key) as Any)
+              .attr('opacity', 1),
+          )(element);
+        };
         const series = grp.selectAll('series');
         const dateFormat = d3.timeFormat('%d/%m/%Y');
 
         const xAxis: Any = d3
           .axisBottom(xScale)
           .ticks(data.length)
-          .tickFormat((d: Any) => {
-            console.log(d);
-            return dateFormat(new Date(d));
-          });
+          .tickFormat((d: Any) => dateFormat(new Date(d)));
 
         series
           .data(stacked)
@@ -114,9 +125,18 @@ export class AmmountDataService {
           .attr('padding', 2)
           .attr('stroke-width', (d: Any) => (d.key === 'contrastMoney' ? 2 : 0)) // Set stroke width only for the top line
           .attr('d', areaGen)
-          .attr('fill', (d: Any) => colorScale(d.key) as Any);
-        chart
-          .append('g')
+          .attr('fill', (d: Any) => colorScale(d.key) as Any)
+          .call(
+            mouseEvent(
+              'mouseover',
+              d3,
+            )((event: Any) =>
+              d3.select(event.currentTarget).attr('opacity', '0.9'),
+            ),
+          )
+          .call(t);
+
+        const bottomAxies = createNewGroup(chart)
           .attr('transform', `translate(0,${heightChart})`)
           .call(xAxis)
           .selectAll('text')

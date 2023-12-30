@@ -30,3 +30,15 @@ export const newSvg = (
     .append('svg')
     .attr('height', height)
     .attr('width', width);
+
+export const coloring = (d3: Any, domains: string[], ranges: string[]) =>
+  d3.scaleOrdinal().domain(domains).range(ranges);
+export const createNewGroup = (parrent: Any) => parrent.append('g');
+export const mouseEvent =
+  (eventType: string, d3: any) => (fn: any) => (element: any) => {
+    element.on(eventType, fn);
+  };
+
+export const applyEvent = (series: any, fn: any) => {
+  series.each(fn);
+};
