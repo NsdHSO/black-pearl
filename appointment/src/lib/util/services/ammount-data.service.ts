@@ -100,10 +100,7 @@ export class AmmountDataService {
           .y1((d: Any) => +yScale(d[1]))
           .curve(d3.curveNatural);
         const t = (element: Any) => {
-          mouseEvent(
-            'mouseout',
-            d3,
-          )((event: Any) =>
+          mouseEvent('mouseout')((event: Any) =>
             d3
               .select(event.currentTarget)
               .attr('fill', (d: Any) => colorScale(d.key) as Any)
@@ -127,10 +124,7 @@ export class AmmountDataService {
           .attr('d', areaGen)
           .attr('fill', (d: Any) => colorScale(d.key) as Any)
           .call(
-            mouseEvent(
-              'mouseover',
-              d3,
-            )((event: Any) =>
+            mouseEvent('mouseover')((event: Any) =>
               d3.select(event.currentTarget).attr('opacity', '0.9'),
             ),
           )
