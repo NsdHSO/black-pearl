@@ -38,7 +38,3 @@ export const mouseEvent =
   (eventType: string) => (fn: any) => (element: any) => {
     element.on(eventType, fn);
   };
-
-export const applyEvent = (series: any, fn: any) => {
-  series.each(fn);
-};
