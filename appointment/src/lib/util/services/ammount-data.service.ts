@@ -64,25 +64,31 @@ export class AmmountDataService {
           (d) => new Date(d.month),
           d3,
         );
+        const svg = newSvg('#chart', width, height, d3);
+        const margin = { top: 0, bottom: 30, left: 30, right: 20 };
+        const widths =
+          +svg.attr('width') -
+          margin.left -
+          margin.right -
+          this.strokeWidth * 2;
+        const heights = +svg.attr('height') - margin.top - margin.bottom;
         const xScale: Any = d3
           .scaleTime()
           .domain(xExtent as Any)
-          .range([0, width]);
-        const margin = { top: 0, bottom: 30, left: 30, right: 20 };
-        const svg = newSvg('#chart', width, height, d3);
-
+          .range([0, widths]);
         const heightChart: Any =
           +svg.attr('height') - margin.top - margin.bottom;
         const yScale: Any = d3
           .scaleLinear()
           .domain(yExtent as Any)
-          .range([heightChart, 0]);
-        const chart = createNewGroup(svg);
-        const grp = createNewGroup(chart);
-        grp.attr(
+          .range([heights, 60]);
+        const wrapperGroup = createNewGroup(svg);
+        wrapperGroup.attr(
           'transform',
-          `translate(-${margin.left - this.strokeWidth},-${margin.top}-20)`,
+          `translate(${margin.left}, ${margin.top})`,
         );
+        const grp = createNewGroup(wrapperGroup);
+
         const colorScale = coloring(
           d3,
           ['valueMoney', 'contrastMoney'],
@@ -130,8 +136,8 @@ export class AmmountDataService {
           )
           .call(t);
 
-        const bottomAxies = createNewGroup(chart)
-          .attr('transform', `translate(0,${heightChart})`)
+        const bottomAxies = createNewGroup(wrapperGroup)
+          .attr('transform', `translate(${margin.left},${heightChart})`)
           .call(xAxis)
           .selectAll('text')
           .style('fill', 'white')
