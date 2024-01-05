@@ -7,9 +7,9 @@ import {
   Any,
   coloring,
   createNewGroup,
+  createNewSvg,
   extent,
   mouseEvent,
-  newSvg,
   stackedSeries,
 } from '@graph';
 
@@ -35,7 +35,7 @@ export class AmmountDataService {
           {
             contrastMoney: 7,
             month: '02.01.2023',
-            valueMoney: 7,
+            valueMoney: 0,
           },
           {
             contrastMoney: 25,
@@ -64,7 +64,7 @@ export class AmmountDataService {
           (d) => new Date(d.month),
           d3,
         );
-        const svg = newSvg('#chart', width, height, d3);
+        const svg = createNewSvg('#chart', width, height, d3);
         const margin = { top: 0, bottom: 30, left: 30, right: 20 };
         const widths =
           +svg.attr('width') -
@@ -115,6 +115,7 @@ export class AmmountDataService {
         };
         const series = grp.selectAll('series');
         const dateFormat = d3.timeFormat('%d/%m/%Y');
+        const pathVisibility: Any = {};
 
         const xAxis: Any = d3
           .axisBottom(xScale)
@@ -126,8 +127,11 @@ export class AmmountDataService {
           .join('path')
           .attr('class', (d: any) => {
             const color = colorScale(d.key) as string;
-            return `path-${color.replace('#', '')}`; // Generate unique classes based on colors
+            const className = `path-${color.replace('#', '')}`;
+            pathVisibility[className] = true; // Set initial visibility as true for all paths
+            return className;
           })
+          .attr('opacity', 1) // Set initial opacity for all paths
           .attr('stroke', (d: Any) => colorStroke(d.key) as Any)
           .attr('padding', 2)
           .attr('stroke-width', (d: Any) => (d.key === 'contrastMoney' ? 2 : 0)) // Set stroke width only for the top line
@@ -218,21 +222,104 @@ export class AmmountDataService {
           // Increment Y position for the next legend item
           legendY += rectSize + 10; // Adjust spacing between legend items
 
-          legendChild
-            .on('mouseover', function (event: any, d: any) {
-              const legendColor = item?.color; // Assuming 'color' property exists in legendData
-              const selectedPaths = wrapperGroup.selectAll(
-                `.path-${legendColor.replace('#', '')}`,
-              ); // Select corresponding paths
+          legendChild.on('click', function (event: any, d: any) {
+            const legendColor = item.color; // Access the color directly from the legendData
+            const className = `.path-${legendColor.replace('#', '')}`;
 
-              // Apply desired effects to the selected paths (e.g., change opacity)
-              selectedPaths.attr('opacity', 0.9);
-            })
-            .on('mouseout', function (event: any, d: any) {
-              // Reset effects when mouse moves out of the legend item
-              wrapperGroup.selectAll('path').attr('opacity', 1);
-            });
+            // Toggle visibility of corresponding paths
+            pathVisibility[className] = !pathVisibility[className];
+            const opacity = pathVisibility[className] ? '0.9' : '0';
+            wrapperGroup.selectAll(className).attr('opacity', opacity);
+          });
         });
+      }),
+      tap((v) => {
+        const width = 600;
+        const height = 420;
+        const margin = { top: 0, bottom: 30, left: 30, right: 20 };
+
+        const svg = createNewSvg('#gradient', '100%', '100%', d3);
+        const gradientAndXAxis = createNewGroup(svg);
+        const gradient = gradientAndXAxis
+          .append('defs')
+          .append('linearGradient')
+          .attr('id', 'bar-gradient')
+          .attr('x1', '0%')
+          .attr('y1', '0%')
+          .attr('x2', '100%')
+          .attr('y2', '0%');
+
+        gradient
+          .append('stop')
+          .attr('offset', '0%')
+          .attr('stop-color', '#FA7842');
+        gradient
+          .append('stop')
+          .attr('offset', '11%')
+          .attr('stop-color', '#FEC73C');
+        gradient
+          .append('stop')
+          .attr('offset', '26%')
+          .attr('stop-color', '#FFDF3A');
+        gradient
+          .append('stop')
+          .attr('offset', '100%')
+          .attr('stop-color', 'green');
+        gradientAndXAxis
+          .append('rect')
+          .attr('x', 0)
+          .attr('y', 0)
+          .attr('width', '100%')
+          .attr('height', 10)
+          .style('fill', 'url(#bar-gradient)');
+
+        const xScale = d3
+          .scaleLinear()
+          .domain([1, 5]) // Assuming the domain ranges from 1 to 5
+          .range([margin.left, width - margin.right]); // Adjust according to your chart's margins
+
+        // Create an x-axis using the xScale
+        const xAxis = d3
+          .axisBottom(xScale)
+          .ticks(5) // Set the number of ticks as needed
+          .tickFormat(d3.format('d')); // Format the tick labels as integers
+
+        // Append the x-axis to your SVG
+        function updateXAxis() {
+          const svgWidth = parseFloat(svg.style('width').replace('px', '')); // Lățimea SVG-ului
+
+          // Actualizarea scalei pentru axa x
+          const xScale = d3
+            .scaleLinear()
+            .domain([1, 5]) // Intervalul sau domeniul barelor tale
+            .range([0, svgWidth - margin.left]); // Ajustarea la dimensiunea SVG-ului
+
+          // Șterge bara de pe axa x existentă (dacă există deja)
+          gradientAndXAxis.select('.x-axis').remove();
+
+          // Adăugarea barelor pentru axa x actualizată
+          const xAxis = d3.axisBottom(xScale).ticks(5); // Numărul de bare pe axa x
+
+          const xAxiss = gradientAndXAxis
+            .append('g')
+            .attr('class', 'x-axis')
+            .attr('transform', `translate(10, 10)`) // Ajustare pentru poziționare
+            .call(xAxis);
+
+          // Stilizare bare axă x
+          xAxiss.selectAll('.tick line').remove(); // Ascunde liniile de marcaj
+
+          xAxiss
+            .selectAll('.tick text')
+            .style('fill', 'white')
+            .style('font-size', '12px'); // Stilizare text
+        }
+
+        // Apelarea funcției pentru a inițializa barele pe axa x
+        updateXAxis();
+
+        // Event pentru redimensionarea ferestrei
+        window.addEventListener('resize', updateXAxis);
       }),
     );
 

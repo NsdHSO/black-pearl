@@ -19,10 +19,10 @@ export const stackedSeries = <
 export const extent = <T>(data: Iterable<T>, fn: DatumFunction<T>, d3: Any) =>
   d3.extent(data, fn);
 
-export const newSvg = (
+export const createNewSvg = (
   container: string,
-  width: number,
-  height: number,
+  width: number | string,
+  height: number | string,
   d3: Any,
 ) =>
   d3
