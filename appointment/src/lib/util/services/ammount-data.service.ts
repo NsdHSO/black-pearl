@@ -120,10 +120,14 @@ export class AmmountDataService {
           .axisBottom(xScale)
           .ticks(data.length)
           .tickFormat((d: Any) => dateFormat(new Date(d)));
-
-        series
+        const pathNewGroup = createNewGroup(series);
+        pathNewGroup
           .data(stacked)
           .join('path')
+          .attr('class', (d: any) => {
+            const color = colorScale(d.key) as string;
+            return `path-${color.replace('#', '')}`; // Generate unique classes based on colors
+          })
           .attr('stroke', (d: Any) => colorStroke(d.key) as Any)
           .attr('padding', 2)
           .attr('stroke-width', (d: Any) => (d.key === 'contrastMoney' ? 2 : 0)) // Set stroke width only for the top line
@@ -155,26 +159,80 @@ export class AmmountDataService {
         // Calculate x and y positions for the circle marker based on the scales
         const markerX = xScale(markerDate);
         const markerY = yScale(markerValue);
+        const marker = createNewGroup(grp);
 
-        grp
+        marker
           .append('circle')
           .attr('cx', markerX)
           .attr('cy', markerY)
           .attr('r', 6) // Adjust the radius of the circle as needed
           .attr('fill', 'white') // Set the color of the marker
           .attr('stroke', 'black')
-          .attr('stroke-width', '2');
+          .attr('stroke-width', 3);
         const totalChartHeight = height - margin.top - margin.bottom;
 
-        grp
+        marker
           .append('line')
           .attr('x1', markerX)
           .attr('y1', markerY + 6) // Start the line at the base of the circle
           .attr('x2', markerX)
           .attr('y2', totalChartHeight) // Line ends at the bottom of the chart area
           .attr('stroke', 'black')
-          .attr('stroke-width', 2)
-          .attr('opacity', 0.7);
+          .attr('stroke-width', 3);
+
+        const legendData = [
+          { label: 'Value Money', color: '#f8f2f6' },
+          { label: 'Contrast Money', color: '#aec9f8' },
+          // Add more entries for each element you want to represent in the legend
+        ];
+
+        // Calculate the positions for the legend items
+        const legendX = margin.right; // Adjust the X position as needed
+        let legendY = margin.top + 20; // Initial Y position for the legend
+        const newGroup = createNewGroup(wrapperGroup);
+
+        // Append legend items (rectangles and text) based on the legend data
+        legendData.forEach((item, index) => {
+          const rectSize = 15; // Size of the colored rectangles in the legend
+          const rectPadding = 5; // Padding between rectangle and text
+          // Append rectangles representing the colors
+
+          const legendChild = createNewGroup(newGroup);
+          legendChild
+            .append('rect')
+            .attr('x', legendX)
+            .attr('y', legendY)
+            .attr('width', rectSize)
+            .attr('height', rectSize)
+            .attr('fill', item.color);
+
+          // Append text labels for the legend
+          legendChild
+            .append('text')
+            .attr('x', legendX + rectSize + rectPadding)
+            .attr('y', legendY + rectSize / 2)
+            .text(item.label)
+            .attr('alignment-baseline', 'middle')
+            .attr('fill', 'white'); // Adjust text properties as needed
+
+          // Increment Y position for the next legend item
+          legendY += rectSize + 10; // Adjust spacing between legend items
+
+          legendChild
+            .on('mouseover', function (event: any, d: any) {
+              const legendColor = item?.color; // Assuming 'color' property exists in legendData
+              const selectedPaths = wrapperGroup.selectAll(
+                `.path-${legendColor.replace('#', '')}`,
+              ); // Select corresponding paths
+
+              // Apply desired effects to the selected paths (e.g., change opacity)
+              selectedPaths.attr('opacity', 0.9);
+            })
+            .on('mouseout', function (event: any, d: any) {
+              // Reset effects when mouse moves out of the legend item
+              wrapperGroup.selectAll('path').attr('opacity', 1);
+            });
+        });
       }),
     );
 
