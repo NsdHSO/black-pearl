@@ -161,8 +161,9 @@ export class AmmountDataService {
           .attr('cx', markerX)
           .attr('cy', markerY)
           .attr('r', 6) // Adjust the radius of the circle as needed
-          .attr('fill', 'red') // Set the color of the marker
-          .attr('stroke', 'black');
+          .attr('fill', 'white') // Set the color of the marker
+          .attr('stroke', 'black')
+          .attr('stroke-width', '2');
         const totalChartHeight = height - margin.top - margin.bottom;
 
         grp
@@ -172,8 +173,7 @@ export class AmmountDataService {
           .attr('x2', markerX)
           .attr('y2', totalChartHeight) // Line ends at the bottom of the chart area
           .attr('stroke', 'black')
-          .attr('stroke-width', 1)
-          .attr('stroke-dasharray', '4')
+          .attr('stroke-width', 2)
           .attr('opacity', 0.7);
       }),
     );
