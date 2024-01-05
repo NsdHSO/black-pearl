@@ -34,7 +34,7 @@ export class AmmountDataService {
           },
           {
             contrastMoney: 7,
-            month: '02.02.2023',
+            month: '02.01.2023',
             valueMoney: 7,
           },
           {
@@ -142,6 +142,39 @@ export class AmmountDataService {
           .selectAll('text')
           .style('fill', 'white')
           .style('font-size', '15');
+
+        const markerDate = new Date('04.04.2023');
+        const markerDataEntry = data.find(
+          (entry: any) =>
+            new Date(entry.month).getTime() === markerDate.getTime(),
+        );
+        const markerValue = markerDataEntry
+          ? markerDataEntry.contrastMoney + markerDataEntry.valueMoney
+          : 0; // Default to 0 if no matching data found
+
+        // Calculate x and y positions for the circle marker based on the scales
+        const markerX = xScale(markerDate);
+        const markerY = yScale(markerValue);
+
+        grp
+          .append('circle')
+          .attr('cx', markerX)
+          .attr('cy', markerY)
+          .attr('r', 6) // Adjust the radius of the circle as needed
+          .attr('fill', 'red') // Set the color of the marker
+          .attr('stroke', 'black');
+        const totalChartHeight = height - margin.top - margin.bottom;
+
+        grp
+          .append('line')
+          .attr('x1', markerX)
+          .attr('y1', markerY + 6) // Start the line at the base of the circle
+          .attr('x2', markerX)
+          .attr('y2', totalChartHeight) // Line ends at the bottom of the chart area
+          .attr('stroke', 'black')
+          .attr('stroke-width', 1)
+          .attr('stroke-dasharray', '4')
+          .attr('opacity', 0.7);
       }),
     );
 
