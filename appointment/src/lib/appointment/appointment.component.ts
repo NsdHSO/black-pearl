@@ -98,6 +98,7 @@ export class AppointmentComponent {
           .style('font-size', '12px'); // Stilizare text
 
         gradientAndXAxis.select('.marker-group').remove();
+        gradientAndXAxis.select('.between-group').remove();
 
         // Create a new group for the marker and associated elements
         const markerGroup = gradientAndXAxis
@@ -149,6 +150,46 @@ export class AppointmentComponent {
           .attr('text-anchor', 'middle')
           .attr('fill', 'white')
           .attr('font-size', '10px');
+
+        const betweenFourAndFiveGroup = createNewGroup(gradientAndXAxis)
+          .attr('class', 'between-group')
+          .attr('transform', `translate(10, 0)`);
+
+        betweenFourAndFiveGroup
+          .append('rect')
+          .attr('x', xScale(4.5) - 60) // Adjusted x-position to center the text
+          .attr('y', -20) // Adjusted y-position to move the background rectangle
+          .attr('width', 120) // Adjusted width for the background rectangle
+          .attr('height', 15) // Adjusted height for the background rectangle
+          .style('fill', 'gray') // Background color
+          .style('rx', '5px') // Rounded corner
+          .style('ry', '5px'); // Rounded corner
+        betweenFourAndFiveGroup
+          .append('text')
+          .attr('x', xScale(4.5)) // Adjusted x-position for the text label
+          .attr('y', -10) // Adjusted y-position for the text label
+          .text('You should be here')
+          .attr('text-anchor', 'middle')
+          .attr('fill', 'white')
+          .attr('font-size', '10px');
+        const markerSecond = createNewGroup(betweenFourAndFiveGroup);
+        // Add a rectangle for visual reference
+        markerSecond
+          .append('rect')
+          .attr('x', xScale(4)) // Adjusted x-position for the rectangle
+          .attr('y', -10) // Adjusted y-position for the rectangle
+          .attr('width', 2) // Adjusted width for the rectangle
+          .attr('height', 20) // Adjusted height for the rectangle
+          .style('fill', 'lightblue'); // Background color for the rectangle
+
+        markerSecond
+          .append('rect')
+          .attr('x', xScale(5)) // Adjusted x-position for the rectangle
+          .attr('y', -10) // Adjusted y-position for the rectangle
+          .attr('width', 2) // Adjusted width for the rectangle
+          .attr('height', 20) // Adjusted height for the rectangle
+          .style('fill', 'lightblue'); // Background color for the rectangle
+        // Add the text label in the middle of the interval
       }
 
       updateXAxis(this.range);
