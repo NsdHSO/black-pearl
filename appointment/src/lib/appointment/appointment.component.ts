@@ -28,7 +28,9 @@ export class AppointmentComponent {
       const margin = { top: 0, bottom: 30, left: 30, right: 20 };
 
       const svg = createNewSvg('#gradient', '100%', '100%', d3);
+
       const gradientAndXAxis = createNewGroup(svg);
+      gradientAndXAxis.attr('transform', `translate(0, 30)`); // Ajustare pentru poziționare]
       const gradient = gradientAndXAxis
         .append('defs')
         .append('linearGradient')
@@ -100,7 +102,8 @@ export class AppointmentComponent {
         // Create a new group for the marker and associated elements
         const markerGroup = gradientAndXAxis
           .append('g')
-          .attr('class', 'marker-group');
+          .attr('class', 'marker-group')
+          .attr('transform', `translate(10, 0)`); // Ajustare pentru poziționare
 
         // Add the bar on the x-axis
         markerGroup
@@ -108,8 +111,6 @@ export class AppointmentComponent {
           .attr('x', xScale(3))
           .attr('y', 0)
           .attr('width', 3)
-          .attr('transform', `translate(10, 0)`) // Ajustare pentru poziționare
-
           .attr('height', 10)
           .transition() // Apply transition effect
           .duration(500)
@@ -121,13 +122,33 @@ export class AppointmentComponent {
           .attr('x1', xScale(3))
           .attr('y1', 0)
           .attr('x2', xScale(3))
-          .attr('transform', `translate(10, 0)`) // Ajustare pentru poziționare
           .attr('y2', 10)
           .style('stroke', 'white')
           .transition() // Apply transition effect
           .duration(500)
           .attr('marker-end', 'url(#arrowhead)');
         // Apelarea funcției pentru a inițializa barele pe axa x
+        // Add a background rectangle behind the text labe
+
+        markerGroup
+          .append('rect')
+          .attr('x', xScale(3) - 40) // Adjusted x-position to center the text
+          .attr('y', -20) // Adjusted y-position to move the background rectangle
+          .attr('width', 80) // Adjusted width for the background rectangle
+          .attr('height', 15) // Adjusted height for the background rectangle
+          .style('fill', 'gray') // Background color
+          .style('rx', '5px') // Rounded corner
+          .style('ry', '5px'); // Rounded corner
+
+        // Add the text label above the marker
+        markerGroup
+          .append('text')
+          .attr('x', xScale(3))
+          .attr('y', -10) // Adjusted position to move the text closer to the marker
+          .text('You are here')
+          .attr('text-anchor', 'middle')
+          .attr('fill', 'white')
+          .attr('font-size', '10px');
       }
 
       updateXAxis(this.range);
