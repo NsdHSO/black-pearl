@@ -1,11 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AmmountDataService } from '../util/services/ammount-data.service';
 import { MatIconModule } from '@angular/material/icon';
 import { ButtonComponent } from '@synergy';
 import { of, tap } from 'rxjs';
 import * as d3 from 'd3';
-import { createNewGroup, createNewSvg } from '@graph';
+import { Any, createNewGroup, createNewSvg } from '@graph';
 
 @Component({
   selector: 'black-pearl-appointment',
@@ -15,6 +15,9 @@ import { createNewGroup, createNewSvg } from '@graph';
   styleUrl: './appointment.component.scss',
 })
 export class AppointmentComponent {
+  @Input({ required: true }) range: Any;
+  @Input({ required: true }) gradientSettings: Any;
+
   private _amountService = inject(AmmountDataService);
 
   amountData$ = this._amountService.amountData$;
@@ -34,62 +37,54 @@ export class AppointmentComponent {
         .attr('y1', '0%')
         .attr('x2', '100%')
         .attr('y2', '0%');
-
-      gradient
-        .append('stop')
-        .attr('offset', '0%')
-        .attr('stop-color', '#FA7842');
-      gradient
-        .append('stop')
-        .attr('offset', '11%')
-        .attr('stop-color', '#FEC73C');
-      gradient
-        .append('stop')
-        .attr('offset', '26%')
-        .attr('stop-color', '#FFDF3A');
-      gradient
-        .append('stop')
-        .attr('offset', '100%')
-        .attr('stop-color', 'green');
+      this.gradientSettings.forEach((setting: Any) => {
+        gradient
+          .append('stop')
+          .attr('offset', setting.offset)
+          .attr('stop-color', setting.stopColor);
+      });
       gradientAndXAxis
         .append('rect')
         .attr('x', 0)
         .attr('y', 0)
         .attr('width', '100%')
         .attr('height', 10)
+        .transition() // Apply transition effect
+        .duration(500)
         .style('fill', 'url(#bar-gradient)');
 
       const xScale = d3
         .scaleLinear()
-        .domain([1, 5]) // Assuming the domain ranges from 1 to 5
+        .domain(this.range) // Assuming the domain ranges from 1 to 5
         .range([margin.left, width - margin.right]); // Adjust according to your chart's margins
 
       // Create an x-axis using the xScale
       const xAxis = d3
         .axisBottom(xScale)
-        .ticks(5) // Set the number of ticks as needed
+        .ticks(this.range[this.range.length - 1]) // Set the number of ticks as needed
         .tickFormat(d3.format('d')); // Format the tick labels as integers
 
       // Append the x-axis to your SVG
-      function updateXAxis() {
+      function updateXAxis(range: Any) {
         const svgWidth = parseFloat(svg.style('width').replace('px', '')); // Lățimea SVG-ului
 
         // Actualizarea scalei pentru axa x
         const xScale = d3
           .scaleLinear()
-          .domain([1, 5]) // Intervalul sau domeniul barelor tale
+          .domain(range) // Intervalul sau domeniul barelor tale
           .range([0, svgWidth - margin.left]); // Ajustarea la dimensiunea SVG-ului
 
         // Șterge bara de pe axa x existentă (dacă există deja)
         gradientAndXAxis.select('.x-axis').remove();
 
         // Adăugarea barelor pentru axa x actualizată
-        const xAxis = d3.axisBottom(xScale).ticks(5); // Numărul de bare pe axa x
+        const xAxis = d3.axisBottom(xScale).ticks(range[range.length - 1]); // Numărul de bare pe axa x
 
-        const xAxiss = gradientAndXAxis
-          .append('g')
+        const xAxiss = createNewGroup(gradientAndXAxis)
           .attr('class', 'x-axis')
-          .attr('transform', `translate(10, 10)`) // Ajustare pentru poziționare
+          .attr('transform', `translate(10, 10)`) // Ajustare pentru poziționare]
+          .transition() // Apply transition effect
+          .duration(500)
           .call(xAxis);
 
         // Stilizare bare axă x
@@ -99,13 +94,46 @@ export class AppointmentComponent {
           .selectAll('.tick text')
           .style('fill', 'white')
           .style('font-size', '12px'); // Stilizare text
+
+        gradientAndXAxis.select('.marker-group').remove();
+
+        // Create a new group for the marker and associated elements
+        const markerGroup = gradientAndXAxis
+          .append('g')
+          .attr('class', 'marker-group');
+
+        // Add the bar on the x-axis
+        markerGroup
+          .append('rect')
+          .attr('x', xScale(3))
+          .attr('y', 0)
+          .attr('width', 3)
+          .attr('transform', `translate(10, 0)`) // Ajustare pentru poziționare
+
+          .attr('height', 10)
+          .transition() // Apply transition effect
+          .duration(500)
+          .style('fill', 'white');
+
+        // Add the marker line
+        markerGroup
+          .append('line')
+          .attr('x1', xScale(3))
+          .attr('y1', 0)
+          .attr('x2', xScale(3))
+          .attr('transform', `translate(10, 0)`) // Ajustare pentru poziționare
+          .attr('y2', 10)
+          .style('stroke', 'white')
+          .transition() // Apply transition effect
+          .duration(500)
+          .attr('marker-end', 'url(#arrowhead)');
+        // Apelarea funcției pentru a inițializa barele pe axa x
       }
 
-      // Apelarea funcției pentru a inițializa barele pe axa x
-      updateXAxis();
+      updateXAxis(this.range);
 
       // Event pentru redimensionarea ferestrei
-      window.addEventListener('resize', updateXAxis);
+      window.addEventListener('resize', () => updateXAxis(this.range));
     }),
   );
 }
