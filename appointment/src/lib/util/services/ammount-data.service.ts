@@ -28,7 +28,7 @@ export class AmmountDataService {
         {
           contrastMoney: 0,
           month: '01.01.2023',
-          valueMoney: 0,
+          valueMoney: 20,
         },
         {
           contrastMoney: 7,
