@@ -154,7 +154,8 @@ export class AppointmentComponent {
         const betweenFourAndFiveGroup = createNewGroup(gradientAndXAxis)
           .attr('class', 'between-group')
           .attr('transform', `translate(10, 0)`);
-
+        const xPos4 = xScale(1);
+        const xPos5 = xScale(5);
         betweenFourAndFiveGroup
           .append('rect')
           .attr('x', xScale(4.5) - 60) // Adjusted x-position to center the text
