@@ -79,20 +79,18 @@ export class AppointmentComponent {
           .call(rangeXAxis);
 
         xAxis.selectAll('.tick line').remove();
-
+        gradientAndXAxis.select('.marker-group').remove();
+        gradientAndXAxis.select('.between-group').remove();
         xAxis
           .selectAll('.tick text')
           .style('fill', 'white')
           .style('font-size', '12px');
 
-        gradientAndXAxis.select('.marker-group').remove();
-        gradientAndXAxis.select('.between-group').remove();
-
         addAMarker(xScale, gradientAndXAxis, 2, 'You are here');
 
         // Add the text label above the marker
 
-        addJumbotron(xScale, gradientAndXAxis, 4, 'You should be here');
+        addJumbotron(xScale, gradientAndXAxis, 3, 'You should be here');
       }
 
       updateXAxis(this.range);
