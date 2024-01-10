@@ -6,8 +6,8 @@ import { ButtonComponent } from '@synergy';
 import { of, tap } from 'rxjs';
 import * as d3 from 'd3';
 import {
-  addBanner,
-  addTextToMarker,
+  addAMarker,
+  addJumbotron,
   Any,
   createNewGroup,
   createNewSvg,
@@ -29,8 +29,6 @@ export class AppointmentComponent {
   amountData$ = this._amountService.amountData$;
   ant$ = of(1).pipe(
     tap((v) => {
-      const width = 600;
-      const height = 420;
       const margin = { top: 0, bottom: 30, left: 30, right: 20 };
 
       const svg = createNewSvg('#gradient', '100%', '100%', d3);
@@ -61,109 +59,46 @@ export class AppointmentComponent {
         .duration(500)
         .style('fill', 'url(#bar-gradient)');
 
-      const xScale = d3
-        .scaleLinear()
-        .domain(this.range) // Assuming the domain ranges from 1 to 5
-        .range([margin.left, width - margin.right]); // Adjust according to your chart's margins
-
-      // Create an x-axis using the xScale
-      const xAxis = d3
-        .axisBottom(xScale)
-        .ticks(this.range[this.range.length - 1]) // Set the number of ticks as needed
-        .tickFormat(d3.format('d')); // Format the tick labels as integers
-
-      // Append the x-axis to your SVG
       function updateXAxis(range: Any) {
-        const svgWidth = parseFloat(svg.style('width').replace('px', '')); // Lățimea SVG-ului
+        const svgWidth = parseFloat(svg.style('width').replace('px', ''));
 
-        // Actualizarea scalei pentru axa x
         const xScale = d3
           .scaleLinear()
-          .domain(range) // Intervalul sau domeniul barelor tale
-          .range([0, svgWidth - margin.left]); // Ajustarea la dimensiunea SVG-ului
+          .domain(range)
+          .range([0, svgWidth - margin.left]);
 
-        // Șterge bara de pe axa x existentă (dacă există deja)
         gradientAndXAxis.select('.x-axis').remove();
 
-        // Adăugarea barelor pentru axa x actualizată
-        const xAxis = d3.axisBottom(xScale).ticks(range[range.length - 1]); // Numărul de bare pe axa x
+        const rangeXAxis = d3.axisBottom(xScale).ticks(range[range.length - 1]); // Numărul de bare pe axa x
 
-        const xAxiss = createNewGroup(gradientAndXAxis)
+        const xAxis = createNewGroup(gradientAndXAxis)
           .attr('class', 'x-axis')
-          .attr('transform', `translate(10, 10)`) // Ajustare pentru poziționare]
-          .transition() // Apply transition effect
+          .attr('transform', `translate(10, 10)`)
+          .transition()
           .duration(500)
-          .call(xAxis);
+          .call(rangeXAxis);
 
-        // Stilizare bare axă x
-        xAxiss.selectAll('.tick line').remove(); // Ascunde liniile de marcaj
+        xAxis.selectAll('.tick line').remove();
 
-        xAxiss
+        xAxis
           .selectAll('.tick text')
           .style('fill', 'white')
-          .style('font-size', '12px'); // Stilizare text
+          .style('font-size', '12px');
 
         gradientAndXAxis.select('.marker-group').remove();
         gradientAndXAxis.select('.between-group').remove();
 
-        // Create a new group for the marker and associated elements
-        const markerGroup = createNewGroup(gradientAndXAxis)
-          .attr('class', 'marker-group')
-          .attr('transform', `translate(10, 0)`); // Ajustare pentru poziționare
-
-        // Add the bar on the x-axis
-        markerGroup
-          .append('rect')
-          .attr('x', xScale(3))
-          .attr('y', 0)
-          .attr('width', 3)
-          .attr('height', 10)
-          .transition() // Apply transition effect
-          .duration(500)
-          .style('fill', 'white');
-
-        // Add a background rectangle behind the text labe
-        addBanner(markerGroup, xScale, -20, 3, 80); // Rounded corner
+        addAMarker(xScale, gradientAndXAxis, 2, 'You are here');
 
         // Add the text label above the marker
-        addTextToMarker(markerGroup, xScale, -10, 'You are here', 3);
 
-        const betweenFourAndFiveGroup = createNewGroup(gradientAndXAxis)
-          .attr('class', 'between-group')
-          .attr('transform', `translate(10, 0)`);
-        addBanner(betweenFourAndFiveGroup, xScale, -20, 4.5, 120); // Rounded corner
-        addTextToMarker(
-          betweenFourAndFiveGroup,
-          xScale,
-          -10,
-          'You are here',
-          4.5,
-        );
-
-        const markerSecond = createNewGroup(betweenFourAndFiveGroup);
-        // Add a rectangle for visual reference
-        markerSecond
-          .append('rect')
-          .attr('x', xScale(4)) // Adjusted x-position for the rectangle
-          .attr('y', -10) // Adjusted y-position for the rectangle
-          .attr('width', 2) // Adjusted width for the rectangle
-          .attr('height', 20) // Adjusted height for the rectangle
-          .style('fill', 'lightblue'); // Background color for the rectangle
-
-        markerSecond
-          .append('rect')
-          .attr('x', xScale(5)) // Adjusted x-position for the rectangle
-          .attr('y', -10) // Adjusted y-position for the rectangle
-          .attr('width', 2) // Adjusted width for the rectangle
-          .attr('height', 20) // Adjusted height for the rectangle
-          .style('fill', 'lightblue'); // Background color for the rectangle
-        // Add the text label in the middle of the interval
+        addJumbotron(xScale, gradientAndXAxis, 4, 'You should be here');
       }
 
       updateXAxis(this.range);
 
       // Event pentru redimensionarea ferestrei
-      window.addEventListener('resize', () => updateXAxis(this.range));
+      window.addEventListener('resize', updateXAxis.bind(this, this.range));
     }),
   );
 }

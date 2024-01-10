@@ -77,3 +77,64 @@ export function addBanner(
     .style('rx', rounded) // Rounded corner
     .style('ry', rounded);
 }
+export function addALineOnTheX(
+  markerGroup: Any,
+  xScale: Any,
+  xPosition: number,
+  yPosition = 0,
+  width = 3,
+  height = 10,
+  fillColor = 'white',
+) {
+  markerGroup
+    .append('rect')
+    .attr('x', xScale(xPosition))
+    .attr('y', yPosition)
+    .attr('width', width)
+    .attr('height', height)
+    .transition() // Apply transition effect
+    .duration(500)
+    .style('fill', fillColor);
+}
+
+export function addJumbotron(
+  xScale: Any,
+  parentGroup: Any,
+  firstInterval: number,
+  textMarker: string,
+) {
+  const middleInterval = firstInterval + 0.5;
+  const betweenFourAndFiveGroup = createNewGroup(parentGroup)
+    .attr('class', 'between-group')
+    .attr('transform', `translate(10, 0)`);
+  addBanner(betweenFourAndFiveGroup, xScale, -20, middleInterval, 120); // Rounded corner
+  addTextToMarker(
+    betweenFourAndFiveGroup,
+    xScale,
+    -10,
+    textMarker,
+    middleInterval,
+  );
+
+  const markerSecond = createNewGroup(betweenFourAndFiveGroup);
+  [firstInterval, firstInterval + 1].reduce((acc, interval) => {
+    addALineOnTheX(acc, xScale, interval);
+    return acc;
+  }, markerSecond);
+}
+
+export function addAMarker(
+  xScale: Any,
+  parentGroup: Any,
+  xPosition: number,
+  text: string,
+) {
+  const markerGroup = createNewGroup(parentGroup)
+    .attr('class', 'marker-group')
+    .attr('transform', `translate(10, 0)`);
+  addALineOnTheX(markerGroup, xScale, xPosition);
+  addBanner(markerGroup, xScale, -20, xPosition, 80); // Rounded corner
+  addTextToMarker(markerGroup, xScale, -10, text, xPosition);
+
+  return markerGroup;
+}
