@@ -6,7 +6,7 @@ export const appointmentRoutes: Route[] = [
     path: '',
     component: AppointmentComponent,
     data: {
-      range: [1, 5],
+      range: [1, 6],
       gradientSettings: [
         { offset: '0%', stopColor: '#FA7842' },
         { offset: '11%', stopColor: '#FEC73C' },

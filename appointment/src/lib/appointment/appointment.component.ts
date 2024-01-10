@@ -5,7 +5,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { ButtonComponent } from '@synergy';
 import { of, tap } from 'rxjs';
 import * as d3 from 'd3';
-import { Any, createNewGroup, createNewSvg } from '@graph';
+import {
+  addBanner,
+  addTextToMarker,
+  Any,
+  createNewGroup,
+  createNewSvg,
+} from '@graph';
 
 @Component({
   selector: 'black-pearl-appointment',
@@ -116,62 +122,24 @@ export class AppointmentComponent {
           .duration(500)
           .style('fill', 'white');
 
-        // Add the marker line
-        markerGroup
-          .append('line')
-          .attr('x1', xScale(3))
-          .attr('y1', 0)
-          .attr('x2', xScale(3))
-          .attr('y2', 10)
-          .style('stroke', 'white')
-          .transition() // Apply transition effect
-          .duration(500)
-          .attr('marker-end', 'url(#arrowhead)');
-        // Apelarea funcției pentru a inițializa barele pe axa x
         // Add a background rectangle behind the text labe
-
-        markerGroup
-          .append('rect')
-          .attr('x', xScale(3) - 40) // Adjusted x-position to center the text
-          .attr('y', -20) // Adjusted y-position to move the background rectangle
-          .attr('width', 80) // Adjusted width for the background rectangle
-          .attr('height', 15) // Adjusted height for the background rectangle
-          .style('fill', 'gray') // Background color
-          .style('rx', '5px') // Rounded corner
-          .style('ry', '5px'); // Rounded corner
+        addBanner(markerGroup, xScale, -20, 3, 80); // Rounded corner
 
         // Add the text label above the marker
-        markerGroup
-          .append('text')
-          .attr('x', xScale(3))
-          .attr('y', -10) // Adjusted position to move the text closer to the marker
-          .text('You are here')
-          .attr('text-anchor', 'middle')
-          .attr('fill', 'white')
-          .attr('font-size', '10px');
+        addTextToMarker(markerGroup, xScale, -10, 'You are here', 3);
 
         const betweenFourAndFiveGroup = createNewGroup(gradientAndXAxis)
           .attr('class', 'between-group')
           .attr('transform', `translate(10, 0)`);
-        const xPos4 = xScale(1);
-        const xPos5 = xScale(5);
-        betweenFourAndFiveGroup
-          .append('rect')
-          .attr('x', xScale(4.5) - 60) // Adjusted x-position to center the text
-          .attr('y', -20) // Adjusted y-position to move the background rectangle
-          .attr('width', 120) // Adjusted width for the background rectangle
-          .attr('height', 15) // Adjusted height for the background rectangle
-          .style('fill', 'gray') // Background color
-          .style('rx', '5px') // Rounded corner
-          .style('ry', '5px'); // Rounded corner
-        betweenFourAndFiveGroup
-          .append('text')
-          .attr('x', xScale(4.5)) // Adjusted x-position for the text label
-          .attr('y', -10) // Adjusted y-position for the text label
-          .text('You should be here')
-          .attr('text-anchor', 'middle')
-          .attr('fill', 'white')
-          .attr('font-size', '10px');
+        addBanner(betweenFourAndFiveGroup, xScale, -20, 4.5, 120); // Rounded corner
+        addTextToMarker(
+          betweenFourAndFiveGroup,
+          xScale,
+          -10,
+          'You are here',
+          4.5,
+        );
+
         const markerSecond = createNewGroup(betweenFourAndFiveGroup);
         // Add a rectangle for visual reference
         markerSecond

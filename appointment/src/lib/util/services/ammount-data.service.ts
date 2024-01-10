@@ -182,7 +182,7 @@ export class AmmountDataService {
       const newGroup = createNewGroup(wrapperGroup);
 
       function addLegendToGradient() {
-        return (item, index) => {
+        return (item: Any) => {
           const rectSize = 15; // Size of the colored rectangles in the legend
           const rectPadding = 5; // Padding between rectangle and text
           // Append rectangles representing the colors
@@ -208,7 +208,7 @@ export class AmmountDataService {
           // Increment Y position for the next legend item
           legendY += rectSize + 10; // Adjust spacing between legend items
 
-          legendChild.on('click', function (event: any, d: any) {
+          legendChild.on('click', function (event: Any, d: Any) {
             const legendColor = item.color; // Access the color directly from the legendData
             const className = `.path-${legendColor.replace('#', '')}`;
 
