@@ -101,8 +101,7 @@ export class AppointmentComponent {
         gradientAndXAxis.select('.between-group').remove();
 
         // Create a new group for the marker and associated elements
-        const markerGroup = gradientAndXAxis
-          .append('g')
+        const markerGroup = createNewGroup(gradientAndXAxis)
           .attr('class', 'marker-group')
           .attr('transform', `translate(10, 0)`); // Ajustare pentru poziționare
 

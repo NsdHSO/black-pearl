@@ -181,43 +181,47 @@ export class AmmountDataService {
       let legendY = margin.top + 20; // Initial Y position for the legend
       const newGroup = createNewGroup(wrapperGroup);
 
+      function addLegendToGradient() {
+        return (item, index) => {
+          const rectSize = 15; // Size of the colored rectangles in the legend
+          const rectPadding = 5; // Padding between rectangle and text
+          // Append rectangles representing the colors
+
+          const legendChild = createNewGroup(newGroup);
+          legendChild
+            .append('rect')
+            .attr('x', legendX)
+            .attr('y', legendY)
+            .attr('width', rectSize)
+            .attr('height', rectSize)
+            .attr('fill', item.color);
+
+          // Append text labels for the legend
+          legendChild
+            .append('text')
+            .attr('x', legendX + rectSize + rectPadding)
+            .attr('y', legendY + rectSize / 2)
+            .text(item.label)
+            .attr('alignment-baseline', 'middle')
+            .attr('fill', 'white'); // Adjust text properties as needed
+
+          // Increment Y position for the next legend item
+          legendY += rectSize + 10; // Adjust spacing between legend items
+
+          legendChild.on('click', function (event: any, d: any) {
+            const legendColor = item.color; // Access the color directly from the legendData
+            const className = `.path-${legendColor.replace('#', '')}`;
+
+            // Toggle visibility of corresponding paths
+            pathVisibility[className] = !pathVisibility[className];
+            const opacity = pathVisibility[className] ? '0.9' : '0';
+            wrapperGroup.selectAll(className).attr('opacity', opacity);
+          });
+        };
+      }
+
       // Append legend items (rectangles and text) based on the legend data
-      legendData.forEach((item, index) => {
-        const rectSize = 15; // Size of the colored rectangles in the legend
-        const rectPadding = 5; // Padding between rectangle and text
-        // Append rectangles representing the colors
-
-        const legendChild = createNewGroup(newGroup);
-        legendChild
-          .append('rect')
-          .attr('x', legendX)
-          .attr('y', legendY)
-          .attr('width', rectSize)
-          .attr('height', rectSize)
-          .attr('fill', item.color);
-
-        // Append text labels for the legend
-        legendChild
-          .append('text')
-          .attr('x', legendX + rectSize + rectPadding)
-          .attr('y', legendY + rectSize / 2)
-          .text(item.label)
-          .attr('alignment-baseline', 'middle')
-          .attr('fill', 'white'); // Adjust text properties as needed
-
-        // Increment Y position for the next legend item
-        legendY += rectSize + 10; // Adjust spacing between legend items
-
-        legendChild.on('click', function (event: any, d: any) {
-          const legendColor = item.color; // Access the color directly from the legendData
-          const className = `.path-${legendColor.replace('#', '')}`;
-
-          // Toggle visibility of corresponding paths
-          pathVisibility[className] = !pathVisibility[className];
-          const opacity = pathVisibility[className] ? '0.9' : '0';
-          wrapperGroup.selectAll(className).attr('opacity', opacity);
-        });
-      });
+      legendData.forEach(addLegendToGradient());
     }),
   );
 
