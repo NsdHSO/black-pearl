@@ -9,6 +9,7 @@ import {
   addAMarker,
   addJumbotron,
   Any,
+  createDefForGradient,
   createNewGroup,
   createNewSvg,
 } from '@graph';
@@ -30,38 +31,23 @@ export class AppointmentComponent {
   ant$ = of(1).pipe(
     tap((v) => {
       const margin = { top: 0, bottom: 30, left: 30, right: 20 };
-
       const svg = createNewSvg('#gradient', '100%', '100%', d3);
 
       const gradientAndXAxis = createNewGroup(svg);
       gradientAndXAxis.attr('transform', `translate(0, 30)`); // Ajustare pentru poziționare]
-      const gradient = gradientAndXAxis
-        .append('defs')
-        .append('linearGradient')
-        .attr('id', 'bar-gradient')
-        .attr('x1', '0%')
-        .attr('y1', '0%')
-        .attr('x2', '100%')
-        .attr('y2', '0%');
-      this.gradientSettings.forEach((setting: Any) => {
-        gradient
-          .append('stop')
-          .attr('offset', setting.offset)
-          .attr('stop-color', setting.stopColor);
-      });
-      gradientAndXAxis
-        .append('rect')
-        .attr('x', 0)
-        .attr('y', 0)
-        .attr('width', '100%')
-        .attr('height', 10)
-        .attr('rx', 7) // Horizontal radius for rounded corners
-        .attr('ry', 7) // Vertical radius for rounded corners
-        .transition() // Apply transition effect
-        .duration(500)
-        .style('fill', 'url(#bar-gradient)');
 
-      function updateXAxis(range: Any) {
+      createDefForGradient(
+        gradientAndXAxis,
+        'bar-gradient',
+        this.gradientSettings,
+      );
+
+      function updateXAxis(
+        range: Any,
+        svg: Any,
+        gradientAndXAxis: Any,
+        d3: Any,
+      ) {
         const svgWidth = parseFloat(svg.style('width').replace('px', ''));
 
         const xScale = d3
@@ -81,26 +67,27 @@ export class AppointmentComponent {
           .call(rangeXAxis);
 
         xAxis.selectAll('.tick line').remove();
-        gradientAndXAxis.select('.marker-group').remove();
-        gradientAndXAxis.select('.between-group').remove();
+        gradientAndXAxis.selectAll('.marker-group').remove();
+        gradientAndXAxis.selectAll('.between-group').remove();
         xAxis
           .selectAll('.tick text')
           .style('fill', 'white')
           .style('font-size', '12px');
 
         addAMarker(xScale, gradientAndXAxis, 2, -17, 'You are here');
-        addAMarker(xScale, gradientAndXAxis, 4, -17, 'You are here');
-        addAMarker(xScale, gradientAndXAxis, 1, -17, 'You are here');
 
         // Add the text label above the marker
 
         addJumbotron(xScale, gradientAndXAxis, 3, 'You should be here', -30);
       }
 
-      updateXAxis(this.range);
+      updateXAxis(this.range, svg, gradientAndXAxis, d3);
 
       // Event pentru redimensionarea ferestrei
-      window.addEventListener('resize', updateXAxis.bind(this, this.range));
+      window.addEventListener(
+        'resize',
+        updateXAxis.bind(this, this.range, svg, gradientAndXAxis, d3),
+      );
     }),
   );
 }
