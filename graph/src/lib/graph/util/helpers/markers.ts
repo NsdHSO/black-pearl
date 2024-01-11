@@ -64,23 +64,32 @@ export function addJumbotron(
   parentGroup: Any,
   firstInterval: number,
   textMarker: string,
+  yPosition: number,
 ) {
   const middleInterval = firstInterval + 1;
+  const heightLines = 35;
   const betweenFourAndFiveGroup = createNewGroup(parentGroup)
     .attr('class', 'between-group')
     .attr('transform', `translate(10, 0)`);
-  addBanner(betweenFourAndFiveGroup, xScale, -20, middleInterval, 120); // Rounded corner
+  addBanner(betweenFourAndFiveGroup, xScale, yPosition, middleInterval, 120); // Rounded corner
   addTextToMarker(
     betweenFourAndFiveGroup,
     xScale,
-    -10,
+    yPosition + 10,
     textMarker,
     middleInterval,
   );
 
   const markerSecond = createNewGroup(betweenFourAndFiveGroup);
   [firstInterval, firstInterval + 2].reduce((acc, interval) => {
-    addALineOnTheX(acc, xScale, interval);
+    addALineOnTheX(
+      acc,
+      xScale,
+      interval,
+      heightLines * -1 + 10,
+      1.5,
+      heightLines,
+    );
     return acc;
   }, markerSecond);
 }
@@ -89,14 +98,15 @@ export function addAMarker(
   xScale: Any,
   parentGroup: Any,
   xPosition: number,
+  yPostion: number,
   text: string,
 ) {
   const markerGroup = createNewGroup(parentGroup)
     .attr('class', 'marker-group')
     .attr('transform', `translate(10, 0)`);
   addALineOnTheX(markerGroup, xScale, xPosition);
-  addBanner(markerGroup, xScale, -20, xPosition, 80); // Rounded corner
-  addTextToMarker(markerGroup, xScale, -10, text, xPosition);
+  addBanner(markerGroup, xScale, yPostion, xPosition, 80); // Rounded corner
+  addTextToMarker(markerGroup, xScale, yPostion + 10, text, xPosition);
 
   return markerGroup;
 }

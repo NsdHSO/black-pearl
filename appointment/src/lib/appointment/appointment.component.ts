@@ -86,11 +86,11 @@ export class AppointmentComponent {
           .style('fill', 'white')
           .style('font-size', '12px');
 
-        addAMarker(xScale, gradientAndXAxis, 2, 'You are here');
+        addAMarker(xScale, gradientAndXAxis, 2, -17, 'You are here');
 
         // Add the text label above the marker
 
-        addJumbotron(xScale, gradientAndXAxis, 3, 'You should be here');
+        addJumbotron(xScale, gradientAndXAxis, 3, 'You should be here', -30);
       }
 
       updateXAxis(this.range);
