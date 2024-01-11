@@ -89,6 +89,8 @@ export class AppointmentComponent {
           .style('font-size', '12px');
 
         addAMarker(xScale, gradientAndXAxis, 2, -17, 'You are here');
+        addAMarker(xScale, gradientAndXAxis, 4, -17, 'You are here');
+        addAMarker(xScale, gradientAndXAxis, 1, -17, 'You are here');
 
         // Add the text label above the marker
 

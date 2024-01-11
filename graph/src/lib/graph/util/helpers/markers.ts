@@ -67,7 +67,7 @@ export function addJumbotron(
   yPosition: number,
 ) {
   const middleInterval = firstInterval + 1;
-  const heightLines = 35;
+  const heightLines = 39;
   const betweenFourAndFiveGroup = createNewGroup(parentGroup)
     .attr('class', 'between-group')
     .attr('transform', `translate(10, 0)`);
@@ -76,7 +76,7 @@ export function addJumbotron(
     xScale,
     yPosition,
     middleInterval,
-    xScale(firstInterval + 2) - xScale(firstInterval),
+    xScale(firstInterval + 2.01) - xScale(firstInterval),
   ); // Rounded corner
   addTextToMarker(
     betweenFourAndFiveGroup,
