@@ -71,7 +71,13 @@ export function addJumbotron(
   const betweenFourAndFiveGroup = createNewGroup(parentGroup)
     .attr('class', 'between-group')
     .attr('transform', `translate(10, 0)`);
-  addBanner(betweenFourAndFiveGroup, xScale, yPosition, middleInterval, 120); // Rounded corner
+  addBanner(
+    betweenFourAndFiveGroup,
+    xScale,
+    yPosition,
+    middleInterval,
+    xScale(firstInterval + 2) - xScale(firstInterval),
+  ); // Rounded corner
   addTextToMarker(
     betweenFourAndFiveGroup,
     xScale,
