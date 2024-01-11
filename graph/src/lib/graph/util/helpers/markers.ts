@@ -98,15 +98,15 @@ export function addAMarker(
   xScale: Any,
   parentGroup: Any,
   xPosition: number,
-  yPostion: number,
+  yPosition: number,
   text: string,
 ) {
   const markerGroup = createNewGroup(parentGroup)
     .attr('class', 'marker-group')
     .attr('transform', `translate(10, 0)`);
   addALineOnTheX(markerGroup, xScale, xPosition);
-  addBanner(markerGroup, xScale, yPostion, xPosition, 80); // Rounded corner
-  addTextToMarker(markerGroup, xScale, yPostion + 10, text, xPosition);
+  addBanner(markerGroup, xScale, yPosition, xPosition, 80); // Rounded corner
+  addTextToMarker(markerGroup, xScale, yPosition + 10, text, xPosition);
 
   return markerGroup;
 }
