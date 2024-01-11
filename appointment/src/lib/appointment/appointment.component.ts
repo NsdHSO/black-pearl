@@ -55,6 +55,8 @@ export class AppointmentComponent {
         .attr('y', 0)
         .attr('width', '100%')
         .attr('height', 10)
+        .attr('rx', 7) // Horizontal radius for rounded corners
+        .attr('ry', 7) // Vertical radius for rounded corners
         .transition() // Apply transition effect
         .duration(500)
         .style('fill', 'url(#bar-gradient)');
