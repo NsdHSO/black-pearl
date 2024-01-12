@@ -6,7 +6,7 @@ import { ButtonComponent } from '@synergy';
 import { of, tap } from 'rxjs';
 import * as d3 from 'd3';
 import {
-  addAMarker,
+  addAMarkerWithLine,
   addJumbotron,
   Any,
   createDefForGradient,
@@ -71,7 +71,7 @@ export class AppointmentComponent {
           .style('fill', 'white')
           .style('font-size', '12px');
 
-        addAMarker(xScale, gradientAndXAxis, 2, -17, 'You are here');
+        addAMarkerWithLine(xScale, gradientAndXAxis, 2, -17, 'You are here');
 
         addJumbotron(xScale, gradientAndXAxis, 3, 'You should be here', -30);
       }

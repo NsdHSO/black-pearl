@@ -100,7 +100,7 @@ export function addJumbotron(
   }, markerSecond);
 }
 
-export function addAMarker(
+export function addAMarkerWithLine(
   xScale: Any,
   parentGroup: Any,
   xPosition: number,
