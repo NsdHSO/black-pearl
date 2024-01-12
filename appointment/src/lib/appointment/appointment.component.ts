@@ -6,13 +6,14 @@ import { ButtonComponent } from '@synergy';
 import { of, tap } from 'rxjs';
 import * as d3 from 'd3';
 import {
-  addAMarkerWithLine,
+  addAMarkerWithSquare,
   addJumbotron,
   Any,
   createDefForGradient,
   createNewGroup,
   createNewSvg,
 } from '@graph';
+import { onHover } from '../../../../graph/src/lib/graph/util/helpers/hover';
 
 @Component({
   selector: 'black-pearl-appointment',
@@ -71,9 +72,18 @@ export class AppointmentComponent {
           .style('fill', 'white')
           .style('font-size', '12px');
 
-        addAMarkerWithLine(xScale, gradientAndXAxis, 2, -17, 'You are here');
-
-        addJumbotron(xScale, gradientAndXAxis, 3, 'You should be here', -30);
+        onHover(
+          addAMarkerWithSquare(
+            xScale,
+            gradientAndXAxis,
+            2,
+            -17,
+            'You are here',
+          ),
+        );
+        onHover(
+          addJumbotron(xScale, gradientAndXAxis, 3, 'You should be here', -30),
+        );
       }
 
       updateXAxis(this.range, svg, gradientAndXAxis, d3);

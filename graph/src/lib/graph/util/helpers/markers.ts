@@ -1,4 +1,4 @@
-import { Any, createNewGroup } from './generate';
+import { addASquareOnTheX, Any, createNewGroup } from './generate';
 
 export function addTextToMarker(
   markerGroup: Any,
@@ -98,6 +98,7 @@ export function addJumbotron(
     );
     return acc;
   }, markerSecond);
+  return betweenFourAndFiveGroup;
 }
 
 export function addAMarkerWithLine(
@@ -111,6 +112,23 @@ export function addAMarkerWithLine(
     .attr('class', 'marker-group')
     .attr('transform', `translate(10, 0)`);
   addALineOnTheX(markerGroup, xScale, xPosition);
+  addBanner(markerGroup, xScale, yPosition, xPosition, 80); // Rounded corner
+  addTextToMarker(markerGroup, xScale, yPosition + 10, text, xPosition);
+
+  return markerGroup;
+}
+export function addAMarkerWithSquare(
+  xScale: Any,
+  parentGroup: Any,
+  xPosition: number,
+  yPosition: number,
+  text: string,
+) {
+  const markerGroup = createNewGroup(parentGroup)
+    .attr('class', 'marker-group')
+    .attr('transform', `translate(10, 0)`)
+    .attr('height', 10);
+  addASquareOnTheX(markerGroup, xScale, xPosition);
   addBanner(markerGroup, xScale, yPosition, xPosition, 80); // Rounded corner
   addTextToMarker(markerGroup, xScale, yPosition + 10, text, xPosition);
 

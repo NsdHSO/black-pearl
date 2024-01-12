@@ -38,3 +38,27 @@ export const mouseEvent =
   (eventType: string) => (fn: any) => (element: any) => {
     element.on(eventType, fn);
   };
+export function addASquareOnTheX(
+  markerGroup: Any,
+  xScale: Any,
+  xPosition: number,
+  yPosition = 0,
+  fillColor = 'gray',
+  sideLength = 15,
+) {
+  const group = createNewGroup(markerGroup)
+    .attr(
+      'transform',
+      `translate(${xScale(xPosition)}, ${yPosition - 14}) rotate(${45})`,
+    )
+    .style('rx', '5px') // Rounded corner
+    .style('ry', '5px');
+  group
+    .append('rect')
+    .attr('width', sideLength)
+    .attr('height', sideLength)
+    .transition()
+    .duration(500)
+    .style('fill', fillColor);
+  return group;
+}
