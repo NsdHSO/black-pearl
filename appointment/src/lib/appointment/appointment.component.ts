@@ -32,16 +32,13 @@ export class AppointmentComponent {
     tap((v) => {
       const margin = { top: 0, bottom: 30, left: 30, right: 20 };
       const svg = createNewSvg('#gradient', '100%', '100%', d3);
-
       const gradientAndXAxis = createNewGroup(svg);
       gradientAndXAxis.attr('transform', `translate(0, 30)`); // Ajustare pentru poziționare]
-
       createDefForGradient(
         gradientAndXAxis,
         'bar-gradient',
         this.gradientSettings,
       );
-
       function updateXAxis(
         range: Any,
         svg: Any,
@@ -75,8 +72,6 @@ export class AppointmentComponent {
           .style('font-size', '12px');
 
         addAMarker(xScale, gradientAndXAxis, 2, -17, 'You are here');
-
-        // Add the text label above the marker
 
         addJumbotron(xScale, gradientAndXAxis, 3, 'You should be here', -30);
       }
