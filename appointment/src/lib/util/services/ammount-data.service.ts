@@ -133,6 +133,7 @@ export class AmmountDataService {
         graphWrapper,
         data.length,
       );
+      const leftAxis = createAxis(d3, yScale, 'left', [5, 10], graphWrapper);
 
       const markerDate = new Date('04.01.2023');
       const markerDataEntry = data.find(
