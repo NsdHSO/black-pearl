@@ -1,5 +1,5 @@
 import { Component, inject, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { AmmountDataService } from '../util/services/ammount-data.service';
 import { MatIconModule } from '@angular/material/icon';
 import { ButtonComponent } from '@synergy';
@@ -12,13 +12,14 @@ import {
   createDefForGradient,
   createNewGroup,
   createNewSvg,
+  createScale,
+  onHover,
 } from '@graph';
-import { onHover } from '../../../../graph/src/lib/graph/util/helpers/hover';
 
 @Component({
   selector: 'black-pearl-appointment',
   standalone: true,
-  imports: [CommonModule, MatIconModule, ButtonComponent],
+  imports: [CommonModule, MatIconModule, ButtonComponent, AsyncPipe],
   templateUrl: './appointment.component.html',
   styleUrl: './appointment.component.scss',
 })
@@ -26,13 +27,17 @@ export class AppointmentComponent {
   @Input({ required: true }) range: Any;
   @Input({ required: true }) gradientSettings: Any;
 
-  private _amountService = inject(AmmountDataService);
+  _amountService = inject(AmmountDataService);
 
   amountData$ = this._amountService.amountData$;
   ant$ = of(1).pipe(
     tap((v) => {
       const margin = { top: 0, bottom: 30, left: 30, right: 20 };
-      const svg = createNewSvg('#gradient', '100%', '100%', d3);
+      const svg = createNewSvg(
+        '#gradient',
+        { height: '100%', width: '100%' },
+        d3,
+      );
       const gradientAndXAxis = createNewGroup(svg);
       gradientAndXAxis.attr('transform', `translate(0, 30)`); // Ajustare pentru poziționare]
       createDefForGradient(
@@ -48,11 +53,12 @@ export class AppointmentComponent {
       ) {
         const svgWidth = parseFloat(svg.style('width').replace('px', ''));
 
-        const xScale = d3
-          .scaleLinear()
-          .domain(range)
-          .range([0, svgWidth - margin.left]);
-
+        const xScale = createScale(
+          d3,
+          'linear',
+          [0, svgWidth - margin.left],
+          range,
+        );
         gradientAndXAxis.select('.x-axis').remove();
 
         const rangeXAxis = d3.axisBottom(xScale).ticks(range[range.length - 1]); // Numărul de bare pe axa x
@@ -80,9 +86,11 @@ export class AppointmentComponent {
             -17,
             'You are here',
           ),
+          d3,
         );
         onHover(
           addJumbotron(xScale, gradientAndXAxis, 3, 'You should be here', -30),
+          d3,
         );
       }
 

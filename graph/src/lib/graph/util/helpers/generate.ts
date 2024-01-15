@@ -12,7 +12,7 @@ export const stackedSeries = <
   }>,
 >(
   data: T,
-  keys: string[],
+  keys: Any,
   d3: Any,
 ) => d3.stack().keys(keys)(data);
 
@@ -21,8 +21,7 @@ export const extent = <T>(data: Iterable<T>, fn: DatumFunction<T>, d3: Any) =>
 
 export const createNewSvg = (
   container: string,
-  width: number | string,
-  height: number | string,
+  { height, width }: Any,
   d3: Any,
 ) =>
   d3
@@ -33,7 +32,7 @@ export const createNewSvg = (
 
 export const coloring = (d3: Any, domains: string[], ranges: string[]) =>
   d3.scaleOrdinal().domain(domains).range(ranges);
-export const createNewGroup = (parrent: Any) => parrent.append('g');
+export const createNewGroup = (parent: Any) => parent.append('g');
 export const mouseEvent =
   (eventType: string) => (fn: any) => (element: any) => {
     element.on(eventType, fn);
@@ -61,4 +60,57 @@ export function addASquareOnTheX(
     .duration(500)
     .style('fill', fillColor);
   return group;
+}
+export function appendCircle(
+  parent: Any,
+  markerX: Any,
+  markerY: Any,
+  stroke = 'black',
+  strokeWidth = 3,
+  radius = 6,
+  fill = 'white',
+) {
+  parent
+    .append('circle')
+    .attr('cx', markerX)
+    .attr('cy', markerY)
+    .attr('r', radius) // Adjust the radius of the circle as needed
+    .attr('fill', fill) // Set the color of the marker
+    .attr('stroke', stroke)
+    .attr('stroke-width', strokeWidth);
+  return parent;
+}
+
+export function appendLineMarker(
+  parent: Any,
+  markerX: Any,
+  markerY: Any,
+  totalChartHeight: number,
+  radius = 6,
+  stroke = 'black',
+  strokeWidth = 3,
+) {
+  parent
+    .append('line')
+    .attr('x1', markerX)
+    .attr('y1', markerY + radius) // Start the line at the base of the circle
+    .attr('x2', markerX)
+    .attr('y2', totalChartHeight + radius + 25) // Line ends at the bottom of the chart area
+    .attr('stroke', stroke)
+    .attr('stroke-width', strokeWidth);
+  return parent;
+}
+export function appendSeriesPath(series: Any, configGraph: Any) {
+  return createNewGroup(series)
+    .attr('class', 'series')
+    .append('path')
+    .attr('transform', `translate(${configGraph.marginLeft},0)`)
+    .style('fill', (d: Any, i: number) => configGraph.color[i])
+    .attr('stroke', 'steelblue')
+    .attr('stroke-linejoin', 'round')
+    .attr('stroke-linecap', 'round')
+    .attr('stroke-width', configGraph.strokeWidth);
+}
+export function appendDLine(parent: Any, typeGenerator: Any) {
+  parent.attr('d', typeGenerator);
 }

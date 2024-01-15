@@ -1,7 +1,9 @@
 <div class="flex"></div>
 
-<div id="virouse"></div>
-<div id="chart" class="m-5"></div>
-<div id="gradient" class="m-5"></div>
+<div class="flex">
+  <div class="bg-gray-50"><div id="chart" class="m-5"></div></div>
+  <div><div id="gradient"></div></div>
+</div>
 
 @if (ant$ | async) {}
+@if (_amountService.amountData$ | async) {}

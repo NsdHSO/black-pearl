@@ -1,4 +1,10 @@
-import { addASquareOnTheX, Any, createNewGroup } from './generate';
+import {
+  addASquareOnTheX,
+  Any,
+  appendCircle,
+  appendLineMarker,
+  createNewGroup,
+} from './generate';
 
 export function addTextToMarker(
   markerGroup: Any,
@@ -133,4 +139,35 @@ export function addAMarkerWithSquare(
   addTextToMarker(markerGroup, xScale, yPosition + 10, text, xPosition);
 
   return markerGroup;
+}
+export function addMarkerLinear(
+  xScale: Any,
+  yScale: Any,
+  markerDate: Any,
+  markerValue: Any,
+  parent: Any,
+  height: Any,
+  configGraph: Any,
+  radius = 6,
+  stroke = 'black',
+  strokeWidth = 3,
+) {
+  const markerX = xScale(markerDate);
+  const markerY = yScale(markerValue);
+  const marker = createNewGroup(parent);
+  const totalChartHeight =
+    height - configGraph.marginTop - configGraph.marginBottom;
+
+  appendCircle(marker, markerX, markerY, stroke, strokeWidth, radius);
+
+  appendLineMarker(
+    marker,
+    markerX,
+    markerY,
+    totalChartHeight,
+    radius,
+    stroke,
+    strokeWidth,
+  );
+  return marker;
 }
