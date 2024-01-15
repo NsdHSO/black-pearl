@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of, tap } from 'rxjs';
 import { Amount } from '../interfaces';
 import {
+  addLegendToGradient,
   addMarkerLinear,
   Any,
   appendDLine,
@@ -119,7 +120,10 @@ export class AmmountDataService {
 
       const series = graph.selectAll('.series').data(stackedData).enter();
 
-      appendDLine(appendSeriesPath(series, configGraph), (d: Any) => area(d));
+      const pathD = appendDLine(
+        appendSeriesPath(series, configGraph),
+        (d: Any) => area(d),
+      );
 
       const middleAxis = createAxis(
         d3,
@@ -154,6 +158,21 @@ export class AmmountDataService {
       marker.attr('transform', 'translate(0, 10)');
 
       onHover(marker, d3);
+
+      const legendData = [
+        { label: 'Value Money', color: '#f8f2f6' },
+        { label: 'Contrast Money', color: '#aec9f8' },
+        // Add more entries for each element you want to represent in the legend
+      ];
+
+      // Calculate the positions for the legend items
+      const legendX = configGraph.marginRight; // Adjust the X position as needed
+      const legendY = configGraph.marginTop + 20; // Initial Y position for the legend
+      const newGroup = legendData.map(
+        addLegendToGradient(createNewGroup(graphWrapper), legendX, legendY),
+      );
+      newGroup.forEach((v) => onHover(v, d3));
+      // Append legend items (rectangles and text) based on the legend data
     }),
   );
 

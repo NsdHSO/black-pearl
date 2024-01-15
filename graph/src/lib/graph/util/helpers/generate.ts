@@ -113,4 +113,5 @@ export function appendSeriesPath(series: Any, configGraph: Any) {
 }
 export function appendDLine(parent: Any, typeGenerator: Any) {
   parent.attr('d', typeGenerator);
+  return parent;
 }
