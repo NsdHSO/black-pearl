@@ -8,14 +8,17 @@ import {
   Any,
   appendDLine,
   appendSeriesPath,
+  appliedOpacity,
   createAxis,
   createNewGroup,
   createNewSvg,
   createScale,
+  getHeight,
   onHover,
   stackedSeries,
 } from '@graph';
 import * as d3 from 'd3';
+import { getWidth } from '../../../../../graph/src/lib/graph/util/helpers/layout';
 
 @Injectable({
   providedIn: 'root',
@@ -29,23 +32,33 @@ export class AmmountDataService {
       const data = [
         {
           valueMoney: 0,
-          month: '01.01.2023',
+          month: '01.01.2021',
           contrastMoney: 0,
         },
         {
+          valueMoney: 0.2,
+          month: '08.01.2021',
+          contrastMoney: 0.2,
+        },
+        {
+          valueMoney: 0.4,
+          month: '01.01.2022',
+          contrastMoney: 0.3,
+        },
+        {
+          valueMoney: 1.5,
+          month: '01.01.2024',
+          contrastMoney: 1,
+        },
+        {
           valueMoney: 2,
-          month: '02.01.2023',
-          contrastMoney: 2,
+          month: '01.01.2025',
+          contrastMoney: 1.25,
         },
         {
-          valueMoney: 8,
-          month: '04.01.2023',
-          contrastMoney: 5,
-        },
-        {
-          valueMoney: 17,
-          month: '05.05.2023',
-          contrastMoney: 6,
+          valueMoney: 2.75,
+          month: '01.05.2026',
+          contrastMoney: 1.5,
         },
       ] as Any;
       const configGraph = {
@@ -65,15 +78,10 @@ export class AmmountDataService {
         `translate(${configGraph.marginLeft}, 0)`,
       );
 
-      const width =
-        svgWrapper.attr('width') -
-        configGraph.marginLeft -
-        configGraph.marginRight -
-        configGraph.strokeWidth * 2;
-      const height =
-        svgWrapper.attr('height') -
-        configGraph.marginTop -
-        configGraph.marginBottom;
+      appliedOpacity(graphWrapper);
+
+      const width = getWidth(svgWrapper, configGraph);
+      const height = getHeight(svgWrapper, configGraph);
       const graph = createNewGroup(graphWrapper).attr(
         'transform',
         `translate(-${configGraph.marginLeft - configGraph.strokeWidth}, ${
@@ -121,7 +129,11 @@ export class AmmountDataService {
       const series = graph.selectAll('.series').data(stackedData).enter();
 
       const pathD = appendDLine(
-        appendSeriesPath(series, configGraph),
+        appendSeriesPath(series, configGraph)
+          .transition() // Add the transition
+          .duration(1000)
+          .style('fill', (d: Any, i: number) => configGraph.color[i])
+          .attr('transform', `translate(${configGraph.marginLeft},0)`),
         (d: Any) => area(d),
       );
 
@@ -135,7 +147,7 @@ export class AmmountDataService {
       );
       const leftAxis = createAxis(d3, yScale, 'left', [5, 10], graphWrapper);
 
-      const markerDate = new Date('04.01.2023');
+      const markerDate = new Date('01.01.2025');
       const markerDataEntry = data.find(
         (entry: Any) =>
           new Date(entry.month).getTime() === markerDate.getTime(),
@@ -161,8 +173,8 @@ export class AmmountDataService {
       onHover(marker, d3);
 
       const legendData = [
-        { label: 'Value Money', color: '#f8f2f6' },
-        { label: 'Contrast Money', color: '#aec9f8' },
+        { label: 'Value Money', color: 'lightblue' },
+        { label: 'Contrast Money', color: 'lightgreen' },
         // Add more entries for each element you want to represent in the legend
       ];
 
@@ -174,6 +186,214 @@ export class AmmountDataService {
       );
       newGroup.forEach((v) => onHover(v, d3));
       // Append legend items (rectangles and text) based on the legend data
+    }),
+  );
+
+  amountLine$ = of([
+    {
+      valueMoney: 0,
+      month: '01.01.2021',
+      contrastMoney: 0,
+    },
+    {
+      valueMoney: 0.1,
+      month: '08.01.2021',
+      contrastMoney: 0.2,
+    },
+    {
+      valueMoney: 0.15,
+      month: '01.01.2022',
+      contrastMoney: 0.3,
+    },
+    {
+      valueMoney: 0.3,
+      month: '01.01.2024',
+      contrastMoney: 1,
+    },
+    {
+      valueMoney: 0.4,
+      month: '01.01.2025',
+      contrastMoney: 1.25,
+    },
+    {
+      valueMoney: 0.45,
+      month: '01.05.2026',
+      contrastMoney: 3,
+    },
+  ] as Any).pipe(
+    tap((data) => {
+      const configGraph = {
+        marginTop: 10,
+        marginRight: 10,
+        marginBottom: 20,
+        marginLeft: 20,
+        color: ['lightgreen', 'lightblue'],
+        height: 340,
+        width: 600,
+        strokeWidth: 3.5,
+      };
+      const svg = createNewSvg('#line', configGraph, d3);
+
+      const svgWrapper = createNewGroup(svg).attr(
+        'transform',
+        'translate(20,10)',
+      );
+
+      const axisAndLines = createNewGroup(svgWrapper).attr(
+        'transform',
+        'translate(10, 0)',
+      );
+      const height = getHeight(svg, configGraph);
+      const width = getWidth(svg, configGraph);
+      const xScale = createScale(
+        d3,
+        'time',
+        [0, width],
+        d3.extent(data, (d: Any) => new Date(d.month)),
+      );
+      // Creare scală y
+      const yDomain = data.reduce(
+        (domain: [number, number], d: any) => [
+          Math.min(domain[0], d.valueMoney, d.contrastMoney),
+          Math.max(domain[1], d.valueMoney, d.contrastMoney),
+        ],
+        [Infinity, -Infinity],
+      );
+      const yScales = createScale(d3, 'linear', [height, 0], yDomain);
+      const yScale = createScale(
+        d3,
+        'linear',
+        [height, 0],
+        [0, d3.max(data, (d: Any) => Math.max(d.valueMoney, d.contrastMoney))],
+      );
+      // Creare generator de linie pentru valueMoney
+      const lineValueMoney = d3
+        .line()
+        .x((d: any) => xScale(new Date(d.month)))
+        .y((d: any) => yScales(d.valueMoney))
+        .curve(d3.curveLinear);
+
+      // Creare generator de linie pentru contrastMoney
+      const lineContrastValueMoney = d3
+        .line()
+        .x((d: any) => xScale(new Date(d.month)))
+        .y((d: any) => yScales(d.contrastMoney))
+        .curve(d3.curveCatmullRom);
+
+      // Apelează path-ul pentru linia valueMoney
+      const valueMoneyPath = appendDLine(
+        appendSeriesPath(axisAndLines, configGraph, 'lightblue')
+          .data([data])
+          .style('fill', 'none'),
+        lineValueMoney,
+      );
+
+      // Apelează path-ul pentru linia contrastMoney
+      const contrastMoneyPath = appendDLine(
+        appendSeriesPath(axisAndLines, configGraph, 'lightgreen')
+          .data([data])
+          .style('fill', 'none'),
+        lineContrastValueMoney,
+      );
+
+      // Creare generator de arie pentru regiunea dintre liniile
+      const areaGen = d3
+        .area()
+        .x((d: any) => xScale(new Date(d.month)))
+        .y0((d: any) => yScales(d.valueMoney))
+        .y1((d: any) =>
+          yScales(
+            d.contrastMoney === 0
+              ? d.contrastMoney
+              : d.contrastMoney - 0.3 <= 0
+                ? d.contrastMoney
+                : d.contrastMoney - 0.3,
+          ),
+        )
+        .curve(d3.curveCatmullRom);
+
+      // Apelează path-ul de arie pentru regiunea dintre liniile
+      const areaPath = appendDLine(
+        appendSeriesPath(
+          axisAndLines,
+          { ...configGraph, strokeWidth: 5.0 },
+          'none',
+        )
+          .data([data])
+          .style('fill', '#a7d9e7'), // Setează culoarea de fundal
+        areaGen,
+      );
+      const areaGen1 = d3
+        .area()
+        .x((d: any) => xScale(new Date(d.month)))
+        .y0((d: any) =>
+          yScales(
+            d.contrastMoney === 0
+              ? d.contrastMoney
+              : d.contrastMoney - 0.3 <= 0
+                ? d.contrastMoney
+                : d.contrastMoney - 0.3,
+          ),
+        )
+        .y1((d: any) => yScales(d.contrastMoney))
+        .curve(d3.curveCatmullRom);
+
+      // Apelează path-ul de arie pentru regiunea dintre liniile
+      const areaPath1 = appendDLine(
+        appendSeriesPath(
+          axisAndLines,
+          { ...configGraph, strokeWidth: 5.0 },
+          'none',
+        )
+          .data([data])
+          .style('fill', '#7bd0e7'), // Setează culoarea de fundal
+        areaGen1,
+      );
+      const areaGenY = d3
+        .area()
+        .x((d: any) => xScale(new Date(d.month)))
+        .y0((d: any) => yScales(0))
+        .y1((d: any) =>
+          yScales(
+            d.contrastMoney <= 0.1
+              ? d.contrastMoney
+              : d.valueMoney - d.valueMoney / 2 === 0
+                ? 0
+                : d.valueMoney - d.valueMoney / 2,
+          ),
+        )
+        .curve(d3.curveCatmullRom);
+
+      const areaPathY = appendDLine(
+        appendSeriesPath(axisAndLines, configGraph, 'none')
+          .data([data])
+          .style('fill', 'rgba(252,177,177,0.45)'), // Setează culoarea de fundal
+        areaGenY,
+      );
+
+      const areaGenY1 = d3
+        .area()
+        .x((d: any) => xScale(new Date(d.month)))
+        .y0((d: any) =>
+          yScales(
+            d.contrastMoney <= 0.1
+              ? d.contrastMoney
+              : d.valueMoney - d.valueMoney / 2 === 0
+                ? 0
+                : d.valueMoney - d.valueMoney / 2,
+          ),
+        )
+        .y1((d: any) => yScales(d.valueMoney))
+        .curve(d3.curveCatmullRom);
+
+      const areaPathY1 = appendDLine(
+        appendSeriesPath(axisAndLines, configGraph, 'none')
+          .data([data])
+          .style('fill', 'rgba(252,177,177,0.92)'), // Setează culoarea de fundal
+        areaGenY1,
+      );
+      // Apele
+      createAxis(d3, xScale, 'bottom', [0, height], axisAndLines, data.length);
     }),
   );
 

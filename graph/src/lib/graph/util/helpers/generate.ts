@@ -100,18 +100,23 @@ export function appendLineMarker(
     .attr('stroke-width', strokeWidth);
   return parent;
 }
-export function appendSeriesPath(series: Any, configGraph: Any) {
-  return createNewGroup(series)
-    .attr('class', 'series')
+export function appendSeriesPath(
+  series: Any,
+  configGraph: Any,
+  color = 'steelblue',
+) {
+  const groupToSeries = createNewGroup(series).attr('class', 'series');
+  const pathPloted = groupToSeries
     .append('path')
-    .attr('transform', `translate(${configGraph.marginLeft},0)`)
-    .style('fill', (d: Any, i: number) => configGraph.color[i])
-    .attr('stroke', 'steelblue')
+    .attr('stroke', color)
     .attr('stroke-linejoin', 'round')
     .attr('stroke-linecap', 'round')
     .attr('stroke-width', configGraph.strokeWidth);
+  return pathPloted;
 }
 export function appendDLine(parent: Any, typeGenerator: Any) {
   parent.attr('d', typeGenerator);
   return parent;
 }
+
+type And = Omit<any, any>;
