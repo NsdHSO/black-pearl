@@ -112,10 +112,12 @@ export function appendSeriesPath(
     .attr('stroke-linejoin', 'round')
     .attr('stroke-linecap', 'round')
     .attr('stroke-width', configGraph.strokeWidth);
+
   return pathPloted;
 }
 export function appendDLine(parent: Any, typeGenerator: Any) {
   parent.attr('d', typeGenerator);
+
   return parent;
 }
 

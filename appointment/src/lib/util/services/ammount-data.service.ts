@@ -130,13 +130,32 @@ export class AmmountDataService {
 
       const pathD = appendDLine(
         appendSeriesPath(series, configGraph)
-          .transition() // Add the transition
-          .duration(1000)
           .style('fill', (d: Any, i: number) => configGraph.color[i])
           .attr('transform', `translate(${configGraph.marginLeft},0)`),
         (d: Any) => area(d),
       );
+      const areaGenY = d3
+        .area()
+        .x((d: any) => xScale(new Date(d.month)))
+        .y0((d: any) => yScale(d.contrastMoney))
+        .y1((d: any) =>
+          yScale(
+            d.valueMoney <= 0.1
+              ? d.valueMoney
+              : d.valueMoney + d.valueMoney / 2 === 0
+                ? 0
+                : d.valueMoney + d.valueMoney / 4,
+          ),
+        )
+        .curve(d3.curveNatural);
 
+      const areaPathY = appendDLine(
+        appendSeriesPath(graph, configGraph, 'none')
+          .data([data])
+          .style('fill', 'rgba(252,177,177,0.45)')
+          .attr('transform', 'translate(20,0)'), // Setează culoarea de fundal
+        areaGenY,
+      );
       const middleAxis = createAxis(
         d3,
         xScale,
@@ -198,27 +217,27 @@ export class AmmountDataService {
     {
       valueMoney: 0.1,
       month: '08.01.2021',
-      contrastMoney: 0.2,
+      contrastMoney: 10.2,
     },
     {
       valueMoney: 0.15,
       month: '01.01.2022',
-      contrastMoney: 0.3,
+      contrastMoney: 10.3,
     },
     {
       valueMoney: 0.3,
       month: '01.01.2024',
-      contrastMoney: 1,
+      contrastMoney: 20,
     },
     {
       valueMoney: 0.4,
       month: '01.01.2025',
-      contrastMoney: 1.25,
+      contrastMoney: 25.75,
     },
     {
-      valueMoney: 0.45,
+      valueMoney: 0.65,
       month: '01.05.2026',
-      contrastMoney: 3,
+      contrastMoney: 60,
     },
   ] as Any).pipe(
     tap((data) => {
@@ -271,7 +290,7 @@ export class AmmountDataService {
         .line()
         .x((d: any) => xScale(new Date(d.month)))
         .y((d: any) => yScales(d.valueMoney))
-        .curve(d3.curveLinear);
+        .curve(d3.curveCatmullRom);
 
       // Creare generator de linie pentru contrastMoney
       const lineContrastValueMoney = d3
@@ -280,34 +299,21 @@ export class AmmountDataService {
         .y((d: any) => yScales(d.contrastMoney))
         .curve(d3.curveCatmullRom);
 
-      // Apelează path-ul pentru linia valueMoney
-      const valueMoneyPath = appendDLine(
-        appendSeriesPath(axisAndLines, configGraph, 'lightblue')
-          .data([data])
-          .style('fill', 'none'),
-        lineValueMoney,
-      );
-
-      // Apelează path-ul pentru linia contrastMoney
-      const contrastMoneyPath = appendDLine(
-        appendSeriesPath(axisAndLines, configGraph, 'lightgreen')
-          .data([data])
-          .style('fill', 'none'),
-        lineContrastValueMoney,
-      );
-
       // Creare generator de arie pentru regiunea dintre liniile
       const areaGen = d3
         .area()
         .x((d: any) => xScale(new Date(d.month)))
-        .y0((d: any) => yScales(d.valueMoney))
+        .y0((d: any) => yScales(d.valueMoney + 0.02))
         .y1((d: any) =>
           yScales(
             d.contrastMoney === 0
               ? d.contrastMoney
               : d.contrastMoney - 0.3 <= 0
                 ? d.contrastMoney
-                : d.contrastMoney - 0.3,
+                : (new Date(d.month).getFullYear() -
+                    new Date(data[0].month).getFullYear()) /
+                    10 +
+                  12,
           ),
         )
         .curve(d3.curveCatmullRom);
@@ -332,7 +338,10 @@ export class AmmountDataService {
               ? d.contrastMoney
               : d.contrastMoney - 0.3 <= 0
                 ? d.contrastMoney
-                : d.contrastMoney - 0.3,
+                : (new Date(d.month).getFullYear() -
+                    new Date(data[0].month).getFullYear()) /
+                    10 +
+                  12,
           ),
         )
         .y1((d: any) => yScales(d.contrastMoney))
@@ -383,7 +392,7 @@ export class AmmountDataService {
                 : d.valueMoney - d.valueMoney / 2,
           ),
         )
-        .y1((d: any) => yScales(d.valueMoney))
+        .y1((d: any) => yScales(d.valueMoney - 0.02))
         .curve(d3.curveCatmullRom);
 
       const areaPathY1 = appendDLine(
@@ -394,6 +403,33 @@ export class AmmountDataService {
       );
       // Apele
       createAxis(d3, xScale, 'bottom', [0, height], axisAndLines, data.length);
+      const legendData = [
+        { label: 'Value Money', color: 'lightblue' },
+        { label: 'Contrast Money', color: 'lightgreen' },
+        // Add more entries for each element you want to represent in the legend
+      ];
+      // Apelează path-ul pentru linia valueMoney
+      const valueMoneyPath = appendDLine(
+        appendSeriesPath(axisAndLines, configGraph, '#c03b3b')
+          .data([data])
+          .style('fill', 'none'),
+        lineValueMoney,
+      );
+      // Apelează path-ul pentru linia contrastMoney
+      const contrastMoneyPath = appendDLine(
+        appendSeriesPath(axisAndLines, configGraph, '#6a71e8')
+          .data([data])
+          .style('fill', 'none'),
+        lineContrastValueMoney,
+      );
+      // Calculate the positions for the legend items
+      const legendX = configGraph.marginRight; // Adjust the X position as needed
+      const legendY = configGraph.marginTop + 20; // Initial Y position for the legend
+      const newGroup = legendData.map(
+        addLegendToGradient(createNewGroup(svgWrapper), legendX, legendY),
+      );
+      newGroup.forEach((v) => onHover(v, d3));
+      appliedOpacity(svg);
     }),
   );
 
