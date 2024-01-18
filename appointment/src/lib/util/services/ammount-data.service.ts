@@ -46,19 +46,25 @@ export class AmmountDataService {
           contrastMoney: 0.3,
         },
         {
-          valueMoney: 1.5,
-          month: '01.01.2024',
-          contrastMoney: 1,
+          valueMoney: 0.9,
+          month: '05.01.2023',
+          contrastMoney: 0.65,
         },
+        {
+          valueMoney: 1.2,
+          month: '01.01.2024',
+          contrastMoney: 0.7,
+        },
+
         {
           valueMoney: 2,
           month: '01.01.2025',
-          contrastMoney: 1.25,
+          contrastMoney: 0.85,
         },
         {
           valueMoney: 2.75,
           month: '01.05.2026',
-          contrastMoney: 1.5,
+          contrastMoney: 0.9,
         },
       ] as Any;
       const configGraph = {
@@ -124,7 +130,7 @@ export class AmmountDataService {
         .x((dataPoint: Any) => xScale(new Date(dataPoint.month)))
         .y0((dataPoint: Any) => yScale(dataPoint.values[0]))
         .y1((dataPoint: Any) => yScale(dataPoint.values[1]))
-        .curve(d3.curveNatural);
+        .curve(d3.curveCatmullRom);
 
       const series = graph.selectAll('.series').data(stackedData).enter();
 
@@ -134,7 +140,7 @@ export class AmmountDataService {
           .attr('transform', `translate(${configGraph.marginLeft},0)`),
         (d: Any) => area(d),
       );
-      const areaGenY = d3
+      const areaAboveContastMoney = d3
         .area()
         .x((d: any) => xScale(new Date(d.month)))
         .y0((d: any) => yScale(d.contrastMoney))
@@ -147,14 +153,37 @@ export class AmmountDataService {
                 : d.valueMoney + d.valueMoney / 4,
           ),
         )
-        .curve(d3.curveNatural);
+        .curve(d3.curveCatmullRom);
 
-      const areaPathY = appendDLine(
+      const areaPathContrastMoney = appendDLine(
         appendSeriesPath(graph, configGraph, 'none')
           .data([data])
-          .style('fill', 'rgba(252,177,177,0.45)')
+          .style('fill', 'rgba(252,177,177,0.25)')
           .attr('transform', 'translate(20,0)'), // Setează culoarea de fundal
-        areaGenY,
+        areaAboveContastMoney,
+      );
+
+      const areaAboveMoney = d3
+        .area()
+        .x((d: any) => xScale(new Date(d.month)))
+        .y0((d: any) => yScale(0))
+        .y1((d: any) =>
+          yScale(
+            d.contrastMoney <= 0.1
+              ? d.contrastMoney
+              : d.contrastMoney - d.contrastMoney / 2 === 0
+                ? 0
+                : d.contrastMoney - d.contrastMoney / 4,
+          ),
+        )
+        .curve(d3.curveCatmullRom);
+
+      const areaPathMoney = appendDLine(
+        appendSeriesPath(graph, configGraph, 'none')
+          .data([data])
+          .style('fill', 'rgba(255,255,255,0.2)')
+          .attr('transform', 'translate(20,0)'), // Setează culoarea de fundal
+        areaAboveMoney,
       );
       const middleAxis = createAxis(
         d3,
