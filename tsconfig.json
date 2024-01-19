@@ -11,6 +11,7 @@
     "paths": {
       "@synergy": ["synergy/src"],
       "@admin": ["admin/src"],
+      "@cow-record": ["cow-record/src"],
       "@dashboard": ["dashboard/src"],
       "@appointment": ["appointment/src"],
       "@graph": ["graph/src"]

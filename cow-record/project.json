@@ -1,0 +1,21 @@
+{
+  "name": "cow-record",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "cow-record/src",
+  "prefix": "black-pearl",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "cow-record/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  }
+}
