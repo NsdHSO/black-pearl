@@ -6,6 +6,6 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './cow-record.component.html',
-  styleUrl: './cow-record.component.css',
+  styleUrl: './cow-record.component.scss',
 })
 export class CowRecordComponent {}
