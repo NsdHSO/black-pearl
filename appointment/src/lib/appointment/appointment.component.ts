@@ -1,4 +1,10 @@
-import { Component, inject, Input } from '@angular/core';
+import {
+  Component,
+  inject,
+  Input,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { AmmountDataService } from '../util/services/ammount-data.service';
 import { MatIconModule } from '@angular/material/icon';
@@ -27,6 +33,8 @@ export class AppointmentComponent {
   @Input({ required: true }) range: Any;
   @Input({ required: true }) gradientSettings: Any;
 
+  showAxis = signal({ x: false, y: true });
+
   _amountService = inject(AmmountDataService);
 
   amountData$ = this._amountService.amountData$;
@@ -50,6 +58,7 @@ export class AppointmentComponent {
         svg: Any,
         gradientAndXAxis: Any,
         d3: Any,
+        config: WritableSignal<{ x: boolean; y: boolean }>,
       ) {
         const svgWidth = parseFloat(svg.style('width').replace('px', ''));
 
@@ -73,11 +82,12 @@ export class AppointmentComponent {
         xAxis.selectAll('.tick line').remove();
         gradientAndXAxis.selectAll('.marker-group').remove();
         gradientAndXAxis.selectAll('.between-group').remove();
-        xAxis
-          .selectAll('.tick text')
-          .style('fill', 'white')
-          .style('font-size', '12px');
-
+        if (config().x) {
+          xAxis
+            .selectAll('.tick text')
+            .style('fill', 'white')
+            .style('font-size', '12px');
+        }
         onHover(
           addAMarkerWithSquare(
             xScale,
@@ -94,13 +104,24 @@ export class AppointmentComponent {
         );
       }
 
-      updateXAxis(this.range, svg, gradientAndXAxis, d3);
+      updateXAxis(this.range, svg, gradientAndXAxis, d3, this.showAxis);
 
       // Event pentru redimensionarea ferestrei
       window.addEventListener(
         'resize',
-        updateXAxis.bind(this, this.range, svg, gradientAndXAxis, d3),
+        updateXAxis.bind(
+          this,
+          this.range,
+          svg,
+          gradientAndXAxis,
+          d3,
+          this.showAxis,
+        ),
       );
     }),
   );
+
+  setItem(item: string, value: boolean) {
+    this._amountService.ifn$.next({ x: false, y: false });
+  }
 }

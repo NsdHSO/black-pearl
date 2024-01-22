@@ -1,6 +1,6 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { Amount } from '../interfaces';
 import {
   addLegendToGradient,
@@ -26,6 +26,8 @@ import { getWidth } from '../../../../../graph/src/lib/graph/util/helpers/layout
 export class AmmountDataService {
   private _httpClient = inject(HttpClient);
   private strokeWidth: number = 1.2;
+  showAxis = signal({ x: signal(true), y: signal(true) });
+  ifn$ = new BehaviorSubject({ x: true, y: true });
   amountData$: Observable<Amount> = of('das').pipe(
     //eslint-disable-next-line
     tap((v: Any) => {
@@ -185,15 +187,27 @@ export class AmmountDataService {
           .attr('transform', 'translate(20,0)'), // Setează culoarea de fundal
         areaAboveMoney,
       );
-      const middleAxis = createAxis(
-        d3,
-        xScale,
-        'bottom',
-        [0, height + 10],
-        graphWrapper,
-        data.length,
-      );
-      const leftAxis = createAxis(d3, yScale, 'left', [5, 10], graphWrapper);
+      this.ifn$.subscribe((v) => {
+        if (v.x) {
+          const middleAxis = createAxis(
+            d3,
+            xScale,
+            'bottom',
+            [0, height + 10],
+            graphWrapper,
+            data.length,
+          );
+        }
+        if (v.y) {
+          const leftAxis = createAxis(
+            d3,
+            yScale,
+            'left',
+            [5, 10],
+            graphWrapper,
+          );
+        }
+      });
 
       const markerDate = new Date('01.01.2025');
       const markerDataEntry = data.find(
@@ -431,7 +445,16 @@ export class AmmountDataService {
         areaGenY1,
       );
       // Apele
-      createAxis(d3, xScale, 'bottom', [0, height], axisAndLines, data.length);
+      if (this.showAxis().x()) {
+        createAxis(
+          d3,
+          xScale,
+          'bottom',
+          [0, height],
+          axisAndLines,
+          data.length,
+        );
+      }
       const legendData = [
         { label: 'Value Money', color: 'lightblue' },
         { label: 'Contrast Money', color: 'lightgreen' },
