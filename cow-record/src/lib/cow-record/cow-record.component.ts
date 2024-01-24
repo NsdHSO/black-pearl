@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ButtonComponent,
@@ -23,6 +23,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   ],
   templateUrl: './cow-record.component.html',
   styleUrl: './cow-record.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CowRecordComponent {
   readonly cowRecordSharedService = inject(GlobalCowRecordService);

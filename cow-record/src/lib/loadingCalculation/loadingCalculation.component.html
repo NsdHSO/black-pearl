@@ -1,0 +1,20 @@
+<div class="p-8 h-full w-full flex justify-center items-center">
+  <black-pearl-jumbotron padding="p-2 rounded h-80 w-80 flex justify-center">
+    <div class="flex flex-col justify-between">
+      <div class="flex flex-col gap-4">
+        <span class="text-2xl font-bold"
+          >Please Can you wait to calculate your something</span
+        >
+        <div class="flex justify-center h-full">
+          {{ globalCowService.timer$ | async }}
+        </div>
+      </div>
+      <div>
+        <black-pearl-button
+          (marian)="globalCowService.stopTimer()"
+          [text]="'Stop Timer'"
+        />
+      </div>
+    </div>
+  </black-pearl-jumbotron>
+</div>

@@ -18,7 +18,7 @@ export const appConfig: ApplicationConfig = {
       appRoutes,
       withEnabledBlockingInitialNavigation(),
       withComponentInputBinding(),
-      withViewTransitions()
+      withViewTransitions(),
     ),
     provideStoreDevtools(),
     provideAnimations(),

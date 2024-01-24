@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { AsyncPipe, NgClass } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { Shadows } from '../../utils';
@@ -9,6 +15,7 @@ import { Shadows } from '../../utils';
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
   imports: [AsyncPipe, NgClass],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonComponent {
   @Input()

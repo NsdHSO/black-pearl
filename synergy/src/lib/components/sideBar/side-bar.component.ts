@@ -1,4 +1,10 @@
-import { Component, inject, Input, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  Input,
+  OnDestroy,
+} from '@angular/core';
 import {
   ChildrenOutletContexts,
   Router,
@@ -25,6 +31,7 @@ import { AsyncPipe } from '@angular/common';
   templateUrl: './side-bar.component.html',
   styleUrl: './side-bar.component.scss',
   animations: [slideInAnimation],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SideBarComponent implements OnDestroy {
   @Input()
