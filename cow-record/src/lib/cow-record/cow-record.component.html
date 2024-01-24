@@ -1,1 +1,39 @@
-<p>cow-record works!</p>
+<div class="p-8 relative h-full" data-test="cow-record-wrapper">
+  <div class="" data-test="cow-record-wrapper-header">
+    <div
+      class="flex justify-center items-center"
+      data-test="cow-record-wrapper-header__title"
+    >
+      <h1 class="text-gray-800 dark:text-gray-400 text-3xl">
+        You are the HeRo
+      </h1>
+    </div>
+  </div>
+  <div data-test="cow-record-wrapper-body">
+    <div data-test="cow-record-wrapper-body" class="flex gap-4">
+      <black-pearl-jumbotron padding="p-2 rounded">
+        <span class="text-xl"> Who we are </span>
+        <p>We are the hero What is the best from word</p>
+      </black-pearl-jumbotron>
+      <black-pearl-jumbotron padding="p-2 rounded">
+        <span class="text-xl"> Tell us who You are </span>
+        <span>
+          <black-pearl-input-text
+            [formControl]="cowRecordSharedService.whoYouAre"
+            placeholder="Ivan Morcovici"
+          />
+        </span>
+      </black-pearl-jumbotron>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+  <div data-test="cow-record-wrapper-footer" class="absolute bottom-0 w-[93%]">
+    <black-pearl-button
+      (marian)="
+        cowRecordSharedService.navigate(['', 'admin', 'cow_records', 'tes'])
+      "
+      class="bg-indigo-300 dark:bg-indigo-800 p-2 text-amber-100"
+      [text]="'Continues'"
+    />
+  </div>
+</div>

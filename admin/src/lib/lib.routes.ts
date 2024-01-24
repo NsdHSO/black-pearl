@@ -61,7 +61,7 @@ export const adminRoutes: Route[] = [
         loadChildren: () =>
           import('@cow-record').then((m) => m.cowRecordRoutes),
       },
-      { path: '', redirectTo: 'appointment', pathMatch: 'full' },
+      { path: '', redirectTo: 'cow_records', pathMatch: 'full' },
     ],
   },
 ];

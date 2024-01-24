@@ -206,6 +206,7 @@ export class AmmountDataService {
             [5, 10],
             graphWrapper,
           );
+        } else if (!v.y) {
         }
       });
 

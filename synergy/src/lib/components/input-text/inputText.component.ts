@@ -1,4 +1,4 @@
-import { Component, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OutlineDirective } from '../../directive/outline/outline.directive';
@@ -13,4 +13,7 @@ import { AbstractAccessor, FORWARD_REF } from '../../utils';
   providers: [FORWARD_REF(InputTextComponent)],
   hostDirectives: [{ directive: OutlineDirective }],
 })
-export class InputTextComponent extends AbstractAccessor {}
+export class InputTextComponent extends AbstractAccessor {
+  @Input()
+  placeholder = '';
+}
