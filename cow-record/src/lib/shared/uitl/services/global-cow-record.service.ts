@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   BehaviorSubject,
@@ -21,11 +21,23 @@ export class GlobalCowRecordService {
   private _stopTimer = new Subject();
   private _howMuch = new BehaviorSubject(240);
 
-  whoYouAre: UntypedFormControl;
+  whoYouAre = new UntypedFormGroup({
+    goal: new UntypedFormControl(''),
+    rate: new UntypedFormControl(''),
+    month: new UntypedFormControl(''),
+  });
 
-  constructor() {
-    this.whoYouAre = new UntypedFormControl('');
-  }
+  constructor() {}
+
+  private _state = new BehaviorSubject<{
+    eligibility: { goal: number; rate?: number; month: number; income: number };
+    rates: { name: string }[];
+  }>({
+    eligibility: { goal: 50000, month: 24, income: 200 },
+    rates: [{ name: 'Ivna' }, { name: 'Ioana' }],
+  });
+
+  state$ = this._state.asObservable();
 
   navigate(route: unknown[]) {
     const url = route.map((segment) => String(segment)).join('/');
@@ -58,5 +70,18 @@ export class GlobalCowRecordService {
 
   stopTimer() {
     this.navigate(['', 'admin', 'cow_records', 'cow_views']);
+  }
+
+  dispatch<T, V extends number>(action: T, value: V) {
+    const goalOldState = { ...this._state.value.eligibility };
+    console.log('After');
+    this._state.next({
+      ...this._state.value,
+      eligibility: {
+        ...goalOldState,
+        ...(value as any),
+      },
+    });
+    console.log('Before');
   }
 }

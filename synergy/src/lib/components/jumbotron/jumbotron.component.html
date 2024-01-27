@@ -1,6 +1,11 @@
 <div
-  [ngClass]="[shadow, margin, padding]"
-  class="hover:bg-gray-200 bg-gray-50 dark:bg-gray-500 dark:hover:bg-gray-600"
+  [ngClass]="[
+    shadow,
+    margin,
+    padding,
+    hover ? 'dark:hover:bg-gray-600 hover:bg-gray-200' : ''
+  ]"
+  class="bg-gray-50 dark:bg-gray-500"
   data-test="synergy-wrapper"
 >
   <ng-content></ng-content>

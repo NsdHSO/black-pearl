@@ -18,4 +18,6 @@ export class JumbotronComponent {
 
   @Input()
   padding: string = 'p-0';
+  @Input()
+  hover = false;
 }

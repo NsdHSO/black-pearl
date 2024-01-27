@@ -17,12 +17,34 @@
       </black-pearl-jumbotron>
       <black-pearl-jumbotron padding="p-2 rounded">
         <span class="text-xl"> Tell us who You are </span>
-        <span>
+
+        <div>
+          <span>Your Goal</span>
           <black-pearl-input-text
-            [formControl]="cowRecordSharedService.whoYouAre"
-            placeholder="Ivan Morcovici"
+            [formControl]="
+              cowRecordSharedService.whoYouAre | getControl: 'goal'
+            "
+            placeholder="12.000"
           />
-        </span>
+        </div>
+        <div>
+          <span>Your Rate</span>
+          <black-pearl-input-text
+            [formControl]="
+              cowRecordSharedService.whoYouAre | getControl: 'rate'
+            "
+            placeholder="248"
+          />
+        </div>
+        <div>
+          <span>Month</span>
+          <black-pearl-input-text
+            [formControl]="
+              cowRecordSharedService.whoYouAre | getControl: 'month'
+            "
+            placeholder="24"
+          />
+        </div>
       </black-pearl-jumbotron>
     </div>
   </div>
@@ -37,3 +59,8 @@
     />
   </div>
 </div>
+
+<ng-container
+  *ngIf="{ state: setState$ | async, valueChange: valueChanges$ | async }"
+>
+</ng-container>
