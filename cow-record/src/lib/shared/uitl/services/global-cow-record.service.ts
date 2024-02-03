@@ -74,7 +74,6 @@ export class GlobalCowRecordService {
 
   dispatch<T, V extends number>(action: T, value: V) {
     const goalOldState = { ...this._state.value.eligibility };
-    console.log('After');
     this._state.next({
       ...this._state.value,
       eligibility: {
@@ -82,6 +81,5 @@ export class GlobalCowRecordService {
         ...(value as any),
       },
     });
-    console.log('Before');
   }
 }
