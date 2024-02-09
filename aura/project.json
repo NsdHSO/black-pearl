@@ -1,0 +1,37 @@
+{
+  "name": "aura",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "aura/src",
+  "prefix": "black-pearl",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "aura/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "aura/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "aura/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "aura/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  }
+}

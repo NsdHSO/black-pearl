@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
@@ -27,7 +27,9 @@ export class GlobalCowRecordService {
     month: new UntypedFormControl(''),
   });
 
-  constructor() {}
+  constructor() {
+    const t = signal('tet');
+  }
 
   private _state = new BehaviorSubject<{
     eligibility: { goal: number; rate?: number; month: number; income: number };

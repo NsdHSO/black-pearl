@@ -19,7 +19,8 @@
       "@black-pearl/cow-record": ["cow-record/src/index.ts"],
       "@black-pearl/dashboard": ["dashboard/src/index.ts"],
       "@graph": ["graph/src/index.ts"],
-      "@synergy": ["synergy/src/index.ts"]
+      "@synergy": ["synergy/src/index.ts"],
+      "aura": ["aura/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
