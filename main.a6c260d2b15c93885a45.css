@@ -475,8 +475,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 .left-14 {
   left: 3.5rem;
 }
+.bottom-0 {
+  bottom: 0px;
+}
 .z-10 {
   z-index: 10;
+}
+.col-span-1 {
+  grid-column: span 1 / span 1;
 }
 .m-0 {
   margin: 0px;
@@ -515,6 +521,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-\[calc\(100\%-64px\)\] {
   height: calc(100% - 64px);
 }
+.h-80 {
+  height: 20rem;
+}
 .w-16 {
   width: 4rem;
 }
@@ -536,6 +545,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-\[calc\(100\%-56px\)\] {
   width: calc(100% - 56px);
 }
+.w-\[93\%\] {
+  width: 93%;
+}
+.w-80 {
+  width: 20rem;
+}
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -550,6 +565,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .grid-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 .flex-col {
   flex-direction: column;
@@ -571,6 +589,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .gap-3 {
   gap: 0.75rem;
+}
+.gap-4 {
+  gap: 1rem;
 }
 .gap-x-8 {
   column-gap: 2rem;
@@ -601,6 +622,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .rounded-xl {
   border-radius: 0.75rem;
+}
+.rounded {
+  border-radius: 0.25rem;
 }
 .border {
   border-width: 1px;
@@ -658,6 +682,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .p-4 {
   padding: 1rem;
 }
+.p-8 {
+  padding: 2rem;
+}
 .px-0\.5 {
   padding-left: 0.125rem;
   padding-right: 0.125rem;
@@ -687,6 +714,18 @@ Ensure the default browser behavior of the `hidden` attribute.
   font-size: 1.125rem;
   line-height: 1.75rem;
 }
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+.text-9xl {
+  font-size: 8rem;
+  line-height: 1;
+}
 .font-bold {
   font-weight: 700;
 }
@@ -709,6 +748,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-slate-700 {
   --tw-text-opacity: 1;
   color: rgb(51 65 85 / var(--tw-text-opacity));
+}
+.text-gray-800 {
+  --tw-text-opacity: 1;
+  color: rgb(31 41 55 / var(--tw-text-opacity));
+}
+.text-amber-100 {
+  --tw-text-opacity: 1;
+  color: rgb(254 243 199 / var(--tw-text-opacity));
 }
 .shadow {
   --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
