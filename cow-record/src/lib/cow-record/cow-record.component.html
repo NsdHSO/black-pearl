@@ -46,6 +46,26 @@
           />
         </div>
       </black-pearl-jumbotron>
+      <black-pearl-jumbotron padding="p-2 rounded">
+        <div class="flex flex-col">
+          <div class="grid grid-cols-3 gap-4">
+            <span class="col-span-1"> Month </span>
+            <input
+              #mosney
+              [value]="money()"
+              (input)="money.set(+mosney.value)"
+            />
+          </div>
+          <div class="grid grid-cols-3 gap-4">
+            <span class="col-span-1"> rate </span>
+            <input #rater [value]="rate()" (input)="rate.set(+rater.value)" />
+          </div>
+          <div class="grid grid-cols-3 gap-4">
+            <span class="col-span-1"> Month </span>
+            <input #months [value]="month()" />
+          </div>
+        </div>
+      </black-pearl-jumbotron>
     </div>
   </div>
   <router-outlet></router-outlet>
@@ -59,8 +79,3 @@
     />
   </div>
 </div>
-
-<ng-container
-  *ngIf="{ state: setState$ | async, valueChange: valueChanges$ | async }"
->
-</ng-container>
