@@ -47,35 +47,40 @@
         </div>
       </black-pearl-jumbotron>
       <black-pearl-jumbotron padding="p-2 rounded">
-        <div class="flex flex-col">
-          <div class="grid grid-cols-3 gap-4">
+        <div class="flex flex-col gap-y-1">
+          <div class="grid grid-cols-2 gap-4">
             <span class="col-span-1"> Month </span>
             <input
+              class="rounded-xl px-3 outline-0"
               #mosney
               [value]="money()"
               (input)="money.set(+mosney.value)"
             />
           </div>
-          <div class="grid grid-cols-3 gap-4">
+          <div class="grid grid-cols-2 gap-4">
             <span class="col-span-1"> rate </span>
-            <input #rater [value]="rate()" (input)="rate.set(+rater.value)" />
+            <input class="rounded-xl px-3 outline-0" #rater [value]="rate()" />
           </div>
-          <div class="grid grid-cols-3 gap-4">
+          <div class="grid grid-cols-2 gap-4">
             <span class="col-span-1"> Month </span>
-            <input #months [value]="month()" />
+            <input
+              class="rounded-xl px-3 outline-0"
+              #months
+              [value]="month()"
+            />
           </div>
         </div>
       </black-pearl-jumbotron>
     </div>
   </div>
   <router-outlet></router-outlet>
-  <div data-test="cow-record-wrapper-footer" class="absolute bottom-0 w-[93%]">
-    <black-pearl-button
-      (marian)="
-        cowRecordSharedService.navigate(['', 'admin', 'cow_records', 'loading'])
-      "
-      class="bg-indigo-300 dark:bg-indigo-800 p-2 text-amber-100"
-      [text]="'Continues'"
-    />
-  </div>
+  <div
+    data-test="cow-record-wrapper-footer"
+    class="absolute bottom-0 w-[93%]"
+  ></div>
+
+  <ng-container
+    *ngIf="{ state: setState$ | async, valueChange: valueChanges$ | async }"
+  >
+  </ng-container>
 </div>

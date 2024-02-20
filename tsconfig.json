@@ -7,15 +7,7 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "paths": {
-      "@synergy": ["synergy/src"],
-      "@admin": ["admin/src"],
-      "@cow-record": ["cow-record/src"],
-      "@dashboard": ["dashboard/src"],
-      "@appointment": ["appointment/src"],
-      "@graph": ["graph/src"]
-    }
+    "noFallthroughCasesInSwitch": true
   },
   "files": [],
   "include": [],

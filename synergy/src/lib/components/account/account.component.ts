@@ -3,6 +3,7 @@ import {
   Component,
   inject,
   Input,
+  signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Account, forExpand, UtilsService } from '../../utils';
@@ -24,4 +25,7 @@ export class AccountComponent {
   account!: Account;
 
   protected readonly _utilService = inject(UtilsService);
+  money = signal<any | null>(null);
+  rate = signal<any | null>(null);
+  month = signal<any | null>(null);
 }

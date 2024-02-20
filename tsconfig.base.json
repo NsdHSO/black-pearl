@@ -15,11 +15,12 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@black-pearl/admin": ["admin/src/index.ts"],
-      "@black-pearl/cow-record": ["cow-record/src/index.ts"],
-      "@black-pearl/dashboard": ["dashboard/src/index.ts"],
+      "@admin": ["admin/src/index.ts"],
+      "@cow-record": ["cow-record/src/index.ts"],
+      "@dashboard": ["dashboard/src/index.ts"],
       "@graph": ["graph/src/index.ts"],
-      "@synergy": ["synergy/src/index.ts"]
+      "@synergy": ["synergy/src/index.ts"],
+      "@appointment": ["appointment/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -33,7 +33,7 @@ export class GlobalCowRecordService {
     eligibility: { goal: number; rate?: number; month: number; income: number };
     rates: { name: string }[];
   }>({
-    eligibility: { goal: 50000, month: 24, income: 200 },
+    eligibility: { goal: 50000, month: 24, income: 2000 },
     rates: [{ name: 'Ivna' }, { name: 'Ioana' }],
   });
 
@@ -81,5 +81,13 @@ export class GlobalCowRecordService {
         ...(value as any),
       },
     });
+    this.whoYouAre.patchValue(
+      {
+        month: this._state.value.eligibility.month,
+        rate: this._state.value.eligibility.rate,
+        goal: this._state.value.eligibility.goal,
+      },
+      { emitEvent: false },
+    );
   }
 }
